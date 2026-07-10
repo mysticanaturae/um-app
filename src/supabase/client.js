@@ -1,6 +1,11 @@
 // Supabase connection
 
-const SUPABASE_URL = "TVOJ_SUPABASE_URL";
-const SUPABASE_KEY = "TVOJ_SUPABASE_KEY";
+import { createClient } from '@supabase/supabase-js';
 
-export { SUPABASE_URL, SUPABASE_KEY };
+const SUPABASE_URL = "https://oqmjblrmrwwjfakhwoec.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ql5MWoNfzgcMRn0QLCOKPg_RPvG2nHt";
+
+export const supabase = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
