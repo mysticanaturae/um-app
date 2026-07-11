@@ -1,7 +1,5 @@
-// Blinkita Universe App
-
-import { loadSeats } from "./components/Seats.js";
+import { UniversePortal } from "./components/UniversePortal.js";
 
 console.log("🌈 Blinkita Universe is alive");
 
-loadSeats();
+UniversePortal();
