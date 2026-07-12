@@ -1,4 +1,5 @@
 import { UniversePortal } from "./components/UniversePortal.js";
+import { supabase } from "./supabase/client.js";
 
 console.log("🌈 Blinkita Universe is alive");
 
@@ -148,103 +149,254 @@ if (seatInput) {
 
 
 // ======================================================
-// PLAČILNI TOK
+// SUPABASE - ČLANSTVO + PLAČILA
 // ======================================================
 
-const form =
-    document.getElementById("reservation-form");
 
-if (form) {
 
-    form.addEventListener("submit", function (e) {
-
-        e.preventDefault();
-
-        const payment =
-            document.getElementById("payment").value;
-
-        const bankBox =
-            document.getElementById("bank-box");
-
-        const westernBox =
-            document.getElementById("western-box");
-
-        if (bankBox) bankBox.style.display = "none";
-        if (westernBox) westernBox.style.display = "none";
+const reservationForm =
+document.getElementById("reservation-form");
 
 
 
-        // =====================================
-        // PAYPAL
-        // =====================================
+if(reservationForm){
 
-        if (payment === "paypal") {
 
-            const go = confirm(
+reservationForm.addEventListener(
+"submit",
+async function(e){
 
-`🌈 Dobrodošel/a v Blinkita Universe!
 
-Hvala, ker soustvarjaš Ustvarjalce Mogočega.
-
-Po potrditvi boš preusmerjen/a na varno PayPal plačilo.
-
-Nadaljujem?`
-
-            );
-
-            if (go) {
-
-                window.location.href =
-                    "https://www.paypal.com/ncp/payment/QDCZHD48TWVHW";
-
-            }
-
-            return;
-
-        }
+e.preventDefault();
 
 
 
-        // =====================================
-        // BANKA
-        // =====================================
-
-        if (payment === "bank") {
-
-            bankBox.style.display = "block";
-
-            bankBox.scrollIntoView({
-
-                behavior: "smooth"
-
-            });
-
-            return;
-
-        }
+const name =
+document.getElementById("name").value;
 
 
+const email =
+document.getElementById("email").value;
 
-        // =====================================
-        // WESTERN UNION
-        // =====================================
 
-        if (payment === "western") {
+const country =
+document.getElementById("country").value;
 
-            westernBox.style.display = "block";
 
-            westernBox.scrollIntoView({
+const birthDate =
+document.getElementById("birth-date").value;
 
-                behavior: "smooth"
 
-            });
+const tzolkin =
+document.getElementById("tzolkin").value;
 
-            return;
 
-        }
+const packageValue =
+document.getElementById("package").value;
 
-    });
+
+const seatNumber =
+document.getElementById("seatNumber").value;
+
+
+const payment =
+document.getElementById("payment").value;
+
+
+
+
+
+// razdeli ime
+
+const parts =
+name.split(" ");
+
+
+const firstName =
+parts[0];
+
+
+const lastName =
+parts.slice(1).join(" ");
+
+
+
+
+
+// 1. USTVARI ČLANA
+
+
+const { data:member, error:memberError } =
+
+await supabase
+.from("members")
+.insert({
+
+first_name:firstName,
+
+last_name:lastName,
+
+email:email,
+
+country:country,
+
+birth_date:birthDate,
+
+personal_tzolkin_code:tzolkin
+
+})
+.select()
+.single();
+
+
+
+
+if(memberError){
+
+console.error(memberError);
+
+alert(
+"Prišlo je do napake pri shranjevanju podatkov."
+);
+
+return;
 
 }
 
-console.log("✨ app.js loaded");
+
+
+
+
+// 2. ČLANSTVO
+
+
+await supabase
+.from("membership")
+.insert({
+
+member_id:member.id,
+
+package:packageValue,
+
+status:"pending"
+
+});
+
+
+
+
+
+
+// 3. PLAČILO
+
+
+await supabase
+.from("payments")
+.insert({
+
+member_id:member.id,
+
+amount:
+packageValue.includes("BASIC")
+? 55
+:
+packageValue.includes("ADVANCED")
+? 111
+:
+packageValue.includes("PREMIUM")
+? 333
+:
+555,
+
+payment_method:payment,
+
+payment_status:"pending"
+
+});
+
+
+
+
+
+
+// 4. SEDEŽ
+
+
+if(
+seatNumber &&
+!packageValue.includes("BASIC")
+){
+
+
+await supabase
+.from("seats")
+.update({
+
+member_id:member.id,
+
+status:"pending",
+
+reserved_at:
+new Date()
+
+})
+.eq(
+"seat_number",
+seatNumber
+);
+
+
+}
+
+
+
+
+
+// PLAČILNI ODGOVOR
+
+
+
+if(payment==="paypal"){
+
+
+alert(
+"✨ Podatki so shranjeni. Odpira se PayPal plačilo."
+);
+
+
+window.location.href =
+"https://www.paypal.com/ncp/payment/QDCZHD48TWVHW";
+
+
+}
+
+
+
+if(payment==="bank"){
+
+
+document
+.getElementById("bank-box")
+.style.display="block";
+
+
+}
+
+
+
+if(payment==="western"){
+
+
+document
+.getElementById("western-box")
+.style.display="block";
+
+
+}
+
+
+
+});
+
+
+}

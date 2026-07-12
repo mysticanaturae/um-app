@@ -1,8 +1,11 @@
 import { supabase } from "../supabase/client.js";
 
+
 export async function loadSeats() {
 
+
     console.log("🪑 Seats portal activated");
+
 
 
     const { data, error } = await supabase
@@ -11,28 +14,45 @@ export async function loadSeats() {
         .order("seat_number");
 
 
+
     if (error) {
 
-        console.error("❌ Error loading seats:", error);
+
+        console.error(
+            "❌ Error loading seats:",
+            error
+        );
+
 
         return;
+
 
     }
 
 
 
-    console.log("🌈 Seats from Supabase:", data);
+    console.log(
+        "🌈 Seats from Supabase:",
+        data
+    );
 
 
 
-    const grid = document.getElementById("seat-grid");
+    const grid =
+        document.getElementById("seat-grid");
+
 
 
     if (!grid) {
 
-        console.error("❌ seat-grid not found");
+
+        console.error(
+            "❌ seat-grid not found"
+        );
+
 
         return;
+
 
     }
 
@@ -42,32 +62,139 @@ export async function loadSeats() {
 
 
 
+
+
     data.forEach((seat) => {
 
 
-        const seatBox = document.createElement("div");
+
+        const seatBox =
+            document.createElement("div");
 
 
-        seatBox.className = "seat-circle";
+
+        seatBox.className =
+            "seat-circle";
+
+
+
+
+
+        // STATUS SEDEŽA
+
+
+        const isConfirmed =
+            seat.status === "confirmed";
+
+
+
+        const isPending =
+            seat.status === "pending";
+
+
+
+
+
+        if(isConfirmed){
+
+
+            seatBox.classList.add(
+                "confirmed-seat"
+            );
+
+
+        }
+
+
+
+        if(isPending){
+
+
+            seatBox.classList.add(
+                "pending-seat"
+            );
+
+
+        }
+
+
+
 
 
         seatBox.innerHTML = `
+
+
             <div class="circle">
-                ${seat.seat_number}
+
+
+                ${
+                    isConfirmed
+                    ? "🔒"
+                    : ""
+                }
+
+
+                ${
+                    isPending
+                    ? "✨"
+                    : ""
+                }
+
+
+                <span>
+                    ${seat.seat_number}
+                </span>
+
+
             </div>
+
+
         `;
+
+
+
+
 
 
 
         seatBox.onclick = () => {
 
 
+
+            // potrjene številke niso več na voljo
+
+
+            if(isConfirmed){
+
+
+                alert(
+                    "🔒 Ta srečna številka že pripada enemu izmed Ustvarjalcev Mogočega. Izberi drugo številko. ✨"
+                );
+
+
+                return;
+
+
+            }
+
+
+
+
+
+
+
             const selectedSeat =
-                document.getElementById("seatNumber");
+                document.getElementById(
+                    "seatNumber"
+                );
+
 
 
             const packageSelect =
-                document.getElementById("package");
+                document.getElementById(
+                    "package"
+                );
+
 
 
             const selectedPackage =
@@ -77,19 +204,34 @@ export async function loadSeats() {
 
 
 
-            // preveri paket
 
-            if (
 
-                selectedPackage.includes("ADVANCED") ||
-                selectedPackage.includes("PREMIUM") ||
-                selectedPackage.includes("VIP")
 
-            ) {
+
+            if(
+
+
+                selectedPackage.includes(
+                    "ADVANCED"
+                )
+                ||
+
+                selectedPackage.includes(
+                    "PREMIUM"
+                )
+                ||
+
+                selectedPackage.includes(
+                    "VIP"
+                )
+
+
+            ){
 
 
 
                 if(selectedSeat){
+
 
 
                     selectedSeat.value =
@@ -103,36 +245,55 @@ export async function loadSeats() {
                     );
 
 
+
                 }
 
 
 
-                // označi izbrano številko
+
+
 
                 document
-                .querySelectorAll(".seat-circle")
-                .forEach(item => {
+                .querySelectorAll(
+                    ".seat-circle"
+                )
+                .forEach(item=>{
 
-                    item.classList.remove("selected");
+
+                    item.classList.remove(
+                        "selected"
+                    );
+
 
                 });
 
 
 
-                seatBox.classList.add("selected");
+
+
+                seatBox.classList.add(
+                    "selected"
+                );
 
 
 
 
-                // vrni nazaj na obrazec
+
 
                 document
-                .querySelector(".reservation")
+                .querySelector(
+                    ".reservation"
+                )
                 ?.scrollIntoView({
+
 
                     behavior:"smooth"
 
+
                 });
+
+
+
 
 
 
@@ -141,7 +302,9 @@ export async function loadSeats() {
 
 
                 alert(
-                    "🌱 Paket BASIC te že vključuje v Blinkita krog. Srečna številka pa je vključena v pakete ADVANCED, PREMIUM in VIP."
+
+                    "🌱 Paket BASIC te vključuje v Blinkita krog. Srečna številka pa je vključena v pakete ADVANCED, PREMIUM in VIP."
+
                 );
 
 
@@ -153,14 +316,23 @@ export async function loadSeats() {
 
 
 
-        grid.appendChild(seatBox);
+
+
+        grid.appendChild(
+            seatBox
+        );
+
 
 
     });
 
 
 
-    console.log("✨ Seats portal rendered");
+
+    console.log(
+        "✨ Seats portal rendered"
+    );
+
 
 
 }
