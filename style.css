@@ -1462,3 +1462,93 @@ margin-bottom:20px;
     2px solid rgba(255,215,100,.35);
 
 }
+
+/* ======================================================
+   SEATS STATUS
+====================================================== */
+
+
+.pending-seat .circle {
+
+    animation:pulseSeat 2s infinite;
+
+}
+
+
+
+.confirmed-seat .circle {
+
+    box-shadow:
+    0 0 20px rgba(255,215,100,.8);
+
+    animation:glowSeat 2s infinite;
+
+}
+
+
+
+.confirmed-seat {
+
+    cursor:not-allowed;
+
+}
+
+
+
+@keyframes pulseSeat {
+
+
+    0% {
+
+        transform:scale(1);
+
+    }
+
+
+    50% {
+
+        transform:scale(1.08);
+
+    }
+
+
+    100% {
+
+        transform:scale(1);
+
+    }
+
+
+}
+
+
+
+
+@keyframes glowSeat {
+
+
+    0% {
+
+        box-shadow:
+        0 0 10px rgba(255,215,100,.5);
+
+    }
+
+
+    50% {
+
+        box-shadow:
+        0 0 30px rgba(255,215,100,1);
+
+    }
+
+
+    100% {
+
+        box-shadow:
+        0 0 10px rgba(255,215,100,.5);
+
+    }
+
+
+}
