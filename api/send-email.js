@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
       from: "Blinkita Multiverse <onboarding@resend.dev>",
 
-      to: "blankathomas11@gmail.com",
+      to: "onboarding@resend.dev",
 
       subject: "✨ Dobrodošla v Blinkita Multiverse",
 
