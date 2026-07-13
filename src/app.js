@@ -1,7 +1,7 @@
 import { UniversePortal } from "./components/UniversePortal.js";
 import { supabase } from "./supabase/client.js";
 
-console.log("🌈 Blinkita Universe is alive");
+console.log("🌈 Blinkita Multiverse is alive");
 
 UniversePortal();
 

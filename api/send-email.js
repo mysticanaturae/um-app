@@ -6,9 +6,8 @@ export default async function handler(req, res) {
 
     const data = await resend.emails.send({
 
-      from: "Blinkita Multiverse <onboarding@resend.dev>",
-
-      to: "onboarding@resend.dev",
+      from: "Blinkita Multiverse <info@blinkita.com>",
+to: "info@blinkita.si",
 
       subject: "✨ Dobrodošla v Blinkita Multiverse",
 
