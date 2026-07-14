@@ -530,7 +530,22 @@ SEAT GRID
 
 
 
+.seat.reserved {
 
+    background: #e6b800;
+    color:white;
+    border:2px solid #ffd700;
+
+}
+
+
+.seat.occupied {
+
+    background:#2e8b57;
+    color:white;
+    border:2px solid #90ee90;
+
+}
 
 
 
@@ -942,16 +957,19 @@ margin-bottom:20px;
 
 .join-button {
 
-    width: 220px;
-    min-height: 55px;
+    width:100%;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    min-height:52px;
 
-    margin-top: 20px;
+    display:flex;
 
-    text-align: center;
+    align-items:center;
+
+    justify-content:center;
+
+    margin-top:20px;
+
+    text-align:center;
 
 }
 
@@ -1715,5 +1733,180 @@ margin-bottom:20px;
 
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+
+}
+
+.blinkita-logo {
+    text-align:center;
+    margin:40px auto 20px;
+    background:#f8f7f3;
+}
+
+.blinkita-logo img {
+    max-width:280px;
+    width:80%;
+    height:auto;
+    mix-blend-mode:multiply;
+}
+
+#seat-stats{
+
+text-align:center;
+font-size:22px;
+line-height:1.8;
+margin-bottom:30px;
+
+}
+
+
+.pending-seat .circle{
+
+border:3px solid gold;
+box-shadow:0 0 15px gold;
+
+}
+
+
+.confirmed-seat .circle{
+
+border:3px solid purple;
+box-shadow:0 0 15px purple;
+
+}
+
+/* ======================================================
+   SECTION RHYTHM - BLINKITA PORTAL
+====================================================== */
+
+
+.story {
+
+    background:
+    linear-gradient(
+        180deg,
+        #171321,
+        #211934
+    );
+
+}
+
+
+
+.vision {
+
+    background:
+    linear-gradient(
+        180deg,
+        #211934,
+        #171321
+    );
+
+}
+
+
+
+.seven {
+
+    background:
+    linear-gradient(
+        180deg,
+        #171321,
+        #28203f
+    );
+
+}
+
+
+
+.membership {
+
+    background:
+    linear-gradient(
+        180deg,
+        #28203f,
+        #171321
+    );
+
+}
+
+
+
+.seats-section {
+
+    background:
+    linear-gradient(
+        180deg,
+        #171321,
+        #241c38
+    );
+
+}
+
+
+
+.progress {
+
+    background:
+    linear-gradient(
+        180deg,
+        #241c38,
+        #171321
+    );
+
+}
+
+
+
+.reservation {
+
+    background:
+    linear-gradient(
+        180deg,
+        #171321,
+        #0d101c
+    );
+
+}
+
+/* ======================================================
+   BLINKITA SECTION ALTERNATION
+====================================================== */
+
+
+section:nth-of-type(even){
+
+    background:
+    linear-gradient(
+        180deg,
+        #211934,
+        #171321
+    );
+
+}
+
+
+
+section:nth-of-type(odd){
+
+    background:
+    linear-gradient(
+        180deg,
+        #171321,
+        #211934
+    );
+
+}
+
+.seat-grid {
+
+    background:
+    rgba(255,255,255,0.03);
+
+    padding:40px;
+
+    border-radius:40px;
+
+    border:
+    1px solid rgba(217,179,108,.2);
 
 }

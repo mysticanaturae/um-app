@@ -1,42 +1,75 @@
-import { resend } from "../lib/resend.js";
+import {
+    sendWelcomeEmail,
+    sendAdminNotification
+} from "../lib/emailService.js";
 
 export default async function handler(req, res) {
 
-  try {
+    if (req.method !== "POST") {
+        return res.status(405).json({
+            error: "Method not allowed"
+        });
+    }
 
-    const data = await resend.emails.send({
+    try {
 
-      from: "Blinkita Multiverse <info@blinkita.com>",
-to: "info@blinkita.si",
+        const {
 
-      subject: "✨ Dobrodošla v Blinkita Multiverse",
+            name,
+            email,
+            packageValue,
+            seatNumber,
+            payment,
+            memberCode
 
-      html: `
-      <h1>BLINKITA MULTIVERSE</h1>
+        } = req.body;
 
-      <p>To je prvi testni email.</p>
+        // 1. Welcome email uporabniku
 
-      <p>Če bereš to sporočilo, potem sva uspešno povezala:</p>
+        await sendWelcomeEmail({
 
-      <ul>
-        <li>✅ Vercel</li>
-        <li>✅ Resend</li>
-        <li>✅ Email Engine</li>
-      </ul>
+            name,
+            email,
+            package: packageValue,
+            seat: seatNumber,
+            payment,
+            member_code: memberCode
 
-      <p>Dobrodošla v Blinkita Multiverse. 🌈</p>
-      `
+        });
 
-    });
+// 2. Email administratorju
 
-    return res.status(200).json(data);
+await sendAdminNotification({
 
-  } catch (error) {
+    name,
+    email,
+    package: packageValue,
+    seat: seatNumber,
+    payment,
+    member_code: memberCode
 
-    console.error(error);
+});
 
-    return res.status(500).json(error);
 
-  }
+        return res.status(200).json({
+
+            success: true
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        return res.status(500).json({
+
+            success: false,
+            error: error.message
+
+        });
+
+    }
 
 }

@@ -17,15 +17,12 @@ export async function loadSeats() {
 
     if (error) {
 
-
         console.error(
             "❌ Error loading seats:",
             error
         );
 
-
         return;
-
 
     }
 
@@ -37,7 +34,136 @@ export async function loadSeats() {
     );
 
 
+// ======================================================
+// POSODOBI NAPREDEK
+// ======================================================
 
+
+const confirmedSeats =
+data.filter(
+    seat => seat.status === "confirmed"
+);
+
+
+const pendingSeats =
+data.filter(
+    seat => seat.status === "pending"
+);
+
+const progressPending =
+document.getElementById(
+    "progress-pending"
+);
+
+
+const progressConfirmed =
+document.getElementById(
+    "progress-confirmed"
+);
+
+
+
+if(progressPending){
+
+    progressPending.innerHTML =
+    `🌟 Rezerviranih številk: ${pendingSeats.length}`;
+
+}
+
+
+
+if(progressConfirmed){
+
+    progressConfirmed.innerHTML =
+    `🔒 Aktivnih številk: ${confirmedSeats.length}`;
+
+}
+
+const occupiedCount =
+confirmedSeats.length + pendingSeats.length;
+
+
+const freeCount =
+data.length - occupiedCount;
+
+
+
+let totalRaised = 0;
+
+
+data.forEach(seat => {
+
+
+    if(seat.status === "confirmed"){
+
+
+        if(seat.package){
+
+            if(seat.package.includes("BASIC"))
+            totalRaised += 55;
+
+
+            if(seat.package.includes("ADVANCED"))
+            totalRaised += 111;
+
+
+            if(seat.package.includes("PREMIUM"))
+            totalRaised += 333;
+
+
+            if(seat.package.includes("VIP"))
+            totalRaised += 555;
+
+        }
+
+    }
+
+});
+
+
+
+const progressMembers =
+document.getElementById(
+    "progress-members"
+);
+
+
+const progressMoney =
+document.getElementById(
+    "progress-money"
+);
+
+
+const progressFree =
+document.getElementById(
+    "progress-free"
+);
+
+
+
+if(progressMembers){
+
+    progressMembers.innerHTML =
+    `${occupiedCount} / 99 ustvarjalcev`;
+
+}
+
+
+if(progressMoney){
+
+    progressMoney.innerHTML =
+    `💚 Zbranih: ${totalRaised} €`;
+
+}
+
+
+if(progressFree){
+
+    progressFree.innerHTML =
+    `✨ Prostih številk: ${freeCount}`;
+
+}
+ 
     const grid =
         document.getElementById("seat-grid");
 
@@ -45,20 +171,19 @@ export async function loadSeats() {
 
     if (!grid) {
 
-
         console.error(
             "❌ seat-grid not found"
         );
 
-
         return;
-
 
     }
 
 
 
     grid.innerHTML = "";
+
+
 
 
 
@@ -78,9 +203,6 @@ export async function loadSeats() {
 
 
 
-
-
-        // STATUS SEDEŽA
 
 
         const isConfirmed =
@@ -107,7 +229,7 @@ export async function loadSeats() {
 
 
 
-        if(isPending){
+        else if(isPending){
 
 
             seatBox.classList.add(
@@ -116,6 +238,20 @@ export async function loadSeats() {
 
 
         }
+
+
+
+        else {
+
+
+            seatBox.classList.add(
+                "available-seat"
+            );
+
+
+        }
+
+
 
 
 
@@ -161,25 +297,18 @@ export async function loadSeats() {
 
 
 
-            // potrjene številke niso več na voljo
+            if(isConfirmed || isPending){
 
 
-            if(isConfirmed){
+    alert(
+        "✨ Ta srečna številka je trenutno rezervirana ali že zasedena. Prosimo, izberi drugo številko."
+    );
 
 
-                alert(
-                    "🔒 Ta srečna številka že pripada enemu izmed Ustvarjalcev Mogočega. Izberi drugo številko. ✨"
-                );
+    return;
 
 
-                return;
-
-
-            }
-
-
-
-
+}
 
 
 
@@ -211,19 +340,15 @@ export async function loadSeats() {
             if(
 
 
-                selectedPackage.includes(
-                    "ADVANCED"
-                )
+                selectedPackage.includes("ADVANCED")
+
                 ||
 
-                selectedPackage.includes(
-                    "PREMIUM"
-                )
+                selectedPackage.includes("PREMIUM")
+
                 ||
 
-                selectedPackage.includes(
-                    "VIP"
-                )
+                selectedPackage.includes("VIP")
 
 
             ){
@@ -245,8 +370,8 @@ export async function loadSeats() {
                     );
 
 
-
                 }
+
 
 
 
@@ -271,9 +396,12 @@ export async function loadSeats() {
 
 
 
+
+
                 seatBox.classList.add(
                     "selected"
                 );
+
 
 
 
@@ -297,7 +425,10 @@ export async function loadSeats() {
 
 
 
-            } else {
+
+            }
+
+            else {
 
 
 
@@ -318,6 +449,8 @@ export async function loadSeats() {
 
 
 
+
+
         grid.appendChild(
             seatBox
         );
@@ -325,6 +458,9 @@ export async function loadSeats() {
 
 
     });
+
+
+
 
 
 
