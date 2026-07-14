@@ -455,18 +455,23 @@ const memberCode =
 try {
 
 
-fetch("http://localhost:3001/api/send-email", {
-    method: "POST",
+fetch("/api/send-email", {
+  
+  method: "POST",
+
     headers: {
         "Content-Type": "application/json"
     },
+
     body: JSON.stringify({
+
         name,
         email,
         packageValue,
         seatNumber,
         payment,
         memberCode
+
     })
 });
 
