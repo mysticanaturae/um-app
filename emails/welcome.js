@@ -1,10 +1,14 @@
 import { emailLayout } from "./layout.js";
 
-export function welcomeEmail(data){
+export function welcomeEmail(data) {
+
+const packageValue = data.packageValue || "";
+const seatNumber = data.seatNumber || "";
+const memberCode = data.memberCode || "—";
 
 return emailLayout(
 
-"🌈 Portal se je odprl.",
+"🌈 Portal se je odprl in tvoje potovanje se je začelo.",
 
 `
 
@@ -38,32 +42,38 @@ To je povabilo v skupnost ljudi, ki verjamejo, da lahko skupaj ustvarjamo svet, 
 
 <h2>🌈 Tvoji podatki</h2>
 
-<p>
+<div class="card">
 
-<strong>Ime:</strong> ${data.name}<br>
-<strong>Email:</strong> ${data.email}<br>
-<strong>Paket:</strong> ${data.packageValue}<br>
-<strong>Koda člana:</strong> ${data.memberCode}
+<strong>Ime:</strong> ${data.name || "—"}<br>
+<strong>Email:</strong> ${data.email || "—"}<br>
+<strong>Paket:</strong> ${packageValue || "—"}<br>
+<strong>Koda člana:</strong> ${memberCode}
 
-</p>
+</div>
 
 ${
-!data.packageValue.includes("BASIC") && data.seatNumber
+packageValue && !packageValue.includes("BASIC") && seatNumber
 ? `
-<p>
+<div class="card">
 
-<strong>🍀 Tvoja rezervirana srečna številka:</strong> ${data.seatNumber}
+<strong>🍀 Tvoja rezervirana srečna številka:</strong>
 
-</p>
+<h2 style="margin:15px 0 0 0;font-size:40px;color:#5b46d6;text-align:center;">
+${seatNumber}
+</h2>
+
+</div>
 `
 : `
-<p>
+<div class="card">
 
 💛 Kot član paketa <strong>BASIC</strong> si postal/a pomemben del Blinkita Multiverse.
 
+<br><br>
+
 Ta paket ne vključuje rezervacije srečne številke, vendar s svojo podporo pomagaš soustvarjati prostor, kjer nemogoče postaja mogoče.
 
-</p>
+</div>
 `
 }
 
