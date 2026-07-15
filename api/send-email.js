@@ -43,13 +43,12 @@ await sendAdminNotification({
 
     name,
     email,
-    package: packageValue,
-    seat: seatNumber,
+    packageValue,
+    seatNumber,
     payment,
-    member_code: memberCode
+    memberCode
 
 });
-
 
         return res.status(200).json({
 
