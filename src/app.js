@@ -320,6 +320,7 @@ return;
 // 2. DEL NADALJUJE TUKAJ
 // ======================================================
 
+
 // ======================================================
 // ČLANSTVO
 // ======================================================
@@ -342,7 +343,10 @@ status:"pending"
 
 if(membershipError){
 
-console.error(membershipError);
+console.error(
+"Membership error:",
+membershipError
+);
 
 }
 
@@ -408,33 +412,33 @@ seatNumber,
 typeof seatNumber
 );
 
+
 const { data: updatedSeat, error: seatError } =
 
 await supabase
 .from("seats")
 .update({
 
-    member_id: member.id,
+member_id: member.id,
 
-    status: "pending",
+status:"pending",
 
-    reserved_at: new Date()
+reserved_at:new Date()
 
 })
 .eq(
-    "seat_number",
-    Number(seatNumber)
+"seat_number",
+Number(seatNumber)
 )
 .select();
 
 
 
 console.log(
-    "🪑 Seat update:",
-    updatedSeat,
-    seatError
+"🪑 Seat update:",
+updatedSeat,
+seatError
 );
-
 
 
 }
@@ -455,25 +459,45 @@ const memberCode =
 try {
 
 
-fetch("/api/send-email", {
-  
-  method: "POST",
+const emailResponse = await fetch(
+"/api/send-email",
+{
 
-    headers: {
-        "Content-Type": "application/json"
-    },
+method:"POST",
 
-    body: JSON.stringify({
+headers:{
 
-        name,
-        email,
-        packageValue,
-        seatNumber,
-        payment,
-        memberCode
+"Content-Type":"application/json"
 
-    })
+},
+
+body:JSON.stringify({
+
+name,
+
+email,
+
+packageValue,
+
+seatNumber,
+
+payment,
+
+memberCode
+
+})
+
 });
+
+
+const emailResult = await emailResponse.json();
+
+
+console.log(
+"📧 Email response:",
+emailResult
+);
+
 
 
 }
@@ -483,8 +507,11 @@ catch(error){
 
 
 console.error(
-"Email error:",
+
+"📧 Email error:",
+
 error
+
 );
 
 
@@ -553,7 +580,6 @@ window.location.href =
 
 
 
-
 if(payment==="bank"){
 
 
@@ -563,7 +589,6 @@ bankBox.style.display="block";
 
 
 }
-
 
 
 
@@ -581,10 +606,51 @@ westernBox.style.display="block";
 
 
 
+// ======================================================
+// KONČNA POTRDITEV
+// ======================================================
+
+
+if(payment!=="paypal"){
+
+
+alert(
+`🌈 Hvala!
+
+
+Tvoja rezervacija v Blinkita Multiverse je uspešno prejeta.
+
+
+Tvoj sedež je začasno rezerviran.
+
+
+Po uspešnem plačilu nam prosimo pošlji potrdilo na:
+
+
+info@blinkita.si
+
+
+Takoj po potrditvi bomo aktivirali tvoje članstvo.
+
+
+Hvala, ker soustvarjaš Blinkita Multiverse.
+
+
+Where the Impossible Becomes Possible.
+
+
+Living Time • Living Consciousness • Living Creation`
+);
+
+
+}
+
+
 
 });
 
 }
+
 
 
 
@@ -611,29 +677,8 @@ reservationButton.addEventListener(
 ()=>{
 
 
-alert(
-`🌈 Hvala!
-
-
-Tvoja rezervacija v Blinkita Multiverse je uspešno prejeta.
-
-
-Po uspešno opravljenem plačilu nam prosimo pošlji potrdilo na:
-
-
-info@blinkita.si
-
-
-Takoj po potrditvi bomo aktivirali tvoje članstvo.
-
-
-Hvala, ker soustvarjaš Blinkita Multiverse.
-
-
-Where the Impossible Becomes Possible.
-
-
-Living Time • Living Consciousness • Living Creation`
+console.log(
+"🌈 Reservation confirmation button clicked"
 );
 
 
