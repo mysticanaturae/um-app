@@ -1,8 +1,83 @@
 import { supabase } from "../supabase/client.js";
 
+async function registerVisitor() {
+
+
+    const { error } = await supabase
+        .from("visitors")
+        .insert([
+            {}
+        ]);
+
+
+    if(error){
+
+        console.error(
+            "❌ Visitor registration error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    console.log(
+        "🌎 Visitor registered"
+    );
+
+
+}
+
+
+
+async function loadVisitors() {
+
+
+    const { count, error } = await supabase
+        .from("visitors")
+        .select("*", {
+            count: "exact",
+            head: true
+        });
+
+
+
+    if(error){
+
+        console.error(
+            "❌ Visitor count error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+
+    const visitorCount =
+    document.getElementById(
+        "progress-visitors"
+    );
+
+
+
+    if(visitorCount){
+
+      visitorCount.innerHTML =
+`👣 Obiskovalcev: ${count}`;
+
+    }
+
+
+}
 
 export async function loadSeats() {
 
+    await registerVisitor();
+
+    await loadVisitors();
 
     console.log("🪑 Seats portal activated");
 
