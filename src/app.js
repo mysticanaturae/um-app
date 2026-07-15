@@ -265,6 +265,33 @@ const lastName =
 parts.slice(1).join("");
 
 
+if(
+!name ||
+!email ||
+!packageValue ||
+!payment
+){
+
+alert(
+`🌈 Portal še ni pripravljen za odprtje.
+
+Manjkajo še nekateri podatki.
+
+Prosimo, preveri, da si izpolnil/a:
+✨ svoje ime
+✨ email naslov
+✨ izbrani paket
+✨ način plačila
+
+Ko so vsi podatki pripravljeni, se bo portal odprl in tvoja rezervacija bo ustvarjena.
+
+✨ Where the Impossible Becomes Possible.`
+);
+
+return;
+
+}
+
 
 // ======================================================
 // USTVARI ČLANA
@@ -300,20 +327,17 @@ if(memberError){
 
 console.error(memberError);
 
-
 alert(
-`⚠️ Prišlo je do napake pri shranjevanju podatkov.
+`🌈 Pri odprtju portala je prišlo do napake.
 
-Prosimo poskusi ponovno.`
+Prosimo, poskusi ponovno ali se poveži z nami.
+
+✨ Blinkita Multiverse`
 );
-
 
 return;
 
-
 }
-
-
 
 // ======================================================
 // DO TUKAJ PRIDE 1. DEL
