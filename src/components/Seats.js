@@ -221,6 +221,46 @@ if(progressMoney){
 
 }
 
+const goal = 10000;
+
+
+const percentage =
+Math.min(
+    (totalRaised / goal) * 100,
+    100
+);
+
+
+
+const progressBar =
+document.getElementById(
+    "money-progress-bar"
+);
+
+
+
+const progressPercentage =
+document.getElementById(
+    "progress-percentage"
+);
+
+
+
+if(progressBar){
+
+    progressBar.style.width =
+    `${percentage}%`;
+
+}
+
+
+
+if(progressPercentage){
+
+    progressPercentage.innerHTML =
+    `🌱 ${percentage.toFixed(2)} %`;
+
+}
 
 if(progressFree){
 
