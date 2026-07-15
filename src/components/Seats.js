@@ -33,6 +33,20 @@ export async function loadSeats() {
         data
     );
 
+const { data: payments, error: paymentsError } = await supabase
+    .from("payments")
+    .select("*")
+    .eq("payment_status", "paid");
+
+
+if (paymentsError) {
+
+    console.error(
+        "❌ Error loading payments:",
+        paymentsError
+    );
+
+}
 
 // ======================================================
 // POSODOBI NAPREDEK
@@ -87,36 +101,12 @@ const freeCount =
 data.length - occupiedCount;
 
 
-
 let totalRaised = 0;
 
 
-data.forEach(seat => {
+payments?.forEach(payment => {
 
-
-    if(seat.status === "confirmed"){
-
-
-        if(seat.package){
-
-            if(seat.package.includes("BASIC"))
-            totalRaised += 55;
-
-
-            if(seat.package.includes("ADVANCED"))
-            totalRaised += 111;
-
-
-            if(seat.package.includes("PREMIUM"))
-            totalRaised += 333;
-
-
-            if(seat.package.includes("VIP"))
-            totalRaised += 555;
-
-        }
-
-    }
+    totalRaised += Number(payment.amount);
 
 });
 
