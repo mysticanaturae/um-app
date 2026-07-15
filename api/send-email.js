@@ -26,16 +26,16 @@ export default async function handler(req, res) {
 
         // 1. Welcome email uporabniku
 
-        await sendWelcomeEmail({
+       await sendWelcomeEmail({
 
-            name,
-            email,
-            package: packageValue,
-            seat: seatNumber,
-            payment,
-            member_code: memberCode
+    name,
+    email,
+    packageValue,
+    seatNumber,
+    payment,
+    memberCode
 
-        });
+});
 
 // 2. Email administratorju
 
