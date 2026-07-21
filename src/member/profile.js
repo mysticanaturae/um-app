@@ -250,24 +250,22 @@ await supabase
 // ==========================
 
 
-const { data: seat } =
+const { data: seat, error: seatError } =
 await supabase
 .from("seats")
-.select("seat_number")
-.eq("member_id", member.id)
-.eq("status","confirmed")
-.maybeSingle();
+.select("*")
+.eq("member_id", member.id);
+
+console.log("MEMBER ID:", member.id);
+console.log("SEAT ERROR:", seatError);
+console.log("SEAT DATA:", seat);
 
 
 
-
-
-console.log("MEMBER:", member);
-console.log("MEMBERSHIP:", membership);
-console.log("SEAT:", seat);
-
-
-
+console.log(
+"MEMBER ID:",
+member.id
+);
 
 
 
