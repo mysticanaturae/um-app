@@ -1,0 +1,767 @@
+body {
+
+    margin:0;
+    padding:0;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    background:#030713;
+
+    color:white;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+
+/* ===========================================
+   MAIN SCENE
+=========================================== */
+
+#scene {
+
+    width:100vw;
+
+    height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:100px;
+
+    position:relative;
+
+}
+
+
+
+/* ===========================================
+   STAR FIELD
+=========================================== */
+
+
+#stars {
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+    radial-gradient(
+        white 1px,
+        transparent 1px
+    );
+
+    background-size:60px 60px;
+
+    opacity:.35;
+
+    animation:
+    starsMove 80s linear infinite;
+
+    z-index:0;
+
+}
+
+
+@keyframes starsMove {
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-300px);
+    }
+
+}
+
+
+
+
+/* ===========================================
+   NEBULA
+=========================================== */
+
+
+#nebula {
+
+    position:fixed;
+
+    width:900px;
+
+    height:900px;
+
+    left:25%;
+
+    top:50%;
+
+
+    transform:
+    translate(-50%,-50%);
+
+
+    border-radius:50%;
+
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(0,180,255,.25),
+        transparent 70%
+    );
+
+
+    filter:blur(120px);
+
+
+    animation:
+    nebulaPulse 8s infinite ease-in-out;
+
+
+    z-index:1;
+
+}
+
+
+@keyframes nebulaPulse {
+
+
+    0%,100%{
+
+        transform:
+        translate(-50%,-50%)
+        scale(.9);
+
+    }
+
+
+    50%{
+
+        transform:
+        translate(-50%,-50%)
+        scale(1.1);
+
+    }
+
+}
+
+
+
+/* ===========================================
+   PORTAL AREA
+=========================================== */
+
+
+#portalArea {
+
+    width:500px;
+
+    height:500px;
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:5;
+
+}
+
+
+
+/* ===========================================
+   PORTAL RING
+=========================================== */
+
+
+#portalRing {
+
+
+    position:absolute;
+
+
+    width:360px;
+
+    height:360px;
+
+
+    border-radius:50%;
+
+
+    border:
+    2px solid rgba(120,230,255,.8);
+
+
+
+    box-shadow:
+
+
+    0 0 20px #00c8ff,
+
+    0 0 60px #008cff,
+
+    inset 0 0 40px rgba(0,200,255,.5);
+
+
+
+    animation:
+
+    rotatePortal 30s linear infinite;
+
+
+
+}
+
+
+
+@keyframes rotatePortal {
+
+
+from{
+
+    transform:rotate(0deg);
+
+}
+
+
+to{
+
+    transform:rotate(360deg);
+
+}
+
+
+}
+
+
+
+
+#portalRing::before {
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    inset:35px;
+
+
+    border-radius:50%;
+
+
+    border:
+
+    1px solid rgba(255,255,255,.5);
+
+
+
+    animation:
+
+    innerPulse 5s infinite ease-in-out;
+
+
+}
+
+
+
+@keyframes innerPulse {
+
+
+0%,100%{
+
+    transform:scale(.9);
+
+    opacity:.5;
+
+}
+
+
+50%{
+
+    transform:scale(1.1);
+
+    opacity:1;
+
+}
+
+
+}
+
+
+
+
+/* ===========================================
+   PORTAL LIGHT
+=========================================== */
+
+
+#portalGlow {
+
+
+    position:absolute;
+
+
+    width:500px;
+
+    height:500px;
+
+
+    border-radius:50%;
+
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.35),
+        rgba(0,200,255,.25),
+        transparent 65%
+    );
+
+
+
+    box-shadow:
+
+
+    0 0 60px #00c8ff,
+
+    0 0 150px #008cff;
+
+
+
+    opacity:.5;
+
+
+    animation:
+
+    breathe 6s infinite ease-in-out;
+
+
+}
+
+
+
+@keyframes breathe {
+
+
+0%,100%{
+
+    transform:scale(.9);
+
+    opacity:.5;
+
+}
+
+
+50%{
+
+    transform:scale(1.15);
+
+    opacity:1;
+
+}
+
+
+}
+
+
+
+
+/* ===========================================
+   NUMBER INSIDE PORTAL
+=========================================== */
+
+
+#timeNumber {
+
+
+    position:absolute;
+
+
+    left:50%;
+
+    top:50%;
+
+
+
+    transform:
+
+    translate(-50%,-50%)
+
+    scale(0);
+
+
+
+    font-size:160px;
+
+    font-weight:bold;
+
+
+    color:white;
+
+
+
+    text-shadow:
+
+
+    0 0 30px #00ffff,
+
+    0 0 100px #0088ff;
+
+
+
+    transition:
+
+    2s ease;
+
+
+
+}
+
+
+
+#timeNumber.active {
+
+
+    transform:
+
+    translate(-50%,-50%)
+
+    scale(1);
+
+
+
+}
+
+
+
+/* ===========================================
+   RIGHT TEXT AREA
+=========================================== */
+
+
+#content {
+
+
+    width:420px;
+
+
+    z-index:20;
+
+
+    text-align:left;
+
+
+}
+
+
+
+.logo {
+
+
+    font-size:28px;
+
+
+    letter-spacing:6px;
+
+
+    opacity:.8;
+
+
+}
+
+
+.title {
+
+
+    font-size:48px;
+
+
+    font-weight:300;
+
+
+    letter-spacing:8px;
+
+
+    color:#9fdfff;
+
+
+}
+
+
+
+#message {
+
+
+    font-size:22px;
+
+
+    margin-top:40px;
+
+
+}
+
+
+
+
+/* ===========================================
+   BUTTON
+=========================================== */
+
+
+#portalButton {
+
+
+    position:absolute;
+
+
+    bottom:20px;
+
+
+
+    padding:18px 40px;
+
+
+    border:none;
+
+
+    border-radius:50px;
+
+
+    font-size:20px;
+
+
+    cursor:pointer;
+
+
+    background:#49d8ff;
+
+
+    color:white;
+
+
+
+    box-shadow:
+
+    0 0 30px #00c8ff;
+
+
+
+}
+
+
+#portalButton:hover {
+
+
+    transform:scale(1.05);
+
+
+}
+
+
+
+/* ===========================================
+   PARTICLES
+=========================================== */
+
+
+#particles {
+
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:3;
+
+}
+
+
+
+.particle {
+
+
+    position:absolute;
+
+    width:3px;
+
+    height:3px;
+
+
+    background:white;
+
+
+    border-radius:50%;
+
+
+    animation:
+
+    floatParticle 10s infinite ease-in-out;
+
+}
+
+
+
+@keyframes floatParticle {
+
+
+0%,100%{
+
+    transform:translateY(0);
+
+}
+
+
+50%{
+
+    transform:translateY(-40px);
+
+}
+
+
+}
+
+#portalRing.wheelOpen {
+
+    animation:
+    wheelOpening 3s ease forwards;
+
+}
+
+
+
+@keyframes wheelOpening {
+
+
+0% {
+
+    transform:
+    scale(1)
+    rotate(0deg);
+
+}
+
+
+50% {
+
+    transform:
+    scale(1.5)
+    rotate(180deg);
+
+}
+
+
+100% {
+
+    transform:
+    scale(1.25)
+    rotate(360deg);
+
+}
+
+
+}
+
+#portalGlow.wheelOpen {
+
+    animation:
+    glowOpening 3s ease forwards;
+
+}
+
+
+@keyframes glowOpening {
+
+
+0% {
+
+    transform:scale(1);
+
+    opacity:.5;
+
+}
+
+
+50% {
+
+    transform:scale(1.4);
+
+    opacity:1;
+
+}
+
+
+100% {
+
+    transform:scale(1.15);
+
+    opacity:.8;
+
+}
+
+
+}
+
+
+#wheel{
+
+    font-size:180px;
+
+    animation:none;
+
+    transition:4s;
+
+}
+
+#wheel.spinning{
+
+    transform:rotate(2880deg);
+
+}
+
+#rewardCard{
+
+    width:380px;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+    text-align:center;
+
+    animation:fadeIn 1s;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+        transform:scale(.8);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+}

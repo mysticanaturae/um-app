@@ -1931,3 +1931,56 @@ section:nth-of-type(odd){
     transition: width 1s ease;
 
 }
+
+/* ==========================
+   LOGIN BUTTON
+========================== */
+
+.login-button {
+
+    position: absolute;
+
+    top: 25px;
+    right: 35px;
+
+    z-index: 1000;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 24px;
+
+    background: rgba(255,255,255,0.9);
+
+    color: #6b3fa0;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    border-radius: 40px;
+
+    border: 1px solid rgba(255,255,255,0.7);
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,0.15);
+
+    transition: all 0.3s ease;
+
+}
+
+
+.login-button:hover {
+
+    transform: translateY(-3px);
+
+    background: white;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,0.25);
+
+}

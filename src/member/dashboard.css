@@ -1,0 +1,360 @@
+body{
+
+margin:0;
+
+background:#040817;
+
+font-family:Arial;
+
+color:white;
+
+}
+
+#dashboard{
+
+display:flex;
+
+height:100vh;
+
+}
+
+#sidebar{
+
+width:260px;
+
+background:#091122;
+
+padding:30px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+box-shadow:
+0 0 30px rgba(0,180,255,.25);
+
+}
+
+#sidebar h2{
+
+text-align:center;
+
+margin-bottom:30px;
+
+letter-spacing:4px;
+
+}
+
+#sidebar button{
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#12213d;
+
+color:white;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#sidebar button:hover{
+
+background:#1d4d91;
+
+}
+
+#content{
+
+flex:1;
+
+padding:50px;
+
+overflow:auto;
+
+}
+
+.downloads-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(260px, 1fr)
+    );
+
+    gap: 25px;
+
+    margin-top: 30px;
+
+}
+
+
+
+.download-card {
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    transition: 0.3s ease;
+
+}
+
+
+
+.download-card:hover {
+
+    transform: translateY(-5px);
+
+}
+
+
+
+.download-icon {
+
+    font-size: 42px;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.download-card h3 {
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.download-card a {
+
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 10px 22px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+}
+
+/* ==============================
+   BLINKITA DASHBOARD COMPONENTS
+   ============================== */
+
+
+.dashboard-section {
+
+    background: rgba(255,255,255,0.06);
+
+    border-radius: 25px;
+
+    padding: 35px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+    0 0 30px rgba(0,180,255,.12);
+
+    margin-bottom:30px;
+
+}
+
+
+
+.dashboard-section h1 {
+
+    margin-top:0;
+
+    letter-spacing:1px;
+
+}
+
+
+
+.dashboard-section p {
+
+    opacity:.85;
+
+    line-height:1.6;
+
+}
+
+
+
+/* notranje kartice */
+
+.dashboard-card {
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    transition:.3s ease;
+
+}
+
+
+
+.dashboard-card:hover {
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 10px 30px rgba(0,180,255,.18);
+
+}
+
+
+
+/* mreža */
+
+.dashboard-grid {
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
+    margin-top:25px;
+
+}
+
+
+
+/* gumbi znotraj dashboarda */
+
+.dashboard-button {
+
+    display:inline-block;
+
+    padding:12px 25px;
+
+    border-radius:30px;
+
+    background:#1d4d91;
+
+    color:white;
+
+    text-decoration:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+.dashboard-button:hover {
+
+    transform:translateY(-2px);
+
+    background:#2866c0;
+
+}
+
+#sidebar button.active {
+
+    background:#1d4d91;
+
+    box-shadow:
+    0 0 20px rgba(0,180,255,.45);
+
+}
+
+.dashboard-section h1 {
+
+    font-size:32px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #ffffff,
+    #7ddcff
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    margin-bottom:15px;
+
+}
+
+.dashboard-card {
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.04)
+    );
+
+    backdrop-filter:blur(10px);
+
+}
+
+#sidebar h2 span {
+
+display:block;
+
+font-size:12px;
+
+letter-spacing:5px;
+
+opacity:.7;
+
+margin-top:8px;
+
+}
+
+.dashboard-status {
+
+    display:inline-block;
+
+    margin-top:12px;
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    background:rgba(0,180,255,.15);
+
+    border:1px solid rgba(0,180,255,.25);
+
+    font-size:14px;
+
+}
+
+
+.profile-action {
+    margin-top:30px;
+    margin-bottom:50px;
+}
