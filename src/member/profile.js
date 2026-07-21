@@ -307,7 +307,7 @@ member.seat_number ? `
 
 <a
 class="dashboard-button"
-href="/portal.html">
+href="/portal.html?member=${member.id}">
 
 🌀 ZAVRTI KOLO ČASA
 
