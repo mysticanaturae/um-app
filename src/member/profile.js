@@ -245,27 +245,13 @@ await supabase
 
 
 
-// ==========================
-// NALOŽI SEDEŽ
-// ==========================
 
-
-const { data: seat, error: seatError } =
-await supabase
-.from("seats")
-.select("*")
-.eq("member_id", member.id);
+// ==========================
+// SREČNA ŠTEVILKA
+// ==========================
 
 console.log("MEMBER ID:", member.id);
-console.log("SEAT ERROR:", seatError);
-console.log("SEAT DATA:", seat);
-
-
-
-console.log(
-"MEMBER ID:",
-member.id
-);
+console.log("SEAT NUMBER:", member.seat_number);
 
 
 
@@ -309,12 +295,12 @@ ${membership?.package || "Še nimaš izbranega paketa"}
 
 <p>
 <b>🔢 Srečna številka:</b>
-${seat?.seat_number || "Še ni izbrana"}
+${member.seat_number || "Še ni izbrana"}
 </p>
 
 
 ${
-(!membership || !seat) ? `
+(!membership || !member.seat_number) ? `
 
 <div class="profile-action">
 
@@ -352,7 +338,6 @@ Nalagam tvoj simbol časa...
 <div class="download-icon">
 🌀
 </div>
-
 
 
 <h2>

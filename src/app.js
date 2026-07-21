@@ -424,7 +424,6 @@ payment_status:"pending"
 // SEDEŽ
 // ======================================================
 
-
 if(
 seatNumber &&
 !packageValue.includes("BASIC")
@@ -457,13 +456,37 @@ Number(seatNumber)
 .select();
 
 
-
 console.log(
 "🪑 Seat update:",
 updatedSeat,
 seatError
 );
 
+
+// ======================================================
+// SHRANI ŠTEVILKO TUDI V MEMBERS
+// ======================================================
+
+const { error: memberSeatError } =
+
+await supabase
+.from("members")
+.update({
+
+seat_number: Number(seatNumber)
+
+})
+.eq("id", member.id);
+
+
+if(memberSeatError){
+
+console.error(
+"❌ Member seat update error:",
+memberSeatError
+);
+
+}
 
 }
 
