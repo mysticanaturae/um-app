@@ -8,7 +8,13 @@ import {
 import { getPortalMessages } from "./messages.js";
 
 
-import { memberData } from "./member.js";
+import {
+    memberData,
+    setMemberData
+} from "./member.js";
+
+
+import { supabase } from "../supabase/client.js";
 
 
 import {
@@ -22,14 +28,99 @@ import {
     pulsePortal
 } from "./animations.js";
 
+
 import {
     openTimeWheel
 } from "./wheel.js";
 
+
 import { revealNumber } from "./number.js";
 
 
+
+
+
+// ==========================
+// NALOŽI ČLANA PORTALA
+// ==========================
+
+
+const params =
+new URLSearchParams(window.location.search);
+
+
+
+const memberId =
+params.get("member");
+
+
+
+if(memberId){
+
+
+    const { data: member, error } =
+
+    await supabase
+    .from("members")
+    .select(`
+        first_name,
+        seat_number
+    `)
+    .eq("id", memberId)
+    .single();
+
+
+
+    if(error){
+
+
+        console.error(
+            "❌ Portal member error:",
+            error
+        );
+
+
+    }
+    else{
+
+
+        console.log(
+            "🌌 Portal member:",
+            member
+        );
+
+
+
+        setMemberData({
+
+            name: member.first_name,
+
+            seatNumber: member.seat_number
+
+        });
+
+
+
+        console.log(
+            "🌀 PORTAL DATA SET:",
+            member.seat_number
+        );
+
+
+    }
+
+
+
+}
+
+
+
+
+
+// ==========================
 // 🌌 Zaženi vesolje
+// ==========================
+
 
 createStars();
 
@@ -39,9 +130,16 @@ mouseGalaxy();
 
 
 
+
+
+// ==========================
 // 🌀 Aktiviraj portal
+// ==========================
+
 
 awakenPortal();
+
+
 
 
 
@@ -57,18 +155,26 @@ function sleep(ms){
 
 
 
+
+
+
 async function intro(){
 
 
+
+    console.log(
+        "🌌 CURRENT MEMBER DATA:",
+        memberData
+    );
+
+
+
     const portalMessages =
+
     getPortalMessages(memberData);
 
 
-    console.log(memberData);
 
-
-
-    // Prvi del zgodbe
 
     for(const item of portalMessages){
 
@@ -83,11 +189,19 @@ async function intro(){
 
 
 
+
+
+
     // ✨ Razkritje številke
 
+
     revealNumber(
+
         memberData.seatNumber
+
     );
+
+
 
 
 
@@ -95,11 +209,17 @@ async function intro(){
 
 
 
-    // 🌀 Sporočilo po razkritju
+
+
 
     setMessage(
+
         "Čas je pripravljen."
+
     );
+
+
+
 
 
 
@@ -107,9 +227,11 @@ async function intro(){
 
 
 
-    // 🔘 Prikaži gumb
+
+
 
     showButton();
+
 
 
 }
@@ -118,10 +240,34 @@ async function intro(){
 
 
 
-intro();
+
+
+// ==========================
+// ZAŽENI UVOD
+// ==========================
+
+
+// počakamo, da Supabase naloži člana
+
+setTimeout(()=>{
+
+
+    intro();
+
+
+},500);
 
 
 
+
+
+
+
+
+
+// ==========================
+// GUMB ZA KOLO ČASA
+// ==========================
 
 
 
@@ -129,12 +275,22 @@ document
 .getElementById("portalButton")
 .onclick = async () => {
 
-    console.log("🌀 GUMB DELA");
+
+    console.log(
+        "🌀 GUMB DELA"
+    );
+
 
     pulsePortal();
 
+
+
     await sleep(2000);
 
+
+
     openTimeWheel();
+
+
 
 };
