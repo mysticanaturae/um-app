@@ -1984,3 +1984,8 @@ section:nth-of-type(odd){
     0 8px 25px rgba(0,0,0,0.25);
 
 }
+
+.multiverse-explore {
+    text-align: center;
+    margin: 50px 0;
+}
