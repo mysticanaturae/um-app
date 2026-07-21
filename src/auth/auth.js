@@ -38,8 +38,7 @@ email,
 
 options:{
 emailRedirectTo:
-window.location.origin + "/dashboard.html"
-
+"https://app.blinkita.com/dashboard.html"
 }
 
 });
