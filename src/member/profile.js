@@ -300,7 +300,32 @@ ${member.seat_number || "Še ni izbrana"}
 
 
 ${
-(!membership || !member.seat_number) ? `
+member.seat_number ? `
+
+<div class="profile-action">
+
+
+<a
+class="dashboard-button"
+href="/portal.html">
+
+🌀 ZAVRTI KOLO ČASA
+
+</a>
+
+
+<p class="reward-text">
+
+✨ Tvoja srečna številka je tvoj osebni ključ v Blinkita Multiverse.  
+Samo ti lahko odpreš svojo edinstveno nagrado, ki čaka na tvojem Portalu Časa.
+
+</p>
+
+
+</div>
+
+
+` : `
 
 <div class="profile-action">
 
@@ -314,9 +339,8 @@ href="/index.html">
 
 </div>
 
-` : ""
+`
 }
-
 
 <div id="my-symbol-container">
 
