@@ -166,8 +166,27 @@ await supabase
 .single();
 
 
+const { data: seat, error: seatError } =
+await supabase
+.from("seats")
+.select(`
+    seat_number,
+    status
+`)
+.eq("member_id", memberFromDashboard.id)
+.eq("status", "confirmed")
+.single();
 
 
+
+if(seatError){
+
+console.log(
+"NO CONFIRMED SEAT:",
+seatError
+);
+
+}
 
 
 if(error){
@@ -251,7 +270,24 @@ Današnja energija tradicionalnega Tzolk'in koledarja se pripravlja...
 
 </p>
 
-
+${
+seat
+?
+`
+<p>
+🍀 Tvoja srečna številka:
+<strong>
+${seat.seat_number}
+</strong>
+</p>
+`
+:
+`
+<p>
+✨ Tvoja srečna številka bo prikazana po potrditvi članstva.
+</p>
+`
+}
 
 </div>
 
