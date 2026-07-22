@@ -690,12 +690,15 @@ await loadMySymbol();
 // ==========================
 
 
-const { data:symbols, error:symbolError } =
+const { data:symbol, error:symbolError } =
 await supabase
 .from("blinkita_avatars")
 .select("*")
-.order("name");
-
+.eq(
+"id",
+currentMember.avatar_id
+)
+.single();
 
 
 
@@ -868,10 +871,9 @@ const { error:updateError } =
 await supabase
 .from("members")
 .update({
-
 avatar_id:symbolId
-
 })
+
 .eq(
 "id",
 member.id
