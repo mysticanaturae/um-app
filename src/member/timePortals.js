@@ -62,294 +62,6 @@ return;
 }
 
 
-// ==========================
-// IZBIRA ODGOVOROV ČASU
-// ==========================
-
-
-const selectedAnswers = [];
-
-
-
-document
-.querySelectorAll(".answer-buttons button")
-.forEach(button => {
-
-
-
-button.onclick = () => {
-
-
-
-const answer =
-button.dataset.answer;
-
-
-
-
-if(
-selectedAnswers.includes(answer)
-){
-
-
-
-// odstrani izbiro
-
-const index =
-selectedAnswers.indexOf(answer);
-
-
-
-selectedAnswers.splice(
-index,
-1
-);
-
-
-
-button.classList.remove(
-"selected"
-);
-
-
-
-}
-else{
-
-
-// dodaj izbiro
-
-
-selectedAnswers.push(answer);
-
-
-
-button.classList.add(
-"selected"
-);
-
-
-
-}
-
-
-
-console.log(
-"ODGOVORI ČASU:",
-selectedAnswers
-);
-
-
-
-};
-
-
-
-});
-
-
-
-
-
-
-
-// ==========================
-// AKTIVIRAJ ŠEPET
-// ==========================
-
-
-
-const activateButton =
-document.getElementById(
-"activatePortalButton"
-);
-
-
-
-
-activateButton.onclick = async()=>{
-
-
-
-
-
-if(
-selectedAnswers.length === 0
-){
-
-
-alert(
-"✨ Najprej izberi svoj odgovor Času."
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-// ==========================
-// SHRANI ODGOVORE
-// ==========================
-
-
-for(
-const answer of selectedAnswers
-){
-
-
-
-const { error:answerError } =
-
-await supabase
-.from("portal_answers")
-.insert({
-
-member_id: member.id,
-
-portal_number:
-portal.portal_number,
-
-answer: answer
-
-});
-
-
-
-
-
-if(answerError){
-
-
-console.error(
-"PORTAL ANSWER ERROR:",
-answerError
-);
-
-
-}
-
-}
-
-
-
-console.log(
-"✨ Odgovori shranjeni"
-);
-
-
-
-
-
-
-// ==========================
-// SHRANI AKTIVACIJO
-// ==========================
-
-
-const { error:portalSaveError } =
-
-await supabase
-.from("member_time_portals")
-.insert({
-
-member_id: member.id,
-
-portal_number:
-portal.portal_number,
-
-activated_at:
-new Date()
-
-});
-
-
-
-
-
-
-if(portalSaveError){
-
-
-console.error(
-"PORTAL ACTIVATION ERROR:",
-portalSaveError
-);
-
-
-alert(
-portalSaveError.message
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-content.innerHTML = `
-
-
-<section class="dashboard-section">
-
-
-<h1>
-🌌 Čas je sprejel tvoj odgovor.
-</h1>
-
-
-
-<div class="dashboard-card">
-
-
-<h2>
-Jaz sem Čas.
-</h2>
-
-
-
-<p>
-
-Tvoj šepet je bil slišan.
-
-Tvoja pot skozi portale se nadaljuje.
-
-</p>
-
-
-
-<h2>
-✨ Portal ${portal.portal_number} je aktiviran.
-</h2>
-
-
-
-</div>
-
-
-</section>
-
-
-
-`;
-
-
-
-
-
-};
-
-
 
 
 // ==========================
@@ -585,26 +297,20 @@ return;
 }
 
 
-
-
 // ==========================
 // PRIKAZ
 // ==========================
 
 
-
 content.innerHTML = `
-
 
 
 <section class="dashboard-section">
 
 
-
 <h1>
 🌌 Šepetanje Časa
 </h1>
-
 
 
 
@@ -621,14 +327,11 @@ content.innerHTML = `
 <div class="dashboard-card">
 
 
-
-
 <p>
 
 ${portal.message.replace(/\n/g,"<br>")}
 
 </p>
-
 
 
 </div>
@@ -646,7 +349,12 @@ ${portal.message.replace(/\n/g,"<br>")}
 Kako danes odgovarjaš Času?
 </h2>
 
+
+
+
 <div class="answer-buttons">
+
+
 
 <button data-answer="VIDIM">
 
@@ -709,6 +417,7 @@ Kako danes odgovarjaš Času?
 
 
 
+
 <div class="portal-action">
 
 
@@ -724,6 +433,7 @@ class="dashboard-button">
 </div>
 
 
+
 </div>
 
 
@@ -732,4 +442,263 @@ class="dashboard-button">
 
 `;
 
+
+
+
+
+// ==========================
+// IZBIRA ODGOVOROV ČASU
+// ==========================
+
+
+const selectedAnswers = [];
+
+
+
+document
+.querySelectorAll(".answer-buttons button")
+.forEach(button => {
+
+
+
+button.onclick = () => {
+
+
+
+const answer =
+button.dataset.answer;
+
+
+
+if(
+selectedAnswers.includes(answer)
+){
+
+
+const index =
+selectedAnswers.indexOf(answer);
+
+
+selectedAnswers.splice(index,1);
+
+
+button.classList.remove(
+"selected"
+);
+
+
 }
+else{
+
+
+selectedAnswers.push(answer);
+
+
+button.classList.add(
+"selected"
+);
+
+
+}
+
+
+
+console.log(
+"ODGOVORI ČASU:",
+selectedAnswers
+);
+
+
+
+};
+
+
+});
+
+
+
+
+
+
+
+// ==========================
+// AKTIVIRAJ ŠEPET
+// ==========================
+
+
+const activateButton =
+document.getElementById(
+"activatePortalButton"
+);
+
+
+
+activateButton.onclick = async()=>{
+
+
+
+if(
+selectedAnswers.length === 0
+){
+
+
+alert(
+"✨ Najprej izberi svoj odgovor Času."
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+// SHRANI ODGOVORE
+
+
+for(
+const answer of selectedAnswers
+){
+
+
+const { error:answerError } =
+
+await supabase
+.from("portal_answers")
+.insert({
+
+member_id: member.id,
+
+portal_number:
+portal.portal_number,
+
+answer: answer
+
+});
+
+
+
+if(answerError){
+
+
+console.error(
+"PORTAL ANSWER ERROR:",
+answerError
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+// SHRANI AKTIVACIJO PORTALA
+
+
+const { error:portalSaveError } =
+
+await supabase
+.from("member_time_portals")
+.insert({
+
+member_id: member.id,
+
+portal_number:
+portal.portal_number,
+
+activated_at:
+new Date()
+
+});
+
+
+
+
+
+
+if(portalSaveError){
+
+
+console.error(
+"PORTAL ACTIVATION ERROR:",
+portalSaveError
+);
+
+
+alert(
+portalSaveError.message
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+content.innerHTML = `
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Čas te je slišal.
+</h1>
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+<p>
+
+Tvoj odgovor je postal del tvoje poti.
+
+Tvoj prvi šepet je sprejet.
+
+</p>
+
+
+
+<h2>
+✨ Šepet ${portal.portal_number} / 99 je aktiviran.
+</h2>
+
+
+
+</div>
+
+
+</section>
+
+
+`;
+
+
+
+};
+
+
+
+}
+
+

@@ -1310,51 +1310,7 @@ class="dashboard-button">
 </section>
 
 
-`;return}let r=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(r.includes(t)){let n=r.indexOf(t);r.splice(n,1),e.classList.remove(`selected`)}else r.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,r)}});let i=document.getElementById(`activatePortalButton`);i.onclick=async()=>{if(r.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}for(let n of r){let{error:r}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:c.portal_number,answer:n});r&&console.error(`PORTAL ANSWER ERROR:`,r)}console.log(`✨ Odgovori shranjeni`);let{error:i}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:c.portal_number,activated_at:new Date});if(i){console.error(`PORTAL ACTIVATION ERROR:`,i),alert(i.message);return}n.innerHTML=`
-
-
-<section class="dashboard-section">
-
-
-<h1>
-🌌 Čas je sprejel tvoj odgovor.
-</h1>
-
-
-
-<div class="dashboard-card">
-
-
-<h2>
-Jaz sem Čas.
-</h2>
-
-
-
-<p>
-
-Tvoj šepet je bil slišan.
-
-Tvoja pot skozi portale se nadaljuje.
-
-</p>
-
-
-
-<h2>
-✨ Portal ${c.portal_number} je aktiviran.
-</h2>
-
-
-
-</div>
-
-
-</section>
-
-
-
-`};let{data:a,error:o}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`portal_number`,{ascending:!1}).limit(1);if(o){console.error(`TIME PORTAL PROGRESS ERROR:`,o),n.innerHTML=`Napaka pri nalaganju poti Časa.`;return}let s=1;if(a&&a.length>0&&(s=a[0].portal_number+1),s>99){n.innerHTML=`
+`;return}let{data:r,error:i}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`portal_number`,{ascending:!1}).limit(1);if(i){console.error(`TIME PORTAL PROGRESS ERROR:`,i),n.innerHTML=`Napaka pri nalaganju poti Časa.`;return}let a=1;if(r&&r.length>0&&(a=r[0].portal_number+1),a>99){n.innerHTML=`
 
 
 <section class="dashboard-section">
@@ -1394,7 +1350,7 @@ Ti si postala vrata.
 </section>
 
 
-`;return}console.log(`LOOKING FOR PORTAL NUMBER:`,s);let{data:c,error:l}=await e.from(`time_portals`).select(`*`).eq(`portal_number`,s).maybeSingle();if(l){console.error(`TIME PORTAL LOAD ERROR:`,l),n.innerHTML=`Napaka pri odpiranju Šepetanja Časa.`;return}if(console.log(`CURRENT TIME PORTAL:`,c),!c){n.innerHTML=`
+`;return}console.log(`LOOKING FOR PORTAL NUMBER:`,a);let{data:o,error:s}=await e.from(`time_portals`).select(`*`).eq(`portal_number`,a).maybeSingle();if(s){console.error(`TIME PORTAL LOAD ERROR:`,s),n.innerHTML=`Napaka pri odpiranju Šepetanja Časa.`;return}if(console.log(`CURRENT TIME PORTAL:`,o),!o){n.innerHTML=`
 
 <section class="dashboard-section">
 
@@ -1419,9 +1375,7 @@ Portal se pripravlja nate.
 `;return}n.innerHTML=`
 
 
-
 <section class="dashboard-section">
-
 
 
 <h1>
@@ -1430,10 +1384,9 @@ Portal se pripravlja nate.
 
 
 
-
 <h2>
 
-Šepet Časa ${c.portal_number} / 99
+Šepet Časa ${o.portal_number} / 99
 
 </h2>
 
@@ -1444,14 +1397,11 @@ Portal se pripravlja nate.
 <div class="dashboard-card">
 
 
-
-
 <p>
 
-${c.message.replace(/\n/g,`<br>`)}
+${o.message.replace(/\n/g,`<br>`)}
 
 </p>
-
 
 
 </div>
@@ -1469,7 +1419,12 @@ ${c.message.replace(/\n/g,`<br>`)}
 Kako danes odgovarjaš Času?
 </h2>
 
+
+
+
 <div class="answer-buttons">
+
+
 
 <button data-answer="VIDIM">
 
@@ -1532,6 +1487,7 @@ Kako danes odgovarjaš Času?
 
 
 
+
 <div class="portal-action">
 
 
@@ -1547,13 +1503,55 @@ class="dashboard-button">
 </div>
 
 
+
 </div>
 
 
 </section>
 
 
-`}console.log(`🚀 MEMBER DASHBOARD LOADED`);function m(e){let t=document.getElementById(`content`);e?t.innerHTML=`
+`;let c=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(c.includes(t)){let n=c.indexOf(t);c.splice(n,1),e.classList.remove(`selected`)}else c.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,c)}});let l=document.getElementById(`activatePortalButton`);l.onclick=async()=>{if(c.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}for(let n of c){let{error:r}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:o.portal_number,answer:n});r&&console.error(`PORTAL ANSWER ERROR:`,r)}let{error:r}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:o.portal_number,activated_at:new Date});if(r){console.error(`PORTAL ACTIVATION ERROR:`,r),alert(r.message);return}n.innerHTML=`
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Čas te je slišal.
+</h1>
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+<p>
+
+Tvoj odgovor je postal del tvoje poti.
+
+Tvoj prvi šepet je sprejet.
+
+</p>
+
+
+
+<h2>
+✨ Šepet ${o.portal_number} / 99 je aktiviran.
+</h2>
+
+
+
+</div>
+
+
+</section>
+
+
+`}}console.log(`🚀 MEMBER DASHBOARD LOADED`);function m(e){let t=document.getElementById(`content`);e?t.innerHTML=`
 
 
 <section class="dashboard-section">
