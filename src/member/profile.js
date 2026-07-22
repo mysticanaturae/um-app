@@ -511,11 +511,11 @@ document.getElementById("my-symbol-container");
 
 
 // ==========================
-// PRIKAŽI IZBRANI SIMBOL
+// PRIKAŽI IZBRANI ŠEPETALEC DUŠE
 // ==========================
 
 
-async function loadMySymbol(){
+async function loadMyAvatar(){
 
 
 const { data: currentMember, error } =
@@ -533,7 +533,7 @@ member.id
 if(error){
 
 console.error(
-"LOAD SYMBOL ERROR:",
+"LOAD AVATAR ID ERROR:",
 error
 );
 
@@ -553,7 +553,14 @@ mySymbolContainer.innerHTML = `
 <div class="dashboard-card">
 
 
-✨ Še nimaš izbranega osebnega simbola časa.
+<div class="download-icon">
+✨
+</div>
+
+
+<p>
+✨ Še nimaš izbranega Šepetalca Duše.
+</p>
 
 
 </div>
@@ -570,7 +577,9 @@ return;
 
 
 
-const { data:symbol, error:symbolError } =
+
+
+const { data: avatar, error:avatarError } =
 await supabase
 .from("blinkita_avatars")
 .select("*")
@@ -583,16 +592,18 @@ currentMember.avatar_id
 
 
 
-if(symbolError){
+
+if(avatarError){
 
 console.error(
 "LOAD AVATAR ERROR:",
-symbolError
+avatarError
 );
 
 return;
 
 }
+
 
 
 
@@ -605,21 +616,24 @@ mySymbolContainer.innerHTML = `
 
 <div class="download-icon">
 
-✨
+${avatar.emoji || "✨"}
 
 </div>
 
 
 
+
 <h2>
-${symbol.name}
+${avatar.name}
 </h2>
 
 
 
+
 <p>
-${symbol.description}
+${avatar.description}
 </p>
+
 
 
 
@@ -641,7 +655,9 @@ ${symbol.description}
 
 
 
-await loadMySymbol();
+
+
+await loadMyAvatar();
 
 
 
@@ -650,15 +666,16 @@ await loadMySymbol();
 
 
 // ==========================
-// NALOŽI BLINKITA AVATARJE
+// NALOŽI VSE ŠEPETALCE DUŠE
 // ==========================
 
 
-const { data:symbols, error:symbolError } =
+const { data:avatars, error:avatarError } =
 await supabase
 .from("blinkita_avatars")
 .select("*")
-.order("name");
+.order("id");
+
 
 
 
@@ -666,18 +683,18 @@ await supabase
 
 console.log(
 "BLINKITA AVATARS:",
-symbols
+avatars
 );
 
 
 
 
 
-if(symbolError){
+if(avatarError){
 
 
 container.innerHTML =
-"Napaka pri nalaganju avatarjev.";
+"Napaka pri nalaganju Šepetalcev Duše.";
 
 
 return;
@@ -692,46 +709,21 @@ return;
 
 container.innerHTML =
 
-symbols.map(symbol => `
+avatars.map(avatar => `
+
 
 
 <div
 class="download-card symbol-card"
-data-id="${symbol.id}">
+data-id="${avatar.id}">
 
 
 
-<div class="symbol-image-box">
 
 
-<img
-src="${
-symbol.name === "Imix" ? "/images/Slike-Maya/maya-imix-rdeca.png" :
-symbol.name === "Ik'" ? "/images/Slike-Maya/maya-ik-bela.png" :
-symbol.name === "Ak'b'al" ? "/images/Slike-Maya/maya-akbal-modra.png" :
-symbol.name === "K'an" ? "/images/Slike-Maya/maya-kan-rumena.png" :
-symbol.name === "Chikchan" ? "/images/Slike-Maya/maya-chicchan-rdeca.png" :
-symbol.name === "Kimi" ? "/images/Slike-Maya/maya-cimi-bela.png" :
-symbol.name === "Manik'" ? "/images/Slike-Maya/maya-manik-modra.png" :
-symbol.name === "Lamat" ? "/images/Slike-Maya/maya-lamat-rumena.png" :
-symbol.name === "Muluc" ? "/images/Slike-Maya/maya-muluc-rdeca.png" :
-symbol.name === "Oc" ? "/images/Slike-Maya/maya-oc-bela.png" :
-symbol.name === "Chuen" ? "/images/Slike-Maya/maya-chuen-modra.png" :
-symbol.name === "Eb" ? "/images/Slike-Maya/maya-eb-rumena.png" :
-symbol.name === "Ben" ? "/images/Slike-Maya/maya-ben-rdeca.png" :
-symbol.name === "Ix" ? "/images/Slike-Maya/maya-ix-bela.png" :
-symbol.name === "Men" ? "/images/Slike-Maya/maya-men-modra.png" :
-symbol.name === "Cib" ? "/images/Slike-Maya/maya-cib-rumena.png" :
-symbol.name === "Caban" ? "/images/Slike-Maya/maya-caban-rdeca.png" :
-symbol.name === "Etz'nab" ? "/images/Slike-Maya/maya-etznab-belo.png" :
-symbol.name === "Cauac" ? "/images/Slike-Maya/maya-cauac-modra.png" :
-symbol.name === "Ahau" ? "/images/Slike-Maya/maya-ahau-rumena.png" :
-""
-}"
-class="tzolkin-symbol"
-alt="${symbol.name}"
->
+<div class="download-icon">
 
+${avatar.emoji || "✨"}
 
 </div>
 
@@ -740,27 +732,38 @@ alt="${symbol.name}"
 
 
 <h3>
-${symbol.name}
+
+${avatar.name}
+
 </h3>
 
 
 
 
+
 <p>
-${symbol.description}
+
+${avatar.description}
+
 </p>
 
 
 
 
+
+
 <button>
+
 ✨ Izberi
+
 </button>
 
 
 
 
+
 </div>
+
 
 
 `).join("");
@@ -773,8 +776,10 @@ ${symbol.description}
 
 
 
+
+
 // ==========================
-// SHRANI SIMBOL
+// SHRANI ŠEPETALCA DUŠE
 // ==========================
 
 
@@ -793,7 +798,7 @@ e.target.closest(".symbol-card");
 
 
 
-const symbolId =
+const avatarId =
 Number(card.dataset.id);
 
 
@@ -801,8 +806,9 @@ Number(card.dataset.id);
 
 console.log(
 "SELECTED AVATAR:",
-symbolId
+avatarId
 );
+
 
 
 
@@ -814,7 +820,7 @@ await supabase
 .from("members")
 .update({
 
-avatar_id:symbolId
+avatar_id: avatarId
 
 })
 .eq(
@@ -843,14 +849,13 @@ updateError.message
 
 return;
 
-
 }
 
 
 
 
 
-await loadMySymbol();
+await loadMyAvatar();
 
 
 
