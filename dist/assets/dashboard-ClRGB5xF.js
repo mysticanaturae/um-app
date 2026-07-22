@@ -347,7 +347,7 @@ Tvoja skrivnost čaka, da se odpre.
 
 
 <h1>
-👤 Moj profil
+📸 Moj profil
 </h1>
 
 
@@ -359,8 +359,9 @@ Tvoja skrivnost čaka, da se odpre.
 <div class="download-card profile-main">
 
 
+
 <div class="download-icon">
-🌌
+📸
 </div>
 
 
@@ -385,6 +386,7 @@ Ustvarjalec Mogočega
 
 
 
+
 <div class="profile-action">
 
 
@@ -392,7 +394,7 @@ Ustvarjalec Mogočega
 class="dashboard-button"
 href="/index.html">
 
-✨ Odpri pakete in izberi svojo srečno številko
+✨ Oglej si pakete članstva
 
 </a>
 
@@ -445,40 +447,19 @@ Tvoj rojstni pečat tradicionalnega Tzolk'in koledarja bo pripravljen, ko ustvar
 
 
 
-<h2>
-🌟 Tvoj simbol časa
-</h2>
-
-
-
-<p>
-Po pridružitvi bo tvoj osebni simbol časa odprl svojo zgodbo.
-</p>
-
-
-
-<div class="dashboard-card">
-
-
-✨ Čaka nate.
-
-
-</div>
-
-
-
 </section>
 
 
 
-`;return}let{data:r,error:a}=await e.from(`members`).select(`*`).eq(`id`,t.id).single();if(a){console.error(`PROFILE LOAD ERROR:`,a),n.innerHTML=`Napaka pri nalaganju profila.`;return}console.log(`PROFILE MEMBER:`,r);let o=i(r.birth_date);console.log(`OSEBNA KODA ČASA:`,o);let s=`/images/Slike-Maya/stevilo${o.number}.png`,c=`/images/Slike-Maya/${o.signImage}`,{data:l}=await e.from(`memberships`).select(`*`).eq(`member_id`,r.id).eq(`status`,`active`).maybeSingle();n.innerHTML=`
+`;return}let{data:r,error:a}=await e.from(`members`).select(`*`).eq(`id`,t.id).single();if(a){console.error(`PROFILE LOAD ERROR:`,a),n.innerHTML=`Napaka pri nalaganju profila.`;return}console.log(`PROFILE MEMBER:`,r);let o=i(r.birth_date);console.log(`OSEBNA KODA ČASA:`,o);let c=`/images/Slike-Maya/stevilo${o.number}.png`,l=`/images/Slike-Maya/${o.signImage}`,{data:u}=await e.from(`memberships`).select(`*`).eq(`member_id`,r.id).eq(`status`,`active`).maybeSingle();n.innerHTML=`
 
 
 <section class="dashboard-section">
 
 
+
 <h1>
-👤 Moj profil
+📸 Moj profil
 </h1>
 
 
@@ -495,9 +476,30 @@ Po pridružitvi bo tvoj osebni simbol časa odprl svojo zgodbo.
 <div class="download-card profile-main">
 
 
+
+<div id="selfie-container">
+
+
+${r.selfie_url?`
+
+<img
+src="${r.selfie_url}"
+class="profile-selfie"
+alt="Moj selfie"
+>
+
+`:`
+
 <div class="download-icon">
-🌌
+📸
 </div>
+
+`}
+
+
+</div>
+
+
 
 
 
@@ -507,17 +509,46 @@ ${r.first_name||`Ustvarjalec`}
 
 
 
+
+
 <p>
 <b>✨ Paket:</b>
-${l?.package||`Še nimaš izbranega paketa`}
+
+${u?.package||`Še nimaš izbranega paketa`}
+
 </p>
+
+
 
 
 
 <p>
 <b>🔢 Srečna številka:</b>
+
 ${r.seat_number||`Še ni izbrana`}
+
 </p>
+
+
+
+
+
+<input
+type="file"
+id="selfie-upload"
+accept="image/*"
+>
+
+
+
+
+<button
+id="upload-selfie-button">
+
+📸 Naloži selfie
+
+</button>
+
 
 
 
@@ -532,8 +563,8 @@ Nalagam tvoj simbol časa...
 
 
 
-
 </div>
+
 
 
 
@@ -546,9 +577,11 @@ Nalagam tvoj simbol časa...
 <div class="download-card">
 
 
+
 <div class="download-icon">
 🌀
 </div>
+
 
 
 
@@ -569,10 +602,11 @@ KIN ${o.kin}
 
 
 <img
-src="${s}"
+src="${c}"
 class="tzolkin-symbol"
 alt="Število ${o.number}"
 >
+
 
 
 
@@ -595,10 +629,11 @@ ${o.numberMeaning}
 
 
 <img
-src="${c}"
+src="${l}"
 class="tzolkin-symbol"
 alt="${o.signSlovenian}"
 >
+
 
 
 
@@ -613,6 +648,7 @@ ${o.signMaya}
 
 
 
+
 <p>
 ${o.meaning}
 </p>
@@ -620,7 +656,6 @@ ${o.meaning}
 
 
 
-
 </div>
 
 
@@ -628,15 +663,14 @@ ${o.meaning}
 
 
 
-
 </div>
-
 
 
 
 <h2>
 🌟 Izberi svoj simbol časa
 </h2>
+
 
 
 
@@ -658,33 +692,48 @@ Nalagam simbole...
 
 
 
+
+
 </section>
 
 
 
-`;let u=document.getElementById(`symbols-container`),d=document.getElementById(`my-symbol-container`);async function f(){let{data:t,error:n}=await e.from(`members`).select(`avatar_id`).eq(`id`,r.id).single();if(n){console.error(`LOAD AVATAR ID ERROR:`,n);return}if(!t.avatar_id){d.innerHTML=`
+`;let d=document.getElementById(`symbols-container`),f=document.getElementById(`my-symbol-container`),p=document.getElementById(`selfie-upload`),m=document.getElementById(`upload-selfie-button`);m&&p&&(m.onclick=async()=>{let t=p.files[0];if(!t){alert(`📸 Najprej izberi selfie.`);return}let n=`${r.id}/${Date.now()}-${t.name}`,{error:i}=await e.storage.from(`selfies`).upload(n,t,{upsert:!0});if(i){console.error(`SELFIE UPLOAD ERROR:`,i),alert(i.message);return}let{data:a}=e.storage.from(`selfies`).getPublicUrl(n),{error:o}=await e.from(`members`).update({selfie_url:a.publicUrl}).eq(`id`,r.id);if(o){console.error(`SAVE SELFIE ERROR:`,o),alert(o.message);return}alert(`📸 Tvoj selfie je shranjen.`),s(r)});async function h(){let{data:t,error:n}=await e.from(`members`).select(`avatar_id`).eq(`id`,r.id).single();if(n){console.error(`LOAD AVATAR ID ERROR:`,n);return}if(!t.avatar_id){f.innerHTML=`
+
 
 
 <div class="dashboard-card">
 
 
+
 <div class="download-icon">
+
 ✨
+
 </div>
+
 
 
 <p>
+
 ✨ Še nimaš izbranega Šepetalca Duše.
+
 </p>
+
 
 
 </div>
 
 
-`;return}let{data:i,error:a}=await e.from(`blinkita_avatars`).select(`*`).eq(`id`,t.avatar_id).single();if(a){console.error(`LOAD AVATAR ERROR:`,a);return}d.innerHTML=`
+
+`;return}let{data:i,error:a}=await e.from(`blinkita_avatars`).select(`*`).eq(`id`,t.avatar_id).single();if(a){console.error(`LOAD AVATAR ERROR:`,a);return}f.innerHTML=`
+
 
 
 <div class="dashboard-card selected-symbol">
+
+
+
 
 
 <div class="download-icon">
@@ -696,36 +745,56 @@ ${i.emoji||`✨`}
 
 
 
+
 <h2>
+
 ${i.name}
+
 </h2>
 
 
 
 
+
 <p>
+
 ${i.description}
+
 </p>
 
 
 
 
+
+
 <strong>
+
 🌟 Tvoj Šepetalec Duše
+
 </strong>
+
+
+
 
 
 
 </div>
 
 
-`}try{await f()}catch(e){console.error(`LOAD MY AVATAR FAILED:`,e)}let{data:p,error:m}=await e.from(`blinkita_avatars`).select(`*`).order(`id`);if(console.log(`BLINKITA AVATARS:`,p),m){u.innerHTML=`Napaka pri nalaganju Šepetalcev Duše.`;return}u.innerHTML=p.map(e=>`
+
+`}try{await h()}catch(e){console.error(`LOAD MY AVATAR FAILED:`,e)}let{data:g,error:_}=await e.from(`blinkita_avatars`).select(`*`).order(`id`);if(console.log(`BLINKITA AVATARS:`,g),_){d.innerHTML=`Napaka pri nalaganju Šepetalcev Duše.`;return}d.innerHTML=g.map(e=>`
+
+
 
 
 
 <div
+
 class="download-card symbol-card"
+
 data-id="${e.id}">
+
+
 
 
 
@@ -741,11 +810,15 @@ ${e.emoji||`✨`}
 
 
 
+
+
 <h3>
 
 ${e.name}
 
 </h3>
+
+
 
 
 
@@ -762,6 +835,7 @@ ${e.description}
 
 
 
+
 <button>
 
 ✨ Izberi
@@ -772,11 +846,15 @@ ${e.description}
 
 
 
+
+
 </div>
 
 
 
-`).join(``),document.querySelectorAll(`.symbol-card button`).forEach(t=>{t.onclick=async t=>{let n=t.target.closest(`.symbol-card`),i=Number(n.dataset.id);console.log(`SELECTED AVATAR:`,i);let{error:a}=await e.from(`members`).update({avatar_id:i}).eq(`id`,r.id);if(a){console.error(`SAVE AVATAR ERROR:`,a),alert(a.message);return}await f(),alert(`✨ Tvoj Šepetalec Duše je izbran.`)}})}async function c(t){let n=document.getElementById(`content`),{data:r,error:i}=await e.from(`memberships`).select(`*`).eq(`member_id`,t.id).eq(`status`,`active`).maybeSingle();console.log(`ACTIVE MEMBERSHIP:`,r),i&&console.error(`MEMBERSHIP ERROR:`,i),n.innerHTML=`
+
+
+`).join(``),document.querySelectorAll(`.symbol-card button`).forEach(t=>{t.onclick=async t=>{let n=t.target.closest(`.symbol-card`),i=Number(n.dataset.id);console.log(`SELECTED AVATAR:`,i);let{error:a}=await e.from(`members`).update({avatar_id:i}).eq(`id`,r.id);if(a){console.error(`SAVE AVATAR ERROR:`,a),alert(a.message);return}await h(),alert(`✨ Tvoj Šepetalec Duše je izbran.`)}})}async function c(t){let n=document.getElementById(`content`),{data:r,error:i}=await e.from(`memberships`).select(`*`).eq(`member_id`,t.id).eq(`status`,`active`).maybeSingle();console.log(`ACTIVE MEMBERSHIP:`,r),i&&console.error(`MEMBERSHIP ERROR:`,i),n.innerHTML=`
 
 
 <section class="dashboard-section">

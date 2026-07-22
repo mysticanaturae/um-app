@@ -6,6 +6,7 @@ import { getTzolkinData } from "../time/tzolkin.js";
 export async function showProfile(memberFromDashboard){
 
 
+
 const content =
 document.getElementById("content");
 
@@ -34,7 +35,7 @@ content.innerHTML = `
 
 
 <h1>
-👤 Moj profil
+📸 Moj profil
 </h1>
 
 
@@ -46,8 +47,9 @@ content.innerHTML = `
 <div class="download-card profile-main">
 
 
+
 <div class="download-icon">
-🌌
+📸
 </div>
 
 
@@ -72,6 +74,7 @@ Ustvarjalec Mogočega
 
 
 
+
 <div class="profile-action">
 
 
@@ -79,7 +82,7 @@ Ustvarjalec Mogočega
 class="dashboard-button"
 href="/index.html">
 
-✨ Odpri pakete in izberi svojo srečno številko
+✨ Oglej si pakete članstva
 
 </a>
 
@@ -129,28 +132,6 @@ Tvoj rojstni pečat tradicionalnega Tzolk'in koledarja bo pripravljen, ko ustvar
 </div>
 
 
-
-
-
-<h2>
-🌟 Tvoj simbol časa
-</h2>
-
-
-
-<p>
-Po pridružitvi bo tvoj osebni simbol časa odprl svojo zgodbo.
-</p>
-
-
-
-<div class="dashboard-card">
-
-
-✨ Čaka nate.
-
-
-</div>
 
 
 
@@ -218,7 +199,6 @@ return;
 
 
 
-
 console.log(
 "PROFILE MEMBER:",
 member
@@ -228,8 +208,10 @@ member
 
 
 
+
+
 // ==========================
-// IZRAČUN OSEBNE KODE ČASA
+// OSEBNA KODA ČASA
 // ==========================
 
 
@@ -244,6 +226,7 @@ console.log(
 "OSEBNA KODA ČASA:",
 personalTzolkin
 );
+
 
 
 
@@ -267,9 +250,8 @@ const personalSignImage =
 
 
 
-
 // ==========================
-// NALOŽI PAKET
+// AKTIVNI PAKET
 // ==========================
 
 
@@ -294,6 +276,10 @@ member.id
 
 
 
+// ==========================
+// PROFIL HTML
+// ==========================
+
 
 content.innerHTML = `
 
@@ -301,8 +287,9 @@ content.innerHTML = `
 <section class="dashboard-section">
 
 
+
 <h1>
-👤 Moj profil
+📸 Moj profil
 </h1>
 
 
@@ -319,9 +306,41 @@ content.innerHTML = `
 <div class="download-card profile-main">
 
 
+
+<div id="selfie-container">
+
+
+${
+member.selfie_url
+
+?
+
+`
+
+<img
+src="${member.selfie_url}"
+class="profile-selfie"
+alt="Moj selfie"
+>
+
+`
+
+:
+
+`
+
 <div class="download-icon">
-🌌
+📸
 </div>
+
+`
+
+}
+
+
+</div>
+
+
 
 
 
@@ -331,17 +350,46 @@ ${member.first_name || "Ustvarjalec"}
 
 
 
+
+
 <p>
 <b>✨ Paket:</b>
+
 ${membership?.package || "Še nimaš izbranega paketa"}
+
 </p>
+
+
 
 
 
 <p>
 <b>🔢 Srečna številka:</b>
+
 ${member.seat_number || "Še ni izbrana"}
+
 </p>
+
+
+
+
+
+<input
+type="file"
+id="selfie-upload"
+accept="image/*"
+>
+
+
+
+
+<button
+id="upload-selfie-button">
+
+📸 Naloži selfie
+
+</button>
+
 
 
 
@@ -356,8 +404,8 @@ Nalagam tvoj simbol časa...
 
 
 
-
 </div>
+
 
 
 
@@ -370,9 +418,11 @@ Nalagam tvoj simbol časa...
 <div class="download-card">
 
 
+
 <div class="download-icon">
 🌀
 </div>
+
 
 
 
@@ -397,6 +447,7 @@ src="${personalNumberImage}"
 class="tzolkin-symbol"
 alt="Število ${personalTzolkin.number}"
 >
+
 
 
 
@@ -428,11 +479,13 @@ alt="${personalTzolkin.signSlovenian}"
 
 
 
+
 <h2>
 🌿 ${personalTzolkin.signSlovenian}
 <br>
 ${personalTzolkin.signMaya}
 </h2>
+
 
 
 
@@ -444,7 +497,6 @@ ${personalTzolkin.meaning}
 
 
 
-
 </div>
 
 
@@ -452,15 +504,14 @@ ${personalTzolkin.meaning}
 
 
 
-
 </div>
-
 
 
 
 <h2>
 🌟 Izberi svoj simbol časa
 </h2>
+
 
 
 
@@ -482,17 +533,14 @@ Nalagam simbole...
 
 
 
+
+
 </section>
 
 
 
 `;
 
-
-
-
-
-// konec 1. dela
 
 // ==========================
 // ELEMENTI
@@ -508,6 +556,199 @@ document.getElementById("my-symbol-container");
 
 
 
+const selfieUpload =
+document.getElementById("selfie-upload");
+
+
+const uploadSelfieButton =
+document.getElementById("upload-selfie-button");
+
+
+
+
+
+
+// ==========================
+// UPLOAD SELFIE
+// ==========================
+
+
+if(
+uploadSelfieButton &&
+selfieUpload
+){
+
+
+uploadSelfieButton.onclick = async()=>{
+
+
+const file =
+selfieUpload.files[0];
+
+
+
+if(!file){
+
+
+alert(
+"📸 Najprej izberi selfie."
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+const fileName =
+
+`${member.id}/${Date.now()}-${file.name}`;
+
+
+
+
+
+
+
+const { error:uploadError } =
+
+await supabase
+.storage
+.from("selfies")
+.upload(
+fileName,
+file,
+{
+upsert:true
+}
+);
+
+
+
+
+
+
+if(uploadError){
+
+
+console.error(
+"SELFIE UPLOAD ERROR:",
+uploadError
+);
+
+
+
+alert(
+uploadError.message
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+const { data:urlData } =
+
+supabase
+.storage
+.from("selfies")
+.getPublicUrl(
+fileName
+);
+
+
+
+
+
+
+
+const { error:updateSelfieError } =
+
+await supabase
+.from("members")
+.update({
+
+selfie_url:
+urlData.publicUrl
+
+})
+.eq(
+"id",
+member.id
+);
+
+
+
+
+
+
+
+if(updateSelfieError){
+
+
+console.error(
+"SAVE SELFIE ERROR:",
+updateSelfieError
+);
+
+
+
+alert(
+updateSelfieError.message
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+alert(
+"📸 Tvoj selfie je shranjen."
+);
+
+
+
+
+
+showProfile(member);
+
+
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
 
 // ==========================
 // PRIKAŽI IZBRANI ŠEPETALEC DUŠE
@@ -517,7 +758,9 @@ document.getElementById("my-symbol-container");
 async function loadMyAvatar(){
 
 
+
 const { data: currentMember, error } =
+
 await supabase
 .from("members")
 .select("avatar_id")
@@ -529,16 +772,26 @@ member.id
 
 
 
+
+
+
 if(error){
+
 
 console.error(
 "LOAD AVATAR ID ERROR:",
 error
 );
 
+
+
 return;
 
+
 }
+
+
+
 
 
 
@@ -546,26 +799,37 @@ return;
 if(!currentMember.avatar_id){
 
 
+
 mySymbolContainer.innerHTML = `
+
 
 
 <div class="dashboard-card">
 
 
+
 <div class="download-icon">
+
 ✨
+
 </div>
+
 
 
 <p>
+
 ✨ Še nimaš izbranega Šepetalca Duše.
+
 </p>
+
 
 
 </div>
 
 
+
 `;
+
 
 
 return;
@@ -578,7 +842,9 @@ return;
 
 
 
+
 const { data: avatar, error:avatarError } =
+
 await supabase
 .from("blinkita_avatars")
 .select("*")
@@ -592,16 +858,25 @@ currentMember.avatar_id
 
 
 
+
+
 if(avatarError){
+
 
 console.error(
 "LOAD AVATAR ERROR:",
 avatarError
 );
 
+
+
 return;
 
+
 }
+
+
+
 
 
 
@@ -610,7 +885,11 @@ return;
 mySymbolContainer.innerHTML = `
 
 
+
 <div class="dashboard-card selected-symbol">
+
+
+
 
 
 <div class="download-icon">
@@ -622,51 +901,78 @@ ${avatar.emoji || "✨"}
 
 
 
+
 <h2>
+
 ${avatar.name}
+
 </h2>
 
 
 
 
+
 <p>
+
 ${avatar.description}
+
 </p>
 
 
 
 
+
+
 <strong>
+
 🌟 Tvoj Šepetalec Duše
+
 </strong>
+
+
+
 
 
 
 </div>
 
 
+
 `;
 
 
 
+
 }
+
+
+
 
 
 
 
 try {
 
+
 await loadMyAvatar();
 
+
 }
+
 catch(error){
+
 
 console.error(
 "LOAD MY AVATAR FAILED:",
 error
 );
 
+
 }
+
+
+
+
 
 
 
@@ -677,7 +983,9 @@ error
 // ==========================
 
 
+
 const { data:avatars, error:avatarError } =
+
 await supabase
 .from("blinkita_avatars")
 .select("*")
@@ -688,10 +996,17 @@ await supabase
 
 
 
+
 console.log(
+
 "BLINKITA AVATARS:",
+
 avatars
+
 );
+
+
+
 
 
 
@@ -700,11 +1015,15 @@ avatars
 if(avatarError){
 
 
+
 container.innerHTML =
+
 "Napaka pri nalaganju Šepetalcev Duše.";
 
 
+
 return;
+
 
 
 }
@@ -714,15 +1033,24 @@ return;
 
 
 
+
+
 container.innerHTML =
+
 
 avatars.map(avatar => `
 
 
 
+
+
 <div
+
 class="download-card symbol-card"
+
 data-id="${avatar.id}">
+
+
 
 
 
@@ -733,6 +1061,8 @@ data-id="${avatar.id}">
 ${avatar.emoji || "✨"}
 
 </div>
+
+
 
 
 
@@ -748,11 +1078,14 @@ ${avatar.name}
 
 
 
+
+
 <p>
 
 ${avatar.description}
 
 </p>
+
 
 
 
@@ -769,11 +1102,19 @@ ${avatar.description}
 
 
 
+
+
 </div>
 
 
 
+
+
 `).join("");
+
+
+
+
 
 
 
@@ -786,8 +1127,11 @@ ${avatar.description}
 // ==========================
 
 
+
 document
+
 .querySelectorAll(".symbol-card button")
+
 .forEach(button => {
 
 
@@ -796,21 +1140,36 @@ button.onclick = async(e)=>{
 
 
 
+
+
 const card =
+
 e.target.closest(".symbol-card");
 
 
 
+
+
+
+
 const avatarId =
+
 Number(card.dataset.id);
 
 
 
 
+
+
+
 console.log(
+
 "SELECTED AVATAR:",
+
 avatarId
+
 );
+
 
 
 
@@ -819,17 +1178,27 @@ avatarId
 
 
 const { error:updateError } =
+
 await supabase
+
 .from("members")
+
 .update({
 
 avatar_id: avatarId
 
 })
+
 .eq(
+
 "id",
+
 member.id
+
 );
+
+
+
 
 
 
@@ -839,20 +1208,33 @@ member.id
 if(updateError){
 
 
+
 console.error(
+
 "SAVE AVATAR ERROR:",
+
 updateError
+
 );
+
 
 
 alert(
+
 updateError.message
+
 );
+
 
 
 return;
 
+
 }
+
+
+
+
 
 
 
@@ -863,16 +1245,31 @@ await loadMyAvatar();
 
 
 
+
+
+
+
 alert(
+
 "✨ Tvoj Šepetalec Duše je izbran."
+
 );
+
+
+
 
 
 
 };
 
 
+
+
+
 });
+
+
+
 
 
 }
