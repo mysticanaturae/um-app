@@ -527,13 +527,12 @@ async function loadMySymbol(){
 const { data: currentMember, error } =
 await supabase
 .from("members")
-.select("avatar_symbol_id")
+.select("avatar_id")
 .eq(
 "id",
 member.id
 )
 .single();
-
 
 
 
@@ -558,7 +557,7 @@ return;
 
 
 
-if(!currentMember.avatar_symbol_id){
+if(!currentMember.avatar_id){
 
 
 mySymbolContainer.innerHTML = `
@@ -594,7 +593,7 @@ await supabase
 .select("*")
 .eq(
 "id",
-currentMember.avatar_symbol_id
+currentMember.avatar_id
 )
 .single();
 
@@ -870,7 +869,7 @@ await supabase
 .from("members")
 .update({
 
-avatar_symbol_id:symbolId
+avatar_id:symbolId
 
 })
 .eq(
