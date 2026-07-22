@@ -338,7 +338,7 @@ startOfDay.toISOString()
 "activated_at",
 endOfDay.toISOString()
 )
-.maybeSingle();
+.limit(1);
 
 
 
@@ -354,7 +354,10 @@ todayError
 
 
 
-if(todayActivation){
+if(
+todayActivation &&
+todayActivation.length > 0
+){
 
 
 content.innerHTML = `
