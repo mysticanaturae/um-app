@@ -510,17 +510,13 @@ document.getElementById("my-symbol-container");
 
 
 
-
-
-
-
-
 // ==========================
 // PRIKAŽI IZBRANI SIMBOL
 // ==========================
 
 
 async function loadMySymbol(){
+
 
 const { data: currentMember, error } =
 await supabase
@@ -531,6 +527,7 @@ await supabase
 member.id
 )
 .single();
+
 
 
 if(error){
@@ -546,19 +543,27 @@ return;
 
 
 
+
 if(!currentMember.avatar_id){
+
 
 mySymbolContainer.innerHTML = `
 
+
 <div class="dashboard-card">
+
 
 ✨ Še nimaš izbranega osebnega simbola časa.
 
+
 </div>
+
 
 `;
 
+
 return;
+
 
 }
 
@@ -577,9 +582,11 @@ currentMember.avatar_id
 
 
 
+
 if(symbolError){
 
 console.error(
+"LOAD AVATAR ERROR:",
 symbolError
 );
 
@@ -589,7 +596,9 @@ return;
 
 
 
+
 mySymbolContainer.innerHTML = `
+
 
 <div class="dashboard-card selected-symbol">
 
@@ -601,9 +610,11 @@ mySymbolContainer.innerHTML = `
 </div>
 
 
+
 <h2>
 ${symbol.name}
 </h2>
+
 
 
 <p>
@@ -611,18 +622,21 @@ ${symbol.description}
 </p>
 
 
+
 <strong>
 🌟 Tvoj Šepetalec Duše
 </strong>
 
 
+
 </div>
+
 
 `;
 
+
+
 }
-
-
 
 
 
@@ -635,34 +649,25 @@ await loadMySymbol();
 
 
 
-
-
 // ==========================
-// NALOŽI TZOLKIN SIMBOLE
+// NALOŽI BLINKITA AVATARJE
 // ==========================
 
 
-const { data:symbol, error:symbolError } =
+const { data:symbols, error:symbolError } =
 await supabase
 .from("blinkita_avatars")
 .select("*")
-.eq(
-"id",
-currentMember.avatar_id
-)
-.single();
+.order("name");
 
 
 
 
 
 console.log(
-"TZOLKIN SYMBOLS:",
+"BLINKITA AVATARS:",
 symbols
 );
-
-
-
 
 
 
@@ -672,16 +677,13 @@ if(symbolError){
 
 
 container.innerHTML =
-"Napaka pri nalaganju simbolov.";
+"Napaka pri nalaganju avatarjev.";
 
 
 return;
 
 
 }
-
-
-
 
 
 
@@ -699,9 +701,8 @@ data-id="${symbol.id}">
 
 
 
-
-
 <div class="symbol-image-box">
+
 
 <img
 src="${
@@ -737,10 +738,10 @@ alt="${symbol.name}"
 
 
 
+
 <h3>
 ${symbol.name}
 </h3>
-
 
 
 
@@ -752,7 +753,6 @@ ${symbol.description}
 
 
 
-
 <button>
 ✨ Izberi
 </button>
@@ -760,15 +760,10 @@ ${symbol.description}
 
 
 
-
 </div>
 
 
-
 `).join("");
-
-
-
 
 
 
@@ -798,21 +793,16 @@ e.target.closest(".symbol-card");
 
 
 
-
-
 const symbolId =
-card.dataset.id;
-
-
+Number(card.dataset.id);
 
 
 
 
 console.log(
-"SELECTED SYMBOL:",
+"SELECTED AVATAR:",
 symbolId
 );
-
 
 
 
@@ -823,9 +813,10 @@ const { error:updateError } =
 await supabase
 .from("members")
 .update({
-avatar_id:symbolId
-})
 
+avatar_id:symbolId
+
+})
 .eq(
 "id",
 member.id
@@ -836,21 +827,18 @@ member.id
 
 
 
-
 if(updateError){
 
 
 console.error(
-"SAVE SYMBOL ERROR:",
+"SAVE AVATAR ERROR:",
 updateError
 );
-
 
 
 alert(
 updateError.message
 );
-
 
 
 return;
@@ -862,21 +850,14 @@ return;
 
 
 
-
-
-
 await loadMySymbol();
 
 
 
 
-
-
 alert(
-"✨ Tvoj simbol časa je izbran."
+"✨ Tvoj Šepetalec Duše je izbran."
 );
-
-
 
 
 
@@ -885,10 +866,3 @@ alert(
 
 
 });
-
-
-
-
-
-
-}
