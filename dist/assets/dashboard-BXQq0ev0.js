@@ -1280,7 +1280,6 @@ class="dashboard-button">
 
     `}async function f(){console.log(`🔐 Checking authentication...`);let{data:{session:t}}=await e.auth.getSession(),n=t?.user;if(n||await new Promise(t=>{let{data:r}=e.auth.onAuthStateChange((e,r)=>{console.log(`AUTH EVENT:`,e),r?.user&&(n=r.user,t())});setTimeout(()=>{r.subscription.unsubscribe(),t()},3e3)}),!n)return console.log(`ℹ️ Guest user - no login session`),null;console.log(`AUTH USER:`,n.email);let{data:r,error:i}=await e.from(`members`).select(`*`).eq(`email`,n.email).single();return i?(console.error(`❌ MEMBER NOT FOUND:`,i),null):(console.log(`✅ MEMBER FOUND:`,r),r)}async function p(t){let n=document.getElementById(`content`);if(!t){n.innerHTML=`
 
-
 <section class="dashboard-section">
 
 
@@ -1290,9 +1289,7 @@ class="dashboard-button">
 
 
 <p>
-
 Šepetanje Časa je na voljo članom Blinkita Multiverse.
-
 </p>
 
 
@@ -1306,76 +1303,13 @@ class="dashboard-button">
 </a>
 
 
-
 </section>
 
-
-`;return}let{data:r,error:i}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`portal_number`,{ascending:!1}).limit(1);if(i){console.error(`TIME PORTAL PROGRESS ERROR:`,i),n.innerHTML=`Napaka pri nalaganju poti Časa.`;return}let a=1;if(r&&r.length>0&&(a=r[0].portal_number+1),a>99){n.innerHTML=`
+`;return}let r=new Date;r.setHours(0,0,0,0);let i=new Date;i.setHours(23,59,59,999);let{data:a,error:o}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).gte(`activated_at`,r.toISOString()).lte(`activated_at`,i.toISOString()).limit(1);if(console.log(`MEMBER ID CHECK:`,t.id),console.log(`TODAY ACTIVATION RESULT:`,a),console.log(`TODAY ERROR:`,o),o&&console.error(`DAILY PORTAL CHECK ERROR:`,o),a&&a.length>0){n.innerHTML=`
 
 
 <section class="dashboard-section">
 
-
-<h1>
-🌌 Portal 100
-</h1>
-
-
-<div class="dashboard-card">
-
-
-<h2>
-Jaz sem Čas.
-</h2>
-
-
-<p>
-
-Ne iščeš več vrat.
-
-Ti si postala vrata.
-
-</p>
-
-
-<h2>
-✨ Poseben dar čaka nate.
-</h2>
-
-
-
-</div>
-
-
-</section>
-
-
-`;return}console.log(`LOOKING FOR PORTAL NUMBER:`,a);let{data:o,error:s}=await e.from(`time_portals`).select(`*`).eq(`portal_number`,a).maybeSingle();if(s){console.error(`TIME PORTAL LOAD ERROR:`,s),n.innerHTML=`Napaka pri odpiranju Šepetanja Časa.`;return}if(console.log(`CURRENT TIME PORTAL:`,o),!o){n.innerHTML=`
-
-<section class="dashboard-section">
-
-<h1>
-🌌 Šepetanje Časa
-</h1>
-
-<div class="dashboard-card">
-
-<h2>
-Čas danes še tiho čaka.
-</h2>
-
-<p>
-Portal se pripravlja nate.
-</p>
-
-</div>
-
-</section>
-
-`;return}let c=new Date;c.setHours(0,0,0,0);let l=new Date;l.setHours(23,59,59,999);let{data:u,error:d}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).gte(`activated_at`,c.toISOString()).lte(`activated_at`,l.toISOString()).limit(1);if(d&&console.error(`DAILY PORTAL CHECK ERROR:`,d),u&&u.length>0){n.innerHTML=`
-
-
-<section class="dashboard-section">
 
 
 <h1>
@@ -1383,7 +1317,9 @@ Portal se pripravlja nate.
 </h1>
 
 
+
 <div class="dashboard-card">
+
 
 
 <h2>
@@ -1391,13 +1327,22 @@ Jaz sem Čas.
 </h2>
 
 
+
 <p>
 
 Današnjega šepeta ne odpiram dvakrat.
 
-Tvoj odgovor je že zapisan v tvoji poti.
+</p>
+
+
+
+<p>
+
+Tvoj odgovor je že zapisan
+v tvoji poti.
 
 </p>
+
 
 
 <p class="highlight-text">
@@ -1409,21 +1354,77 @@ Nov dan prinaša nov portal.
 </p>
 
 
+
 <h2>
-✨ Portal ${o.portal_number} / 99
+✨ Šepet ${a[0].portal_number} / 99
 </h2>
+
 
 
 </div>
 
 
+
 </section>
 
 
-`;return}n.innerHTML=`
+
+`;return}let{data:s,error:c}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`portal_number`,{ascending:!1}).limit(1);if(c){console.error(`TIME PORTAL PROGRESS ERROR:`,c),n.innerHTML=`Napaka pri nalaganju poti Časa.`;return}let l=1;if(s&&s.length>0&&(l=s[0].portal_number+1),l>99){n.innerHTML=`
+
 
 
 <section class="dashboard-section">
+
+
+
+<h1>
+🌌 Portal 100
+</h1>
+
+
+
+<div class="dashboard-card">
+
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+
+<p>
+
+Ne iščeš več vrat.
+
+<br><br>
+
+Ti si postala vrata.
+
+</p>
+
+
+
+<h2>
+✨ Poseben dar čaka nate.
+</h2>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+`;return}console.log(`LOOKING FOR PORTAL NUMBER:`,l);let{data:u,error:d}=await e.from(`time_portals`).select(`*`).eq(`portal_number`,l).maybeSingle();if(d){console.error(`TIME PORTAL LOAD ERROR:`,d),n.innerHTML=`Napaka pri odpiranju Šepetanja Časa.`;return}if(!u){n.innerHTML=`
+
+
+
+<section class="dashboard-section">
+
 
 
 <h1>
@@ -1432,10 +1433,46 @@ Nov dan prinaša nov portal.
 
 
 
+<div class="dashboard-card">
+
+
+
 <h2>
+Čas danes še tiho čaka.
+</h2>
 
-Šepet Časa ${o.portal_number} / 99
 
+
+<p>
+Portal se pripravlja nate.
+</p>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+`;return}console.log(`CURRENT TIME PORTAL:`,u),n.innerHTML=`
+
+
+<section class="dashboard-section">
+
+
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+
+
+
+<h2>
+Šepet Časa ${u.portal_number} / 99
 </h2>
 
 
@@ -1445,11 +1482,13 @@ Nov dan prinaša nov portal.
 <div class="dashboard-card">
 
 
+
 <p>
 
-${o.message.replace(/\n/g,`<br>`)}
+${u.message.replace(/\n/g,`<br>`)}
 
 </p>
+
 
 
 </div>
@@ -1458,9 +1497,8 @@ ${o.message.replace(/\n/g,`<br>`)}
 
 
 
-
-
 <div class="answer-section">
+
 
 
 <h2>
@@ -1475,64 +1513,54 @@ Kako danes odgovarjaš Času?
 
 
 <button data-answer="VIDIM">
-
 👁 VIDIM
-
 </button>
 
 
 
 <button data-answer="SLIŠIM">
-
 👂 SLIŠIM
-
 </button>
 
 
 
 <button data-answer="ČUTIM">
-
 💙 ČUTIM
-
 </button>
 
 
 
 <button data-answer="AKTIVIRAM">
-
 ✨ AKTIVIRAM
-
 </button>
 
 
 
 <button data-answer="LJUBIM">
-
 ❤️ LJUBIM
-
 </button>
 
 
 
 <button data-answer="ZAVEDAM">
-
 🌌 ZAVEDAM
-
 </button>
 
 
 
 <button data-answer="SPREJEMAM">
-
 🙏 SPREJEMAM
-
 </button>
 
 
 
 </div>
 
-
+<textarea
+id="timeIntention"
+class="time-intention"
+placeholder="Kaj danes zašepetaš Času? ✨"
+></textarea>
 
 
 
@@ -1555,13 +1583,17 @@ class="dashboard-button">
 </div>
 
 
+
 </section>
 
 
-`;let f=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(f.includes(t)){let n=f.indexOf(t);f.splice(n,1),e.classList.remove(`selected`)}else f.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,f)}});let p=document.getElementById(`activatePortalButton`);p&&(p.onclick=async()=>{if(f.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}for(let n of f){let{error:r}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:o.portal_number,answer:n});r&&console.error(`PORTAL ANSWER ERROR:`,r)}let{error:r}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:o.portal_number,activated_at:new Date});if(r){console.error(`PORTAL ACTIVATION ERROR:`,r),alert(r.message);return}n.innerHTML=`
+
+`;let f=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(f.includes(t)){let n=f.indexOf(t);f.splice(n,1),e.classList.remove(`selected`)}else f.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,f)}});let p=document.getElementById(`activatePortalButton`);p&&(p.onclick=async()=>{if(f.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}let r=document.getElementById(`timeIntention`).value.trim();for(let n of f){let{error:i}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:u.portal_number,answer:n,intention:r||null});i&&console.error(`PORTAL ANSWER ERROR:`,i)}let{error:i}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:u.portal_number,activated_at:new Date});if(i){console.error(`PORTAL ACTIVATION ERROR:`,i),alert(i.message);return}n.innerHTML=`
+
 
 
 <section class="dashboard-section">
+
 
 
 <h1>
@@ -1569,7 +1601,10 @@ class="dashboard-button">
 </h1>
 
 
+
+
 <div class="dashboard-card">
+
 
 
 <h2>
@@ -1577,26 +1612,45 @@ Jaz sem Čas.
 </h2>
 
 
+
 <p>
 
 Tvoj odgovor je postal del tvoje poti.
-
-Tvoj prvi šepet je sprejet.
 
 </p>
 
 
 
+<p>
+
+Tvoja namera je bila izrečena.
+
+</p>
+
+
+
+
 <h2>
-✨ Šepet ${o.portal_number} / 99 je aktiviran.
+✨ Šepet ${u.portal_number} / 99 je aktiviran.
 </h2>
+
+
+
+
+<p class="highlight-text">
+
+Jutri te čaka nov šepet.
+
+</p>
 
 
 
 </div>
 
 
+
 </section>
+
 
 
 `})}console.log(`🚀 MEMBER DASHBOARD LOADED`);function m(e){let t=document.getElementById(`content`);e?t.innerHTML=`

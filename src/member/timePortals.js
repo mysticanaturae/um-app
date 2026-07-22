@@ -1,8 +1,10 @@
+
 import { supabase } from "../supabase/client.js";
 
 
 
 export async function showTimePortals(member){
+
 
 
 const content =
@@ -22,7 +24,6 @@ if(!member){
 
 content.innerHTML = `
 
-
 <section class="dashboard-section">
 
 
@@ -32,9 +33,7 @@ content.innerHTML = `
 
 
 <p>
-
 Šepetanje Časa je na voljo članom Blinkita Multiverse.
-
 </p>
 
 
@@ -48,8 +47,194 @@ class="dashboard-button">
 </a>
 
 
+</section>
+
+`;
+
+
+return;
+
+
+}
+
+
+
+
+
+
+// ==========================
+// PREVERI ALI JE DANAŠNJI ŠEPET ŽE AKTIVIRAN
+// ==========================
+
+
+
+const startOfDay = new Date();
+
+startOfDay.setHours(
+0,
+0,
+0,
+0
+);
+
+
+
+const endOfDay = new Date();
+
+endOfDay.setHours(
+23,
+59,
+59,
+999
+);
+
+
+
+
+const {
+
+data: todayActivation,
+
+error: todayError
+
+} = await supabase
+
+.from("member_time_portals")
+
+.select("*")
+
+.eq(
+"member_id",
+member.id
+)
+
+.gte(
+"activated_at",
+startOfDay.toISOString()
+)
+
+.lte(
+"activated_at",
+endOfDay.toISOString()
+)
+
+.limit(1);
+
+
+
+
+
+console.log(
+"MEMBER ID CHECK:",
+member.id
+);
+
+
+
+console.log(
+"TODAY ACTIVATION RESULT:",
+todayActivation
+);
+
+
+
+console.log(
+"TODAY ERROR:",
+todayError
+);
+
+
+
+
+if(todayError){
+
+
+console.error(
+"DAILY PORTAL CHECK ERROR:",
+todayError
+);
+
+
+}
+
+
+
+
+
+if(
+todayActivation &&
+todayActivation.length > 0
+){
+
+
+
+const activatedPortal =
+todayActivation[0].portal_number;
+
+
+
+content.innerHTML = `
+
+
+<section class="dashboard-section">
+
+
+
+<h1>
+🌌 Današnji šepet je že sprejet.
+</h1>
+
+
+
+<div class="dashboard-card">
+
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+
+<p>
+
+Današnjega šepeta ne odpiram dvakrat.
+
+</p>
+
+
+
+<p>
+
+Tvoj odgovor je že zapisan
+v tvoji poti.
+
+</p>
+
+
+
+<p class="highlight-text">
+
+Vrni se jutri.
+
+Nov dan prinaša nov portal.
+
+</p>
+
+
+
+<h2>
+✨ Šepet ${activatedPortal} / 99
+</h2>
+
+
+
+</div>
+
+
 
 </section>
+
 
 
 `;
@@ -64,27 +249,40 @@ return;
 
 
 
+
+
+
+
 // ==========================
 // POIŠČI ZADNJI AKTIVIRAN PORTAL
 // ==========================
 
 
 
-const { data: progress, error:progressError } =
+const {
 
-await supabase
+data: progress,
+
+error: progressError
+
+} = await supabase
+
 .from("member_time_portals")
+
 .select("*")
+
 .eq(
 "member_id",
 member.id
 )
+
 .order(
 "portal_number",
 {
 ascending:false
 }
 )
+
 .limit(1);
 
 
@@ -117,7 +315,6 @@ return;
 
 
 
-
 let nextPortal = 1;
 
 
@@ -139,8 +336,11 @@ progress[0].portal_number + 1;
 
 
 
+
+
+
 // ==========================
-// PREVERI 99
+// PORTAL 100
 // ==========================
 
 
@@ -152,7 +352,9 @@ if(nextPortal > 99){
 content.innerHTML = `
 
 
+
 <section class="dashboard-section">
+
 
 
 <h1>
@@ -160,7 +362,9 @@ content.innerHTML = `
 </h1>
 
 
+
 <div class="dashboard-card">
+
 
 
 <h2>
@@ -168,13 +372,17 @@ Jaz sem Čas.
 </h2>
 
 
+
 <p>
 
 Ne iščeš več vrat.
 
+<br><br>
+
 Ti si postala vrata.
 
 </p>
+
 
 
 <h2>
@@ -186,7 +394,9 @@ Ti si postala vrata.
 </div>
 
 
+
 </section>
+
 
 
 `;
@@ -205,24 +415,39 @@ return;
 
 
 
+
 // ==========================
-// NALOŽI PORTAL
+// NALOŽI NASLEDNJI PORTAL
 // ==========================
+
+
 
 console.log(
 "LOOKING FOR PORTAL NUMBER:",
 nextPortal
 );
 
-const { data:portal, error:portalError } =
 
-await supabase
+
+
+
+const {
+
+data: portal,
+
+error: portalError
+
+} = await supabase
+
 .from("time_portals")
+
 .select("*")
+
 .eq(
 "portal_number",
 nextPortal
 )
+
 .maybeSingle();
 
 
@@ -245,15 +470,71 @@ content.innerHTML =
 "Napaka pri odpiranju Šepetanja Časa.";
 
 
+
 return;
 
 
 }
 
 
-// ==========================
-// PREVERI ALI PORTAL OBSTAJA
-// ==========================
+
+
+
+
+
+if(!portal){
+
+
+content.innerHTML = `
+
+
+
+<section class="dashboard-section">
+
+
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+
+
+<div class="dashboard-card">
+
+
+
+<h2>
+Čas danes še tiho čaka.
+</h2>
+
+
+
+<p>
+Portal se pripravlja nate.
+</p>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+`;
+
+
+
+return;
+
+
+}
+
+
+
+
 
 
 console.log(
@@ -263,101 +544,12 @@ portal
 
 
 
-if(!portal){
-
-content.innerHTML = `
-
-<section class="dashboard-section">
-
-<h1>
-🌌 Šepetanje Časa
-</h1>
-
-<div class="dashboard-card">
-
-<h2>
-Čas danes še tiho čaka.
-</h2>
-
-<p>
-Portal se pripravlja nate.
-</p>
-
-</div>
-
-</section>
-
-`;
-
-return;
-
-}
-
 
 
 // ==========================
-// PREVERI ALI JE DANAŠNJI ŠEPET ŽE AKTIVIRAN
+// PRIKAZ PORTALA
 // ==========================
 
-
-const startOfDay = new Date();
-
-startOfDay.setHours(
-0,
-0,
-0,
-0
-);
-
-
-const endOfDay = new Date();
-
-endOfDay.setHours(
-23,
-59,
-59,
-999
-);
-
-
-
-const { data:todayActivation, error:todayError } =
-
-await supabase
-.from("member_time_portals")
-.select("*")
-.eq(
-"member_id",
-member.id
-)
-.gte(
-"activated_at",
-startOfDay.toISOString()
-)
-.lte(
-"activated_at",
-endOfDay.toISOString()
-)
-.limit(1);
-
-
-
-if(todayError){
-
-console.error(
-"DAILY PORTAL CHECK ERROR:",
-todayError
-);
-
-}
-
-
-
-
-if(
-todayActivation &&
-todayActivation.length > 0
-){
 
 
 content.innerHTML = `
@@ -365,68 +557,6 @@ content.innerHTML = `
 
 <section class="dashboard-section">
 
-
-<h1>
-🌌 Današnji šepet je že sprejet.
-</h1>
-
-
-<div class="dashboard-card">
-
-
-<h2>
-Jaz sem Čas.
-</h2>
-
-
-<p>
-
-Današnjega šepeta ne odpiram dvakrat.
-
-Tvoj odgovor je že zapisan v tvoji poti.
-
-</p>
-
-
-<p class="highlight-text">
-
-Vrni se jutri.
-
-Nov dan prinaša nov portal.
-
-</p>
-
-
-<h2>
-✨ Portal ${portal.portal_number} / 99
-</h2>
-
-
-</div>
-
-
-</section>
-
-
-`;
-
-
-return;
-
-
-}
-
-
-
-// ==========================
-// PRIKAZ
-// ==========================
-
-
-content.innerHTML = `
-
-
-<section class="dashboard-section">
 
 
 <h1>
@@ -435,10 +565,9 @@ content.innerHTML = `
 
 
 
-<h2>
 
+<h2>
 Šepet Časa ${portal.portal_number} / 99
-
 </h2>
 
 
@@ -446,6 +575,7 @@ content.innerHTML = `
 
 
 <div class="dashboard-card">
+
 
 
 <p>
@@ -455,15 +585,15 @@ ${portal.message.replace(/\n/g,"<br>")}
 </p>
 
 
+
 </div>
 
 
 
 
 
-
-
 <div class="answer-section">
+
 
 
 <h2>
@@ -478,64 +608,54 @@ Kako danes odgovarjaš Času?
 
 
 <button data-answer="VIDIM">
-
 👁 VIDIM
-
 </button>
 
 
 
 <button data-answer="SLIŠIM">
-
 👂 SLIŠIM
-
 </button>
 
 
 
 <button data-answer="ČUTIM">
-
 💙 ČUTIM
-
 </button>
 
 
 
 <button data-answer="AKTIVIRAM">
-
 ✨ AKTIVIRAM
-
 </button>
 
 
 
 <button data-answer="LJUBIM">
-
 ❤️ LJUBIM
-
 </button>
 
 
 
 <button data-answer="ZAVEDAM">
-
 🌌 ZAVEDAM
-
 </button>
 
 
 
 <button data-answer="SPREJEMAM">
-
 🙏 SPREJEMAM
-
 </button>
 
 
 
 </div>
 
-
+<textarea
+id="timeIntention"
+class="time-intention"
+placeholder="Kaj danes zašepetaš Času? ✨"
+></textarea>
 
 
 
@@ -558,7 +678,9 @@ class="dashboard-button">
 </div>
 
 
+
 </section>
+
 
 
 `;
@@ -567,8 +689,10 @@ class="dashboard-button">
 
 
 
+
+
 // ==========================
-// IZBIRA ODGOVOROV ČASU
+// IZBIRA ODGOVOROV
 // ==========================
 
 
@@ -591,6 +715,7 @@ button.dataset.answer;
 
 
 
+
 if(
 selectedAnswers.includes(answer)
 ){
@@ -600,12 +725,17 @@ const index =
 selectedAnswers.indexOf(answer);
 
 
-selectedAnswers.splice(index,1);
+selectedAnswers.splice(
+index,
+1
+);
+
 
 
 button.classList.remove(
 "selected"
 );
+
 
 
 }
@@ -643,17 +773,30 @@ selectedAnswers
 
 
 // ==========================
-// AKTIVIRAJ ŠEPET
+// AKTIVACIJA ŠEPETA
 // ==========================
 
 
+
 const activateButton =
+
 document.getElementById(
 "activatePortalButton"
 );
 
 
-if(activateButton){
+
+
+
+if(!activateButton){
+
+return;
+
+}
+
+
+
+
 
 
 activateButton.onclick = async()=>{
@@ -680,7 +823,26 @@ return;
 
 
 
+const intention =
+
+document
+.getElementById(
+"timeIntention"
+)
+.value
+.trim();
+
+
+
+
+
+
+
+
+// ==========================
 // SHRANI ODGOVORE
+// ==========================
+
 
 
 for(
@@ -688,10 +850,15 @@ const answer of selectedAnswers
 ){
 
 
-const { error:answerError } =
 
-await supabase
+const {
+
+error: answerError
+
+} = await supabase
+
 .from("portal_answers")
+
 .insert({
 
 member_id: member.id,
@@ -699,9 +866,15 @@ member_id: member.id,
 portal_number:
 portal.portal_number,
 
-answer: answer
+answer: answer,
+
+intention:
+intention || null
 
 });
+
+
+
 
 
 
@@ -714,24 +887,31 @@ answerError
 );
 
 
+
+}
+
 }
 
 
 
-}
+ 
 
 
 
-
-
-
+// ==========================
 // SHRANI AKTIVACIJO PORTALA
+// ==========================
 
 
-const { error:portalSaveError } =
 
-await supabase
+const {
+
+error: portalSaveError
+
+} = await supabase
+
 .from("member_time_portals")
+
 .insert({
 
 member_id: member.id,
@@ -749,6 +929,7 @@ new Date()
 
 
 
+
 if(portalSaveError){
 
 
@@ -758,9 +939,11 @@ portalSaveError
 );
 
 
+
 alert(
 portalSaveError.message
 );
+
 
 
 return;
@@ -773,10 +956,19 @@ return;
 
 
 
+
+// ==========================
+// POTRDITEV
+// ==========================
+
+
+
 content.innerHTML = `
 
 
+
 <section class="dashboard-section">
+
 
 
 <h1>
@@ -784,7 +976,10 @@ content.innerHTML = `
 </h1>
 
 
+
+
 <div class="dashboard-card">
+
 
 
 <h2>
@@ -792,13 +987,21 @@ Jaz sem Čas.
 </h2>
 
 
+
 <p>
 
 Tvoj odgovor je postal del tvoje poti.
 
-Tvoj prvi šepet je sprejet.
+</p>
+
+
+
+<p>
+
+Tvoja namera je bila izrečena.
 
 </p>
+
 
 
 
@@ -808,10 +1011,21 @@ Tvoj prvi šepet je sprejet.
 
 
 
+
+<p class="highlight-text">
+
+Jutri te čaka nov šepet.
+
+</p>
+
+
+
 </div>
 
 
+
 </section>
+
 
 
 `;
@@ -821,7 +1035,5 @@ Tvoj prvi šepet je sprejet.
 };
 
 
-
-}
 
 }
