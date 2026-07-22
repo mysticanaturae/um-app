@@ -1,6 +1,6 @@
 import { supabase } from "../supabase/client.js";
 import { getTzolkinData } from "../time/tzolkin.js";
-
+import { tzolkinMessages } from "../time/tzolkinMessages.js";
 
 
 export async function showPortal(memberFromDashboard){
@@ -213,7 +213,8 @@ new Date()
 const todayTzolkin =
 getTzolkinData(today);
 
-
+const todayMessage =
+tzolkinMessages[todayTzolkin.kin];
 
 console.log(
 "DNEVNA KODA ČASA:",
@@ -350,8 +351,8 @@ ${todayTzolkin.kin}
 src="${numberImage}"
 class="tzolkin-symbol"
 alt="Število ${todayTzolkin.number}"
+onerror="console.log('Napaka slike:', this.src)"
 >
-
 
 
 
@@ -376,8 +377,8 @@ ${todayTzolkin.numberMeaning}
 src="${signImage}"
 class="tzolkin-symbol"
 alt="${todayTzolkin.signSlovenian}"
+onerror="console.log('Napaka slike:', this.src)"
 >
-
 
 
 
@@ -402,9 +403,7 @@ ${todayTzolkin.meaning}
 
 
 <p>
-
-✨ Sporočilo Današnje Kode Časa se pripravlja...
-
+✨ ${todayMessage?.message || "Sporočilo Današnje Kode Časa se pripravlja..."}
 </p>
 
 

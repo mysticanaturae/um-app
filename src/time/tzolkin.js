@@ -8,70 +8,84 @@ const tzolkinNumbers = [
 
 {
 number:1,
+image:"stevilo1.jpg",
 meaning:"Začetek, rojstvo namere in prva iskra ustvarjanja."
 },
 
 {
 number:2,
+image:"stevilo2.jpg",
 meaning:"Ravnovesje, dvojnost in iskanje harmonije."
 },
 
 {
 number:3,
+image:"stevilo3.jpg",
 meaning:"Gibanje, aktivacija in razvoj energije."
 },
 
 {
 number:4,
+image:"stevilo4.jpg",
 meaning:"Oblika, struktura in ustvarjanje temeljev."
 },
 
 {
 number:5,
+image:"stevilo5.jpg",
 meaning:"Moč, središče in usmerjanje energije."
 },
 
 {
 number:6,
+image:"stevilo6.jpg",
 meaning:"Ritem, ravnovesje in organizacija."
 },
 
 {
 number:7,
+image:"stevilo7.jpg",
 meaning:"Uglasitev, notranji vpogled in povezava."
 },
 
 {
 number:8,
+image:"stevilo8.jpg",
 meaning:"Harmonija, integracija in ravnovesje."
 },
 
 {
 number:9,
+image:"stevilo9.jpg",
 meaning:"Vztrajnost, namen in uresničevanje."
 },
 
 {
 number:10,
+image:"stevilo10.jpg",
 meaning:"Manifestacija in utelešenje energije."
 },
 
 {
 number:11,
+image:"stevilo11.jpg",
 meaning:"Preobrazba, osvoboditev in sprememba."
 },
 
 {
 number:12,
+image:"stevilo12.jpg",
 meaning:"Sodelovanje, povezovanje in modrost skupnosti."
 },
 
 {
 number:13,
+image:"stevilo13.jpg",
 meaning:"Zaključek cikla, prisotnost in povezava z večnostjo."
 }
 
 ];
+
 
 
 
@@ -130,7 +144,7 @@ meaning:"Zdravljenje, spretnost in povezava z naravo."
 
 {
 maya:"Lamat",
-slovene:"Zvezda",
+slovene:"Zajec / Zvezda",
 image:"maya-lamat.jpg",
 meaning:"Harmonija, lepota in ustvarjalnost."
 },
@@ -274,8 +288,9 @@ return kin;
 
 
 
-export function getTzolkinData(dateInput){
 
+
+export function getTzolkinData(dateInput){
 
 
 const kin =
@@ -311,21 +326,16 @@ return {
 kin,
 
 
+
 // tradicionalno število Tzolk'in
 number,
 
 
-
-// zaradi stare kode pustimo tudi tone
-tone:number,
+numberImage:
+tzolkinNumber.image,
 
 
 numberMeaning:
-tzolkinNumber.meaning,
-
-
-// kompatibilnost s starim portal.js
-toneMeaning:
 tzolkinNumber.meaning,
 
 
