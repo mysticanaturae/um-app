@@ -6,7 +6,6 @@ import { getTzolkinData } from "../time/tzolkin.js";
 export async function showProfile(memberFromDashboard){
 
 
-
 const content =
 document.getElementById("content");
 
@@ -655,11 +654,19 @@ ${avatar.description}
 
 
 
-
+try {
 
 await loadMyAvatar();
 
+}
+catch(error){
 
+console.error(
+"LOAD MY AVATAR FAILED:",
+error
+);
+
+}
 
 
 
@@ -774,10 +781,6 @@ ${avatar.description}
 
 
 
-
-
-
-
 // ==========================
 // SHRANI ŠEPETALCA DUŠE
 // ==========================
@@ -869,5 +872,7 @@ alert(
 };
 
 
-
 });
+
+
+}
