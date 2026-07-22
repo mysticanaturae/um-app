@@ -522,8 +522,6 @@ document.getElementById("my-symbol-container");
 
 async function loadMySymbol(){
 
-
-
 const { data: currentMember, error } =
 await supabase
 .from("members")
@@ -535,61 +533,41 @@ member.id
 .single();
 
 
-
-
 if(error){
-
 
 console.error(
 "LOAD SYMBOL ERROR:",
 error
 );
 
-
 return;
 
-
 }
-
-
-
-
 
 
 
 if(!currentMember.avatar_id){
 
-
 mySymbolContainer.innerHTML = `
-
 
 <div class="dashboard-card">
 
-
 ✨ Še nimaš izbranega osebnega simbola časa.
-
 
 </div>
 
-
 `;
-
-
 
 return;
 
-
 }
-
-
-
 
 
 
 
 const { data:symbol, error:symbolError } =
 await supabase
-.from("tzolkin_symbols")
+.from("blinkita_avatars")
 .select("*")
 .eq(
 "id",
@@ -599,42 +577,28 @@ currentMember.avatar_id
 
 
 
-
-
-
-
 if(symbolError){
-
 
 console.error(
 symbolError
 );
 
-
 return;
-
 
 }
 
 
 
-
-
-
-
 mySymbolContainer.innerHTML = `
-
 
 <div class="dashboard-card selected-symbol">
 
 
-
 <div class="download-icon">
+
 ✨
+
 </div>
-
-
-
 
 
 <h2>
@@ -642,33 +606,21 @@ ${symbol.name}
 </h2>
 
 
-
-
-
 <p>
 ${symbol.description}
 </p>
 
 
-
-
-
 <strong>
-🌟 Tvoj izbrani simbol časa
+🌟 Tvoj Šepetalec Duše
 </strong>
-
-
 
 
 </div>
 
-
 `;
 
-
-
 }
-
 
 
 
