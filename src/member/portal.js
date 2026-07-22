@@ -164,11 +164,10 @@ await supabase
 .select(`
     first_name,
     personal_tzolkin_code,
-    avatar_symbol_id
+    avatar_id
 `)
 .eq("id", memberFromDashboard.id)
 .single();
-
 
 
 
