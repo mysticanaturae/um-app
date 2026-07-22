@@ -94,7 +94,16 @@ console.log(
 lastActivation
 );
 
+console.log(
+"MEMBER USED FOR CHECK:",
+member.id
+);
 
+
+console.log(
+"FULL LAST ACTIVATION JSON:",
+JSON.stringify(lastActivation, null, 2)
+);
 
 if(lastError){
 

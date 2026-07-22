@@ -1304,7 +1304,7 @@ class="dashboard-button">
 
 </section>
 
-`;return}let{data:r,error:i}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`activated_at`,{ascending:!1}).limit(1);if(console.log(`LAST ACTIVATION:`,r),i&&console.error(`LAST ACTIVATION ERROR:`,i),r&&r.length>0){let e=new Date(r[0].activated_at),t=new Date;if(e.getFullYear()===t.getFullYear()&&e.getMonth()===t.getMonth()&&e.getDate()===t.getDate()){n.innerHTML=`
+`;return}let{data:r,error:i}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`activated_at`,{ascending:!1}).limit(1);if(console.log(`LAST ACTIVATION:`,r),console.log(`MEMBER USED FOR CHECK:`,t.id),console.log(`FULL LAST ACTIVATION JSON:`,JSON.stringify(r,null,2)),i&&console.error(`LAST ACTIVATION ERROR:`,i),r&&r.length>0){let e=new Date(r[0].activated_at),t=new Date;if(e.getFullYear()===t.getFullYear()&&e.getMonth()===t.getMonth()&&e.getDate()===t.getDate()){n.innerHTML=`
 
 
 <section class="dashboard-section">
