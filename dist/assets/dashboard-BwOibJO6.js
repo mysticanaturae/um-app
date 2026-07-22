@@ -1372,6 +1372,54 @@ Portal se pripravlja nate.
 
 </section>
 
+`;return}let c=new Date;c.setHours(0,0,0,0);let l=new Date;l.setHours(23,59,59,999);let{data:u,error:d}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).eq(`portal_number`,o.portal_number).gte(`activated_at`,c.toISOString()).lte(`activated_at`,l.toISOString()).maybeSingle();if(d&&console.error(`DAILY PORTAL CHECK ERROR:`,d),u){n.innerHTML=`
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Današnji šepet je že sprejet.
+</h1>
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+<p>
+
+Današnjega šepeta ne odpiram dvakrat.
+
+Tvoj odgovor je že zapisan v tvoji poti.
+
+</p>
+
+
+<p class="highlight-text">
+
+Vrni se jutri.
+
+Nov dan prinaša nov portal.
+
+</p>
+
+
+<h2>
+✨ Portal ${o.portal_number} / 99
+</h2>
+
+
+</div>
+
+
+</section>
+
+
 `;return}n.innerHTML=`
 
 
@@ -1510,7 +1558,7 @@ class="dashboard-button">
 </section>
 
 
-`;let c=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(c.includes(t)){let n=c.indexOf(t);c.splice(n,1),e.classList.remove(`selected`)}else c.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,c)}});let l=document.getElementById(`activatePortalButton`);l.onclick=async()=>{if(c.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}for(let n of c){let{error:r}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:o.portal_number,answer:n});r&&console.error(`PORTAL ANSWER ERROR:`,r)}let{error:r}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:o.portal_number,activated_at:new Date});if(r){console.error(`PORTAL ACTIVATION ERROR:`,r),alert(r.message);return}n.innerHTML=`
+`;let f=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(f.includes(t)){let n=f.indexOf(t);f.splice(n,1),e.classList.remove(`selected`)}else f.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,f)}});let p=document.getElementById(`activatePortalButton`);p&&(p.onclick=async()=>{if(f.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}for(let n of f){let{error:r}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:o.portal_number,answer:n});r&&console.error(`PORTAL ANSWER ERROR:`,r)}let{error:r}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:o.portal_number,activated_at:new Date});if(r){console.error(`PORTAL ACTIVATION ERROR:`,r),alert(r.message);return}n.innerHTML=`
 
 
 <section class="dashboard-section">
@@ -1551,7 +1599,7 @@ Tvoj prvi šepet je sprejet.
 </section>
 
 
-`}}console.log(`🚀 MEMBER DASHBOARD LOADED`);function m(e){let t=document.getElementById(`content`);e?t.innerHTML=`
+`})}console.log(`🚀 MEMBER DASHBOARD LOADED`);function m(e){let t=document.getElementById(`content`);e?t.innerHTML=`
 
 
 <section class="dashboard-section">

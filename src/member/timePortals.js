@@ -139,9 +139,6 @@ progress[0].portal_number + 1;
 
 
 
-
-
-
 // ==========================
 // PREVERI 99
 // ==========================
@@ -254,100 +251,9 @@ return;
 }
 
 
-
 // ==========================
-// PREVERI ALI JE DANES ŽE AKTIVIRANO
+// PREVERI ALI PORTAL OBSTAJA
 // ==========================
-
-
-const today = new Date();
-
-today.setHours(0,0,0,0);
-
-
-
-const { data:todayActivation } =
-
-await supabase
-.from("member_time_portals")
-.select("*")
-.eq(
-"member_id",
-member.id
-)
-.eq(
-"portal_number",
-portal.portal_number
-)
-.gte(
-"activated_at",
-today.toISOString()
-)
-.maybeSingle();
-
-
-
-
-
-if(todayActivation){
-
-
-content.innerHTML = `
-
-
-<section class="dashboard-section">
-
-
-<h1>
-🌌 Šepetanje Časa
-</h1>
-
-
-
-<div class="dashboard-card">
-
-
-<h2>
-✨ Današnji šepet je že sprejet.
-</h2>
-
-
-
-<p>
-
-Čas ti danes ni povedal iste zgodbe dvakrat.
-
-Tvoj odgovor je že postal del tvoje poti.
-
-</p>
-
-
-
-<p class="highlight-text">
-
-Vrni se jutri.
-
-Nov dan prinaša nov šepet.
-
-</p>
-
-
-
-</div>
-
-
-</section>
-
-
-`;
-
-
-
-return;
-
-
-}
-
 
 
 console.log(
@@ -386,6 +292,132 @@ Portal se pripravlja nate.
 return;
 
 }
+
+
+
+// ==========================
+// PREVERI ALI JE DANAŠNJI ŠEPET ŽE AKTIVIRAN
+// ==========================
+
+
+const startOfDay = new Date();
+
+startOfDay.setHours(
+0,
+0,
+0,
+0
+);
+
+
+const endOfDay = new Date();
+
+endOfDay.setHours(
+23,
+59,
+59,
+999
+);
+
+
+
+const { data:todayActivation, error:todayError } =
+
+await supabase
+.from("member_time_portals")
+.select("*")
+.eq(
+"member_id",
+member.id
+)
+.eq(
+"portal_number",
+portal.portal_number
+)
+.gte(
+"activated_at",
+startOfDay.toISOString()
+)
+.lte(
+"activated_at",
+endOfDay.toISOString()
+)
+.maybeSingle();
+
+
+
+
+if(todayError){
+
+console.error(
+"DAILY PORTAL CHECK ERROR:",
+todayError
+);
+
+}
+
+
+
+
+if(todayActivation){
+
+
+content.innerHTML = `
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Današnji šepet je že sprejet.
+</h1>
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+<p>
+
+Današnjega šepeta ne odpiram dvakrat.
+
+Tvoj odgovor je že zapisan v tvoji poti.
+
+</p>
+
+
+<p class="highlight-text">
+
+Vrni se jutri.
+
+Nov dan prinaša nov portal.
+
+</p>
+
+
+<h2>
+✨ Portal ${portal.portal_number} / 99
+</h2>
+
+
+</div>
+
+
+</section>
+
+
+`;
+
+
+return;
+
+
+}
+
 
 
 // ==========================
@@ -623,6 +655,8 @@ document.getElementById(
 );
 
 
+if(activateButton){
+
 
 activateButton.onclick = async()=>{
 
@@ -792,4 +826,4 @@ Tvoj prvi šepet je sprejet.
 
 }
 
-
+}
