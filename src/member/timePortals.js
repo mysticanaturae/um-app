@@ -269,7 +269,35 @@ portal
 
 
 
+if(!portal){
 
+content.innerHTML = `
+
+<section class="dashboard-section">
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+<div class="dashboard-card">
+
+<h2>
+Čas danes še tiho čaka.
+</h2>
+
+<p>
+Portal se pripravlja nate.
+</p>
+
+</div>
+
+</section>
+
+`;
+
+return;
+
+}
 
 
 
