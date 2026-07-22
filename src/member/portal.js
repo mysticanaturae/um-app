@@ -1,5 +1,5 @@
 import { supabase } from "../supabase/client.js";
-
+import { getTzolkinData } from "../time/tzolkin.js";
 
 export async function showPortal(memberFromDashboard){
 
@@ -188,7 +188,26 @@ return;
 }
 
 
+// ==========================
+// DNEVNA KODA ČASA
+// ==========================
 
+
+const today =
+new Date()
+.toISOString()
+.split("T")[0];
+
+
+const todayTzolkin =
+getTzolkinData(today);
+
+
+
+console.log(
+"DNEVNA KODA ČASA:",
+todayTzolkin
+);
 
 
 
@@ -263,38 +282,38 @@ Današnja energija tradicionalnega Tzolk'in koledarja.
 
 
 <h3>
-✨ Današnji Kin
+✨ Današnja Koda Časa
 </h3>
 
 
 
 <p>
-
-Dnevni pečat časa se pripravlja...
-
+🌞 Današnji Kin:
+<strong>
+${todayTzolkin.kin}
+</strong>
 </p>
-
 
 
 <p>
-
-Tukaj se bo vsak dan samodejno prikazal:
-
+🔢 Ton:
+<strong>
+${todayTzolkin.tone}
+</strong>
 </p>
 
 
+<p>
+🌿 Solarni pečat:
+<strong>
+${todayTzolkin.sign}
+</strong>
+</p>
 
-<ul>
 
-<li>🌞 Kin dneva</li>
-
-<li>🔢 Ton dneva</li>
-
-<li>🌿 Solarni pečat</li>
-
-<li>✨ Sporočilo dneva</li>
-
-</ul>
+<p>
+✨ Sporočilo dneva se pripravlja...
+</p>
 
 
 
