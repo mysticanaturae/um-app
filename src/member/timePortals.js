@@ -255,7 +255,98 @@ return;
 
 
 
+// ==========================
+// PREVERI ALI JE DANES ŽE AKTIVIRANO
+// ==========================
 
+
+const today = new Date();
+
+today.setHours(0,0,0,0);
+
+
+
+const { data:todayActivation } =
+
+await supabase
+.from("member_time_portals")
+.select("*")
+.eq(
+"member_id",
+member.id
+)
+.eq(
+"portal_number",
+portal.portal_number
+)
+.gte(
+"activated_at",
+today.toISOString()
+)
+.maybeSingle();
+
+
+
+
+
+if(todayActivation){
+
+
+content.innerHTML = `
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+
+
+<div class="dashboard-card">
+
+
+<h2>
+✨ Današnji šepet je že sprejet.
+</h2>
+
+
+
+<p>
+
+Čas ti danes ni povedal iste zgodbe dvakrat.
+
+Tvoj odgovor je že postal del tvoje poti.
+
+</p>
+
+
+
+<p class="highlight-text">
+
+Vrni se jutri.
+
+Nov dan prinaša nov šepet.
+
+</p>
+
+
+
+</div>
+
+
+</section>
+
+
+`;
+
+
+
+return;
+
+
+}
 
 
 
