@@ -1372,7 +1372,7 @@ Portal se pripravlja nate.
 
 </section>
 
-`;return}let c=new Date;c.setHours(0,0,0,0);let l=new Date;l.setHours(23,59,59,999);let{data:u,error:d}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).eq(`portal_number`,o.portal_number).gte(`activated_at`,c.toISOString()).lte(`activated_at`,l.toISOString()).maybeSingle();if(d&&console.error(`DAILY PORTAL CHECK ERROR:`,d),u){n.innerHTML=`
+`;return}let c=new Date;c.setHours(0,0,0,0);let l=new Date;l.setHours(23,59,59,999);let{data:u,error:d}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).gte(`activated_at`,c.toISOString()).lte(`activated_at`,l.toISOString()).maybeSingle();if(d&&console.error(`DAILY PORTAL CHECK ERROR:`,d),u){n.innerHTML=`
 
 
 <section class="dashboard-section">

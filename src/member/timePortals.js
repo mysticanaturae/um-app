@@ -330,10 +330,6 @@ await supabase
 "member_id",
 member.id
 )
-.eq(
-"portal_number",
-portal.portal_number
-)
 .gte(
 "activated_at",
 startOfDay.toISOString()
@@ -343,7 +339,6 @@ startOfDay.toISOString()
 endOfDay.toISOString()
 )
 .maybeSingle();
-
 
 
 
