@@ -215,7 +215,10 @@ return;
 // NALOŽI PORTAL
 // ==========================
 
-
+console.log(
+"LOOKING FOR PORTAL NUMBER:",
+nextPortal
+);
 
 const { data:portal, error:portalError } =
 
@@ -226,7 +229,7 @@ await supabase
 "portal_number",
 nextPortal
 )
-.single();
+.maybeSingle();
 
 
 
