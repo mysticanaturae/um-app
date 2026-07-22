@@ -1563,52 +1563,121 @@ Tvoj prvi šepet je sprejet.
 ${e.first_name||`Ustvarjalec`}
 </h1>
 
+
+<div class="dashboard-card welcome-card">
+
+
+<h2>
+✨ Tvoj osebni prostor Časa
+</h2>
+
+
 <p>
 
-Dobrodošla v svojem osebnem prostoru
+Dobrodošla v svojem prostoru
 <strong>BLINKITA MULTIVERSE</strong>.
 
-Čas te je ponovno pripeljal sem.
-
-Nekateri odpirajo aplikacije.
-
-Ti odpiraš portale.
-
-Tukaj vsaka številka nosi pomen.
-Vsak simbol pripoveduje zgodbo.
-Vsak obisk je nova možnost ustvarjanja.
-
-Dobrodošla v prostoru, kjer Čas postane živ in Mogoče postane resnično.
 </p>
 
 
+<p>
+
+Čas te je ponovno pripeljal sem.
+
+</p>
+
+
+<p class="highlight-text">
+
+Nekateri odpirajo aplikacije.<br>
+Ti odpiraš portale.
+
+</p>
+
+
+</div>
+
+
+
+
+
 <div class="dashboard-card">
+
+
+<h2>
+🌌 Tukaj se začne tvoje potovanje
+</h2>
+
+
+<p>
+
+Vsaka številka nosi pomen.<br>
+Vsak simbol pripoveduje zgodbo.<br>
+Vsak obisk odpira novo možnost ustvarjanja.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
 
 <div class="download-icon">
 ✨
 </div>
 
+
 <h2>
 Danes je nov začetek.
 </h2>
 
+
 <p>
 
-Odpri svoj Portal.
-Poslušaj svojo Kodo Časa.
-Izberi svoj simbol.
-Zbiraj darila.
+Odpri svoj Portal.<br>
+Poslušaj svojo Kodo Časa.<br>
+Izberi svoj simbol.<br>
+Zbiraj darila.<br>
 Ustvarjaj prihodnost.
+
+</p>
+
+
+<p class="highlight-text">
 
 Vsak korak šteje.
 
 </p>
 
+
 </div>
 
 
-</section>
 
+
+
+<div class="dashboard-card">
+
+
+<h2>
+🌟 Dobrodošla v živem Času.
+</h2>
+
+
+<p>
+
+Prostor, kjer Čas postane živ
+in Mogoče postane resnično.
+
+</p>
+
+
+</div>
 
 
 `:t.innerHTML=`
