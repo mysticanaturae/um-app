@@ -358,3 +358,16 @@ margin-top:8px;
     margin-top:30px;
     margin-bottom:50px;
 }
+
+.tzolkin-symbol {
+
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 10px auto;
+
+}

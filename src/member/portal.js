@@ -226,18 +226,12 @@ todayTzolkin
 
 
 
-// slike
-
 const numberImage =
-`/images/maya-simboli/stevilo${todayTzolkin.number}.jpg`;
-
+`/images/Slike-Maya/stevilo${todayTzolkin.number}.png`;
 
 
 const signImage =
-`/images/maya-simboli/${todayTzolkin.signImage}`;
-
-
-
+`/images/Slike-Maya/${todayTzolkin.signImage}`;
 
 
 

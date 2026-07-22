@@ -96,145 +96,144 @@ const tzolkinSigns = [
 {
 maya:"Imix",
 slovene:"Krokodil",
-image:"imix-cb.jpg",
+image:"maya-imix-rdeca.png",
 meaning:"Izvorna ustvarjalna sila, rojstvo in začetek."
 },
 
 {
 maya:"Ik'",
 slovene:"Veter",
-image:"maya-ik.jpg",
+image:"maya-ik-bela.png",
 meaning:"Dih življenja, gibanje in komunikacija."
 },
 
 {
 maya:"Ak'b'al",
 slovene:"Noč",
-image:"maya-akbal.jpg",
+image:"maya-akbal-modra.png",
 meaning:"Sanje, notranja modrost in skrivnosti."
 },
 
 {
 maya:"K'an",
 slovene:"Semeno",
-image:"maya-kan.jpg",
+image:"maya-kan-rumena.png",
 meaning:"Rast, potencial in uresničevanje."
 },
 
 {
 maya:"Chikchan",
 slovene:"Kača",
-image:"maya-chicchan.jpg",
+image:"maya-chicchan-rdeca.png",
 meaning:"Življenjska sila, instinkt in prebujenje."
 },
 
 {
 maya:"Kimi",
 slovene:"Smrt",
-image:"maya-cimi.jpg",
+image:"maya-cimi-bela.png",
 meaning:"Preobrazba, zaključek in nov začetek."
 },
 
 {
 maya:"Manik'",
 slovene:"Jelen",
-image:"maya-manik.jpg",
+image:"maya-manik-modra.png",
 meaning:"Zdravljenje, spretnost in povezava z naravo."
 },
 
 {
 maya:"Lamat",
-slovene:"Zajec / Zvezda",
-image:"maya-lamat.jpg",
+slovene:"Zvezda",
+image:"maya-lamat-rumena.png",
 meaning:"Harmonija, lepota in ustvarjalnost."
 },
 
 {
 maya:"Muluk",
 slovene:"Voda",
-image:"maya-muluc.jpg",
+image:"maya-muluc-rdeca.png",
 meaning:"Čustva, čiščenje in pretok."
 },
 
 {
 maya:"Ok",
 slovene:"Pes",
-image:"maya-oc.jpg",
+image:"maya-oc-bela.png",
 meaning:"Ljubezen, zvestoba in srčna povezava."
 },
 
 {
 maya:"Chuwen",
 slovene:"Opica",
-image:"maya-chuen.jpg",
+image:"maya-chuen-modra.png",
 meaning:"Igra, ustvarjalnost in mojstrstvo."
 },
 
 {
 maya:"Eb'",
 slovene:"Pot",
-image:"maya-eb.jpg",
+image:"maya-eb-rumena.png",
 meaning:"Življenjska pot, rast in izkušnja."
 },
 
 {
 maya:"B'en",
 slovene:"Trst",
-image:"maya-ben.jpg",
+image:"maya-ben-rdeca.png",
 meaning:"Vodstvo, steber in povezava z namenom."
 },
 
 {
 maya:"Ix",
 slovene:"Jaguar",
-image:"maya-ix.jpg",
+image:"maya-ix-bela.png",
 meaning:"Intuicija, skrivnost in notranja moč."
 },
 
 {
 maya:"Men",
 slovene:"Orel",
-image:"maya-men.jpg",
+image:"maya-men-modra.png",
 meaning:"Vizija, širina pogleda in svoboda."
 },
 
 {
 maya:"K'ib'",
 slovene:"Sova",
-image:"maya-cib.jpg",
+image:"maya-cib-rumena.png",
 meaning:"Modrost, spomin in odpuščanje."
 },
 
 {
 maya:"Kab'an",
 slovene:"Zemlja",
-image:"maya-caban.jpg",
+image:"maya-caban-rdeca.png",
 meaning:"Gibanje, zavest in razvoj."
 },
 
 {
 maya:"Etz'nab'",
 slovene:"Kremen",
-image:"maya-etznab.jpg",
+image:"maya-etznab-belo.png",
 meaning:"Resnica, jasnost in ogledalo."
 },
 
 {
 maya:"Kawak",
 slovene:"Nevihta",
-image:"maya-cauac.jpg",
+image:"maya-cauac-modra.png",
 meaning:"Obnova, čiščenje in preobrazba."
 },
 
 {
 maya:"Ajaw",
 slovene:"Sonce",
-image:"maya-ahau.jpg",
+image:"maya-ahau-rumena.png",
 meaning:"Razsvetljenje, življenje in izpolnitev."
 }
 
 ];
-
 
 
 
