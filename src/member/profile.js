@@ -1,4 +1,6 @@
 import { supabase } from "../supabase/client.js";
+import { getTzolkinData } from "../time/tzolkin.js";
+
 
 
 export async function showProfile(memberFromDashboard){
@@ -7,6 +9,7 @@ export async function showProfile(memberFromDashboard){
 
 const content =
 document.getElementById("content");
+
 
 
 
@@ -92,6 +95,7 @@ href="/index.html">
 
 
 
+
 <div class="download-card">
 
 
@@ -119,17 +123,6 @@ Tvoj rojstni pečat tradicionalnega Tzolk'in koledarja bo pripravljen, ko ustvar
 
 
 
-<a
-class="dashboard-button"
-href="https://mysticanaturae.github.io/osebnakodacasa/"
-target="_blank">
-
-✨ Preveri Kodo Časa
-
-</a>
-
-
-
 </div>
 
 
@@ -147,7 +140,7 @@ target="_blank">
 
 
 <p>
-Po pridružitvi boš lahko izbral svoj osebni simbol v Blinkita Multiverse.
+Po pridružitvi bo tvoj osebni simbol časa odprl svojo zgodbo.
 </p>
 
 
@@ -156,6 +149,7 @@ Po pridružitvi boš lahko izbral svoj osebni simbol v Blinkita Multiverse.
 
 
 ✨ Čaka nate.
+
 
 </div>
 
@@ -168,6 +162,7 @@ Po pridružitvi boš lahko izbral svoj osebni simbol v Blinkita Multiverse.
 `;
 
 
+
 return;
 
 
@@ -175,14 +170,6 @@ return;
 
 
 
-
-
-
-
-console.log(
-"PROFILE MEMBER:",
-memberFromDashboard
-);
 
 
 
@@ -198,8 +185,13 @@ const { data: member, error } =
 await supabase
 .from("members")
 .select("*")
-.eq("id", memberFromDashboard.id)
+.eq(
+"id",
+memberFromDashboard.id
+)
 .single();
+
+
 
 
 
@@ -227,6 +219,56 @@ return;
 
 
 
+
+console.log(
+"PROFILE MEMBER:",
+member
+);
+
+
+
+
+
+// ==========================
+// IZRAČUN OSEBNE KODE ČASA
+// ==========================
+
+
+const personalTzolkin =
+getTzolkinData(
+member.birth_date
+);
+
+
+
+console.log(
+"OSEBNA KODA ČASA:",
+personalTzolkin
+);
+
+
+
+
+
+const personalNumberImage =
+
+`/images/Slike-Maya/stevilo${personalTzolkin.number}.png`;
+
+
+
+
+
+const personalSignImage =
+
+`/images/Slike-Maya/${personalTzolkin.signImage}`;
+
+
+
+
+
+
+
+
 // ==========================
 // NALOŽI PAKET
 // ==========================
@@ -236,8 +278,14 @@ const { data: membership } =
 await supabase
 .from("memberships")
 .select("*")
-.eq("member_id", member.id)
-.eq("status","active")
+.eq(
+"member_id",
+member.id
+)
+.eq(
+"status",
+"active"
+)
 .maybeSingle();
 
 
@@ -245,13 +293,6 @@ await supabase
 
 
 
-
-// ==========================
-// SREČNA ŠTEVILKA
-// ==========================
-
-console.log("MEMBER ID:", member.id);
-console.log("SEAT NUMBER:", member.seat_number);
 
 
 
@@ -267,7 +308,12 @@ content.innerHTML = `
 
 
 
+
+
 <div class="dashboard-grid">
+
+
+
 
 
 
@@ -299,48 +345,8 @@ ${member.seat_number || "Še ni izbrana"}
 </p>
 
 
-${
-member.seat_number ? `
-
-<div class="profile-action">
 
 
-<a
-class="dashboard-button"
-href="/portal.html?member=${member.id}">
-
-🌀 ZAVRTI KOLO ČASA
-
-</a>
-
-
-<p class="reward-text">
-
-✨ Tvoja srečna številka je tvoj osebni ključ v Blinkita Multiverse.  
-Samo ti lahko odpreš svojo edinstveno nagrado, ki čaka na tvojem Portalu Časa.
-
-</p>
-
-
-</div>
-
-
-` : `
-
-<div class="profile-action">
-
-<a
-class="dashboard-button"
-href="/index.html">
-
-✨ Odpri pakete in izberi svojo srečno številko
-
-</a>
-
-</div>
-
-`
-}
 
 <div id="my-symbol-container">
 
@@ -350,7 +356,13 @@ Nalagam tvoj simbol časa...
 
 
 
+
+
 </div>
+
+
+
+
 
 
 
@@ -364,32 +376,73 @@ Nalagam tvoj simbol časa...
 </div>
 
 
+
 <h2>
-Tvoja Osebna Koda Časa
+✨ Tvoja Osebna Koda Časa
 </h2>
 
 
 
+
+
 <h1>
-${member.personal_tzolkin_code || "✨ Ni še ustvarjena"}
+KIN ${personalTzolkin.kin}
 </h1>
 
 
 
+
+
+<img
+src="${personalNumberImage}"
+class="tzolkin-symbol"
+alt="Število ${personalTzolkin.number}"
+>
+
+
+
+
+<h2>
+🔢 ${personalTzolkin.number}
+</h2>
+
+
+
+
 <p>
-Tvoj rojstni pečat tradicionalnega Tzolk'in koledarja.
+${personalTzolkin.numberMeaning}
 </p>
 
 
 
-<a
-class="dashboard-button"
-href="https://mysticanaturae.github.io/osebnakodacasa/"
-target="_blank">
 
-✨ Preveri Kodo Časa
 
-</a>
+
+
+<img
+src="${personalSignImage}"
+class="tzolkin-symbol"
+alt="${personalTzolkin.signSlovenian}"
+>
+
+
+
+
+
+<h2>
+🌿 ${personalTzolkin.signSlovenian}
+<br>
+${personalTzolkin.signMaya}
+</h2>
+
+
+
+
+<p>
+${personalTzolkin.meaning}
+</p>
+
+
 
 
 
@@ -397,8 +450,11 @@ target="_blank">
 
 
 
-</div>
 
+
+
+
+</div>
 
 
 
@@ -412,6 +468,7 @@ target="_blank">
 <p>
 Izberi simbol, ki bo predstavljal tvoj osebni pečat v Blinkita Multiverse.
 </p>
+
 
 
 
@@ -433,6 +490,11 @@ Nalagam simbole...
 `;
 
 
+
+
+
+// konec 1. dela
+
 // ==========================
 // ELEMENTI
 // ==========================
@@ -444,6 +506,7 @@ document.getElementById("symbols-container");
 
 const mySymbolContainer =
 document.getElementById("my-symbol-container");
+
 
 
 
@@ -465,8 +528,12 @@ const { data: currentMember, error } =
 await supabase
 .from("members")
 .select("avatar_symbol_id")
-.eq("id", member.id)
+.eq(
+"id",
+member.id
+)
 .single();
+
 
 
 
@@ -489,6 +556,8 @@ return;
 
 
 
+
+
 if(!currentMember.avatar_symbol_id){
 
 
@@ -498,13 +567,14 @@ mySymbolContainer.innerHTML = `
 <div class="dashboard-card">
 
 
-✨ Še nimaš izbranega simbola časa.
+✨ Še nimaš izbranega osebnega simbola časa.
 
 
 </div>
 
 
 `;
+
 
 
 return;
@@ -516,12 +586,19 @@ return;
 
 
 
+
+
 const { data:symbol, error:symbolError } =
 await supabase
 .from("tzolkin_symbols")
 .select("*")
-.eq("id", currentMember.avatar_symbol_id)
+.eq(
+"id",
+currentMember.avatar_symbol_id
+)
 .single();
+
+
 
 
 
@@ -544,47 +621,47 @@ return;
 
 
 
+
+
 mySymbolContainer.innerHTML = `
 
 
 <div class="dashboard-card selected-symbol">
 
 
+
 <div class="download-icon">
-
 ✨
-
 </div>
+
 
 
 
 
 <h2>
-
 ${symbol.name}
-
 </h2>
 
 
 
+
+
 <p>
-
 ${symbol.description}
-
 </p>
 
 
 
+
+
 <strong>
-
-🌟 Tvoj simbol časa
-
+🌟 Tvoj izbrani simbol časa
 </strong>
 
 
 
-</div>
 
+</div>
 
 
 `;
@@ -592,6 +669,8 @@ ${symbol.description}
 
 
 }
+
+
 
 
 
@@ -622,10 +701,13 @@ await supabase
 
 
 
+
 console.log(
 "TZOLKIN SYMBOLS:",
 symbols
 );
+
+
 
 
 
@@ -651,7 +733,9 @@ return;
 
 
 
+
 container.innerHTML =
+
 symbols.map(symbol => `
 
 
@@ -661,20 +745,37 @@ data-id="${symbol.id}">
 
 
 
-<div class="download-icon">
 
 
-${
-symbol.name === "Imix" ? "🌊" :
-symbol.name === "Ik’" ? "🌬️" :
-symbol.name === "Ak’b’al" ? "🌙" :
-symbol.name === "K’an" ? "🌱" :
-symbol.name === "Chikchan" ? "🐍" :
-symbol.name === "Ix" ? "🐆" :
-symbol.name === "Men" ? "🦅" :
-symbol.name === "Ajaw" ? "☀️" :
-"✨"
-}
+<div class="symbol-image-box">
+
+<img
+src="${
+symbol.name === "Imix" ? "/images/Slike-Maya/maya-imix-rdeca.png" :
+symbol.name === "Ik'" ? "/images/Slike-Maya/maya-ik-bela.png" :
+symbol.name === "Ak'b'al" ? "/images/Slike-Maya/maya-akbal-modra.png" :
+symbol.name === "K'an" ? "/images/Slike-Maya/maya-kan-rumena.png" :
+symbol.name === "Chikchan" ? "/images/Slike-Maya/maya-chicchan-rdeca.png" :
+symbol.name === "Kimi" ? "/images/Slike-Maya/maya-cimi-bela.png" :
+symbol.name === "Manik'" ? "/images/Slike-Maya/maya-manik-modra.png" :
+symbol.name === "Lamat" ? "/images/Slike-Maya/maya-lamat-rumena.png" :
+symbol.name === "Muluc" ? "/images/Slike-Maya/maya-muluc-rdeca.png" :
+symbol.name === "Oc" ? "/images/Slike-Maya/maya-oc-bela.png" :
+symbol.name === "Chuen" ? "/images/Slike-Maya/maya-chuen-modra.png" :
+symbol.name === "Eb" ? "/images/Slike-Maya/maya-eb-rumena.png" :
+symbol.name === "Ben" ? "/images/Slike-Maya/maya-ben-rdeca.png" :
+symbol.name === "Ix" ? "/images/Slike-Maya/maya-ix-bela.png" :
+symbol.name === "Men" ? "/images/Slike-Maya/maya-men-modra.png" :
+symbol.name === "Cib" ? "/images/Slike-Maya/maya-cib-rumena.png" :
+symbol.name === "Caban" ? "/images/Slike-Maya/maya-caban-rdeca.png" :
+symbol.name === "Etz'nab" ? "/images/Slike-Maya/maya-etznab-belo.png" :
+symbol.name === "Cauac" ? "/images/Slike-Maya/maya-cauac-modra.png" :
+symbol.name === "Ahau" ? "/images/Slike-Maya/maya-ahau-rumena.png" :
+""
+}"
+class="tzolkin-symbol"
+alt="${symbol.name}"
+>
 
 
 </div>
@@ -683,18 +784,15 @@ symbol.name === "Ajaw" ? "☀️" :
 
 
 <h3>
-
 ${symbol.name}
-
 </h3>
 
 
 
 
+
 <p>
-
 ${symbol.description}
-
 </p>
 
 
@@ -702,10 +800,9 @@ ${symbol.description}
 
 
 <button>
-
 ✨ Izberi
-
 </button>
+
 
 
 
@@ -715,6 +812,7 @@ ${symbol.description}
 
 
 `).join("");
+
 
 
 
@@ -746,8 +844,12 @@ e.target.closest(".symbol-card");
 
 
 
+
+
 const symbolId =
 card.dataset.id;
+
+
 
 
 
@@ -756,6 +858,7 @@ console.log(
 "SELECTED SYMBOL:",
 symbolId
 );
+
 
 
 
@@ -779,6 +882,8 @@ member.id
 
 
 
+
+
 if(updateError){
 
 
@@ -788,9 +893,11 @@ updateError
 );
 
 
+
 alert(
 updateError.message
 );
+
 
 
 return;
@@ -803,7 +910,11 @@ return;
 
 
 
+
+
 await loadMySymbol();
+
+
 
 
 
@@ -815,11 +926,15 @@ alert(
 
 
 
+
 };
 
 
 
 });
+
+
+
 
 
 
