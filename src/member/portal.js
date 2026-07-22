@@ -166,27 +166,7 @@ await supabase
 .single();
 
 
-const { data: seat, error: seatError } =
-await supabase
-.from("seats")
-.select(`
-    seat_number,
-    status
-`)
-.eq("member_id", memberFromDashboard.id)
-.eq("status", "confirmed")
-.single();
 
-
-
-if(seatError){
-
-console.log(
-"NO CONFIRMED SEAT:",
-seatError
-);
-
-}
 
 
 if(error){
@@ -206,6 +186,9 @@ return;
 
 
 }
+
+
+
 
 
 
@@ -249,6 +232,8 @@ BLINKITA MULTIVERSE
 
 
 
+
+
 <div class="dashboard-card">
 
 
@@ -264,30 +249,58 @@ Današnji Portal Časa
 
 
 
+
 <p>
 
-Današnja energija tradicionalnega Tzolk'in koledarja se pripravlja...
+Današnja energija tradicionalnega Tzolk'in koledarja.
 
 </p>
 
-${
-seat
-?
-`
+
+
+
+<div class="dashboard-card">
+
+
+<h3>
+✨ Današnji Kin
+</h3>
+
+
+
 <p>
-🍀 Tvoja srečna številka:
-<strong>
-${seat.seat_number}
-</strong>
+
+Dnevni pečat časa se pripravlja...
+
 </p>
-`
-:
-`
+
+
+
 <p>
-✨ Tvoja srečna številka bo prikazana po potrditvi članstva.
+
+Tukaj se bo vsak dan samodejno prikazal:
+
 </p>
-`
-}
+
+
+
+<ul>
+
+<li>🌞 Kin dneva</li>
+
+<li>🔢 Ton dneva</li>
+
+<li>🌿 Solarni pečat</li>
+
+<li>✨ Sporočilo dneva</li>
+
+</ul>
+
+
+
+</div>
+
+
 
 </div>
 
@@ -339,6 +352,7 @@ Tvoja skrivnost čaka, da se odpre.
 
 
 `;
+
 
 
 
