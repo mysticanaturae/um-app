@@ -1,216 +1,209 @@
-const tzolkinTones = [
-
-{
-    number:1,
-    name:"Magnetni",
-    meaning:"Začetek, namen in privlačenje energije."
-},
-
-{
-    number:2,
-    name:"Lunarni",
-    meaning:"Izzivi, ravnovesje in iskanje poti."
-},
-
-{
-    number:3,
-    name:"Električni",
-    meaning:"Gibanje, aktivacija in povezovanje."
-},
-
-{
-    number:4,
-    name:"Samozavestni",
-    meaning:"Oblika, struktura in ustvarjanje temeljev."
-},
-
-{
-    number:5,
-    name:"Vplivni",
-    meaning:"Moč, središče in usmerjanje energije."
-},
-
-{
-    number:6,
-    name:"Ritmični",
-    meaning:"Ravnovesje, organizacija in tok."
-},
-
-{
-    number:7,
-    name:"Resonančni",
-    meaning:"Uglasitev, intuicija in povezava z višjim znanjem."
-},
-
-{
-    number:8,
-    name:"Harmonični",
-    meaning:"Integracija, ravnovesje in lepota ustvarjanja."
-},
-
-{
-    number:9,
-    name:"Solarni",
-    meaning:"Vztrajnost, namen in uresničevanje."
-},
-
-{
-    number:10,
-    name:"Planetarni",
-    meaning:"Manifestacija, izpolnitev in utelešenje."
-},
-
-{
-    number:11,
-    name:"Spektralni",
-    meaning:"Osvoboditev, preobrazba in spuščanje starega."
-},
-
-{
-    number:12,
-    name:"Kristalni",
-    meaning:"Sodelovanje, povezovanje in širjenje zavesti."
-},
-
-{
-    number:13,
-    name:"Kozmični",
-    meaning:"Prisotnost, zaključek cikla in povezava z večnostjo."
-}
-
-];
-
-
-
 /* ==========================================
 BLINKITA TIME™
 TRADITIONAL TZOLK'IN ENGINE
 ========================================== */
 
 
-const tzolkinSigns = [
+
+const tzolkinNumbers = [
 
 {
-    maya:"Imix",
-    slovene:"Krokodil",
-    meaning:"Izvorna ustvarjalna sila, rojstvo in začetek."
+number:1,
+meaning:"Začetek, rojstvo namere in prva iskra ustvarjanja."
 },
 
 {
-    maya:"Ik'",
-    slovene:"Veter",
-    meaning:"Dih življenja, gibanje in komunikacija."
+number:2,
+meaning:"Dvojnost, ravnovesje in iskanje harmonije."
 },
 
 {
-    maya:"Ak'b'al",
-    slovene:"Noč",
-    meaning:"Sanje, notranja modrost in skrivnosti."
+number:3,
+meaning:"Gibanje, aktivacija in uresničevanje energije."
 },
 
 {
-    maya:"K'an",
-    slovene:"Semeno",
-    meaning:"Rast, potencial in uresničevanje."
+number:4,
+meaning:"Oblika, struktura in postavljanje temeljev."
 },
 
 {
-    maya:"Chikchan",
-    slovene:"Kača",
-    meaning:"Življenjska sila, instinkt in prebujenje."
+number:5,
+meaning:"Moč, usmeritev in notranji center."
 },
 
 {
-    maya:"Kimi",
-    slovene:"Smrt",
-    meaning:"Preobrazba, zaključek in nov začetek."
+number:6,
+meaning:"Ritem, ravnovesje in organizacija."
 },
 
 {
-    maya:"Manik'",
-    slovene:"Jelen",
-    meaning:"Zdravljenje, spretnost in povezava z naravo."
+number:7,
+meaning:"Uglasitev, notranji vpogled in povezava."
 },
 
 {
-    maya:"Lamat",
-    slovene:"Zvezda",
-    meaning:"Harmonija, lepota in ustvarjalnost."
+number:8,
+meaning:"Ravnovesje, integracija in harmonija."
 },
 
 {
-    maya:"Muluk",
-    slovene:"Voda",
-    meaning:"Čustva, čiščenje in pretok."
+number:9,
+meaning:"Vztrajnost, širjenje in uresničevanje namere."
 },
 
 {
-    maya:"Ok",
-    slovene:"Pes",
-    meaning:"Ljubezen, zvestoba in srčna povezava."
+number:10,
+meaning:"Manifestacija in utelešenje energije."
 },
 
 {
-    maya:"Chuwen",
-    slovene:"Opica",
-    meaning:"Igra, ustvarjalnost in mojstrstvo."
+number:11,
+meaning:"Preobrazba, osvoboditev in sprememba."
 },
 
 {
-    maya:"Eb'",
-    slovene:"Trava / Pot",
-    meaning:"Življenjska pot, rast in izkušnja."
+number:12,
+meaning:"Sodelovanje, povezovanje in modrost skupnosti."
 },
 
 {
-    maya:"B'en",
-    slovene:"Trst / Koruza",
-    meaning:"Vodstvo, steber in blagoslov."
-},
-
-{
-    maya:"Ix",
-    slovene:"Jaguar",
-    meaning:"Intuicija, skrivnost in notranja moč."
-},
-
-{
-    maya:"Men",
-    slovene:"Orel",
-    meaning:"Vizija, širina pogleda in svoboda."
-},
-
-{
-    maya:"K'ib'",
-    slovene:"Sova",
-    meaning:"Modrost, spomin in odpuščanje."
-},
-
-{
-    maya:"Kab'an",
-    slovene:"Zemlja",
-    meaning:"Gibanje, zavest in razvoj."
-},
-
-{
-    maya:"Etz'nab'",
-    slovene:"Kremen",
-    meaning:"Resnica, jasnost in ogledalo."
-},
-
-{
-    maya:"Kawak",
-    slovene:"Nevihta",
-    meaning:"Preobrazba, obnova in čiščenje."
-},
-
-{
-    maya:"Ajaw",
-    slovene:"Sonce",
-    meaning:"Razsvetljenje, mojstrstvo in izpolnitev."
+number:13,
+meaning:"Zaključek cikla, prisotnost in povezava z večnostjo."
 }
 
 ];
+
+
+
+
+
+const tzolkinSigns = [
+
+{
+maya:"Imix",
+slovene:"Krokodil",
+meaning:"Izvorna ustvarjalna sila, rojstvo in začetek."
+},
+
+{
+maya:"Ik'",
+slovene:"Veter",
+meaning:"Dih življenja, gibanje in komunikacija."
+},
+
+{
+maya:"Ak'b'al",
+slovene:"Noč",
+meaning:"Sanje, notranja modrost in skrivnosti."
+},
+
+{
+maya:"K'an",
+slovene:"Semeno",
+meaning:"Rast, potencial in uresničevanje."
+},
+
+{
+maya:"Chikchan",
+slovene:"Kača",
+meaning:"Življenjska sila, instinkt in prebujenje."
+},
+
+{
+maya:"Kimi",
+slovene:"Smrt",
+meaning:"Preobrazba, zaključek in nov začetek."
+},
+
+{
+maya:"Manik'",
+slovene:"Jelen",
+meaning:"Zdravljenje, spretnost in povezava z naravo."
+},
+
+{
+maya:"Lamat",
+slovene:"Zvezda",
+meaning:"Harmonija, lepota in ustvarjalnost."
+},
+
+{
+maya:"Muluk",
+slovene:"Voda",
+meaning:"Čustva, čiščenje in pretok."
+},
+
+{
+maya:"Ok",
+slovene:"Pes",
+meaning:"Ljubezen, zvestoba in srčna povezava."
+},
+
+{
+maya:"Chuwen",
+slovene:"Opica",
+meaning:"Igra, ustvarjalnost in mojstrstvo."
+},
+
+{
+maya:"Eb'",
+slovene:"Trava / Pot",
+meaning:"Življenjska pot, rast in izkušnja."
+},
+
+{
+maya:"B'en",
+slovene:"Trst",
+meaning:"Vodstvo, steber in povezava z višjim namenom."
+},
+
+{
+maya:"Ix",
+slovene:"Jaguar",
+meaning:"Intuicija, skrivnost in notranja moč."
+},
+
+{
+maya:"Men",
+slovene:"Orel",
+meaning:"Vizija, širina pogleda in svoboda."
+},
+
+{
+maya:"K'ib'",
+slovene:"Sova",
+meaning:"Modrost, spomin in odpuščanje."
+},
+
+{
+maya:"Kab'an",
+slovene:"Zemlja",
+meaning:"Gibanje, zavest in razvoj."
+},
+
+{
+maya:"Etz'nab'",
+slovene:"Kremen",
+meaning:"Resnica, jasnost in ogledalo."
+},
+
+{
+maya:"Kawak",
+slovene:"Nevihta",
+meaning:"Obnova, čiščenje in preobrazba."
+},
+
+{
+maya:"Ajaw",
+slovene:"Sonce",
+meaning:"Razsvetljenje, življenje in izpolnitev."
+}
+
+];
+
+
+
 
 
 
@@ -218,48 +211,44 @@ const tzolkinSigns = [
 export function calculateTzolkinKin(dateInput){
 
 
-    const dateParts =
-    dateInput.split("-");
+const dateParts =
+dateInput.split("-");
 
 
-    const date =
-    new Date(Date.UTC(
-        parseInt(dateParts[0]),
-        parseInt(dateParts[1]) - 1,
-        parseInt(dateParts[2])
-    ));
+const date =
+new Date(Date.UTC(
+parseInt(dateParts[0]),
+parseInt(dateParts[1])-1,
+parseInt(dateParts[2])
+));
 
 
-
-    const refDate =
-    new Date(Date.UTC(1800,0,1));
-
+const refDate =
+new Date(Date.UTC(1800,0,1));
 
 
-    const refKin = 114;
+const refKin = 114;
 
 
-
-    const msPerDay =
-    1000 * 60 * 60 * 24;
-
+const msPerDay =
+1000 * 60 * 60 * 24;
 
 
-    const daysSince =
-    Math.floor(
-        (date - refDate) / msPerDay
-    );
+const daysSince =
+Math.floor(
+(date-refDate)/msPerDay
+);
 
 
-
-    const kin =
-    ((refKin - 1 + daysSince) % 260 + 260) % 260 + 1;
-
+const kin =
+((refKin-1+daysSince)%260+260)%260+1;
 
 
-    return kin;
+return kin;
 
 }
+
+
 
 
 
@@ -268,47 +257,65 @@ export function calculateTzolkinKin(dateInput){
 export function getTzolkinData(dateInput){
 
 
-    const kin =
-    calculateTzolkinKin(dateInput);
+
+const kin =
+calculateTzolkinKin(dateInput);
 
 
 
-    const tone =
-    ((kin - 1) % 13) + 1;
+const tone =
+((kin-1)%13)+1;
 
 
 
-    const signNumber =
-    ((kin - 1) % 20);
+const signIndex =
+((kin-1)%20);
 
 
 
-    const sign =
-    tzolkinSigns[signNumber];
+const sign =
+tzolkinSigns[signIndex];
 
 
 
-    return {
+const number =
+tzolkinNumbers[tone-1];
 
 
-        kin,
-
-        tone,
 
 
-        signNumber: signNumber + 1,
+
+return {
 
 
-        signMaya: sign.maya,
+kin,
 
 
-        signSlovenian: sign.slovene,
+tone,
 
 
-        meaning: sign.meaning
+toneMeaning:
+number.meaning,
 
 
-    };
+signNumber:
+signIndex+1,
+
+
+signMaya:
+sign.maya,
+
+
+signSlovenian:
+sign.slovene,
+
+
+meaning:
+sign.meaning
+
+
+};
+
 
 
 }
