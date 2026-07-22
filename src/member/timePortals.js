@@ -57,15 +57,13 @@ return;
 
 
 // ==========================
-// PREVERI ZADNJO AKTIVACIJO
+// POIŠČI ZADNJI AKTIVIRAN PORTAL
 // ==========================
 
 
 const {
-
-data:lastActivation,
-
-error:lastError
+data: lastActivation,
+error: lastError
 
 } = await supabase
 
@@ -79,10 +77,11 @@ member.id
 )
 
 .order(
-"activated_at",
+"portal_number",
 {
 ascending:false
 }
+
 )
 
 .limit(1);
@@ -94,19 +93,9 @@ console.log(
 lastActivation
 );
 
-console.log(
-"MEMBER USED FOR CHECK:",
-member.id
-);
 
-
-console.log(
-"FULL LAST ACTIVATION JSON:",
-JSON.stringify(lastActivation, null, 2)
-);
 
 if(lastError){
-
 
 console.error(
 "LAST ACTIVATION ERROR:",
@@ -114,144 +103,13 @@ lastError
 );
 
 
-}
-
-
-
-
-
-// ==========================
-// ČE JE DANES ŽE AKTIVIRAL
-// ==========================
-
-
-if(
-lastActivation &&
-lastActivation.length > 0
-){
-
-
-const activatedAt =
-new Date(
-lastActivation[0].activated_at
-);
-
-
-
-const now =
-new Date();
-
-
-
-const sameDay =
-
-activatedAt.getFullYear()
-===
-now.getFullYear()
-
-&&
-
-activatedAt.getMonth()
-===
-now.getMonth()
-
-&&
-
-activatedAt.getDate()
-===
-now.getDate();
-
-
-
-
-if(sameDay){
-
-
-
-content.innerHTML = `
-
-
-<section class="dashboard-section">
-
-
-
-<h1>
-🌌 Današnji šepet je že sprejet.
-</h1>
-
-
-
-<div class="dashboard-card">
-
-
-
-<h2>
-Jaz sem Čas.
-</h2>
-
-
-
-<p>
-
-Današnjega šepeta ne odpiram dvakrat.
-
-</p>
-
-
-
-<p>
-
-Tvoj odgovor je že zapisan
-v tvoji poti.
-
-</p>
-
-
-
-<p class="highlight-text">
-
-Vrni se jutri.
-
-Nov dan prinaša nov šepet.
-
-</p>
-
-
-
-<h2>
-
-✨ Šepet ${lastActivation[0].portal_number} / 99
-
-</h2>
-
-
-
-</div>
-
-
-
-</section>
-
-
-`;
-
-
+content.innerHTML =
+"Napaka pri preverjanju poti Časa.";
 
 return;
 
-
 }
 
-
-}
-
-
-
-
-
-// ==========================
-// DOLOČI NASLEDNJI PORTAL
-// ==========================
 
 
 
@@ -262,17 +120,13 @@ let nextPortal = 1;
 if(
 lastActivation &&
 lastActivation.length > 0
-){
 
+){
 
 nextPortal =
 lastActivation[0].portal_number + 1;
 
-
 }
-
-
-
 
 
 
@@ -296,14 +150,12 @@ content.innerHTML = `
 </h1>
 
 
-
 <div class="dashboard-card">
 
 
 <h2>
 Jaz sem Čas.
 </h2>
-
 
 
 <p>
@@ -317,11 +169,9 @@ Ti si postala vrata.
 </p>
 
 
-
 <h2>
 ✨ Poseben dar čaka nate.
 </h2>
-
 
 
 </div>
@@ -331,6 +181,117 @@ Ti si postala vrata.
 
 
 `;
+
+
+return;
+
+
+}
+
+
+
+
+
+// ==========================
+// PREVERI ALI JE TA PORTAL ŽE AKTIVIRAN
+// ==========================
+
+
+const {
+
+data: existingPortal,
+
+error: existingError
+
+} = await supabase
+
+.from("member_time_portals")
+
+.select("*")
+
+.eq(
+"member_id",
+member.id
+)
+
+.eq(
+"portal_number",
+nextPortal
+)
+
+.maybeSingle();
+
+
+
+console.log(
+"EXISTING PORTAL CHECK:",
+existingPortal
+);
+
+
+
+if(existingError){
+
+console.error(
+"PORTAL CHECK ERROR:",
+existingError
+);
+
+}
+
+
+
+
+
+if(existingPortal){
+
+
+content.innerHTML = `
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Šepet Časa je že sprejet.
+</h1>
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+<p>
+
+Ta šepet je že postal del tvoje poti.
+
+</p>
+
+
+<p class="highlight-text">
+
+Jutri se odpre nov portal.
+
+</p>
+
+
+<h2>
+✨ Šepet ${nextPortal} / 99
+</h2>
+
+
+</div>
+
+
+</section>
+
+
+`;
+
 
 return;
 
