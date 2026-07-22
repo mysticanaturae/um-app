@@ -99,7 +99,6 @@ Pridruži se Blinkita Multiverse in odpri svoj osebni portal.
 
 
 
-
 <div class="dashboard-card">
 
 
@@ -146,7 +145,6 @@ return;
 
 
 }
-
 
 
 
@@ -199,6 +197,7 @@ return;
 
 
 
+
 // ==========================
 // DNEVNA KODA ČASA
 // ==========================
@@ -220,6 +219,22 @@ console.log(
 "DNEVNA KODA ČASA:",
 todayTzolkin
 );
+
+
+
+
+
+
+// slike
+
+const numberImage =
+`/images/maya-simboli/stevilo${todayTzolkin.number}.jpg`;
+
+
+
+const signImage =
+`/images/maya-simboli/${todayTzolkin.signImage}`;
+
 
 
 
@@ -266,8 +281,6 @@ BLINKITA MULTIVERSE
 
 
 
-
-
 <div class="dashboard-card">
 
 
@@ -295,6 +308,7 @@ Današnja energija tradicionalnega Tzolk'in koledarja.
 
 
 
+
 <div class="dashboard-card">
 
 
@@ -306,30 +320,49 @@ Današnja energija tradicionalnega Tzolk'in koledarja.
 
 
 
+
+
 <p>
 🌞 KIN:
+
 <strong>
 ${todayTzolkin.kin}
 </strong>
+
 </p>
+
 
 
 
 
 
 <h2>
-🌿 ${todayTzolkin.tone} ${todayTzolkin.signSlovenian}
+🌿 ${todayTzolkin.number} ${todayTzolkin.signSlovenian}
 </h2>
 
 
 
 
 
+
+
+<img
+src="${numberImage}"
+class="tzolkin-symbol"
+alt="Število ${todayTzolkin.number}"
+>
+
+
+
+
+
 <p>
-🔢 Število ${todayTzolkin.tone}:
+
+🔢 Število ${todayTzolkin.number}
+
 <br>
 
-${todayTzolkin.toneMeaning}
+${todayTzolkin.numberMeaning}
 
 </p>
 
@@ -337,8 +370,24 @@ ${todayTzolkin.toneMeaning}
 
 
 
+
+
+<img
+src="${signImage}"
+class="tzolkin-symbol"
+alt="${todayTzolkin.signSlovenian}"
+>
+
+
+
+
+
+
 <p>
-🌿 ${todayTzolkin.signSlovenian}:
+
+🌿 ${todayTzolkin.signSlovenian}
+(${todayTzolkin.signMaya})
+
 <br>
 
 ${todayTzolkin.meaning}
@@ -349,9 +398,15 @@ ${todayTzolkin.meaning}
 
 
 
+
+
+
 <p>
+
 ✨ Sporočilo Današnje Kode Časa se pripravlja...
+
 </p>
+
 
 
 
@@ -399,6 +454,8 @@ Tvoja skrivnost čaka, da se odpre.
 
 
 
+
+
 </div>
 
 
@@ -410,6 +467,7 @@ Tvoja skrivnost čaka, da se odpre.
 
 
 `;
+
 
 
 
