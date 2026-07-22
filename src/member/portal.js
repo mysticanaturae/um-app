@@ -396,11 +396,17 @@ ${todayTzolkin.meaning}
 
 
 
+<div class="tzolkin-message-card">
+
+
+<h3>
+✨ Sporočilo Današnje Kode Časa
+</h3>
+
+
 <p>
-✨ ${todayMessage?.message || "Sporočilo Današnje Kode Časa se pripravlja..."}
+${todayMessage?.message || "Sporočilo Današnje Kode Časa se pripravlja..."}
 </p>
-
-
 
 
 
