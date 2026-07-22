@@ -693,7 +693,7 @@ await loadMySymbol();
 
 const { data:symbols, error:symbolError } =
 await supabase
-.from("tzolkin_symbols")
+.from("blinkita_avatars")
 .select("*")
 .order("name");
 
