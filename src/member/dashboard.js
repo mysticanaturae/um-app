@@ -8,7 +8,7 @@ import { showRewards } from "./rewards.js";
 import { showMultiverse } from "./multiverse.js";
 import { showLibrary } from "./library.js";
 import { getCurrentMember } from "../auth/session.js";
-
+import { showTimePortals } from "./timePortals.js";
 
 
 
@@ -120,14 +120,48 @@ content.innerHTML = `
 ${currentMember.first_name || "Ustvarjalec"}
 </h1>
 
+<p>
 
+Dobrodošla v svojem osebnem prostoru
+<strong>BLINKITA MULTIVERSE</strong>.
+
+Čas te je ponovno pripeljal sem.
+
+Nekateri odpirajo aplikacije.
+
+Ti odpiraš portale.
+
+Tukaj vsaka številka nosi pomen.
+Vsak simbol pripoveduje zgodbo.
+Vsak obisk je nova možnost ustvarjanja.
+
+Dobrodošla v prostoru, kjer Čas postane živ in Mogoče postane resnično.
+</p>
+
+
+<div class="dashboard-card">
+
+<div class="download-icon">
+✨
+</div>
+
+<h2>
+Danes je nov začetek.
+</h2>
 
 <p>
 
-Tvoj osebni prostor BLINKITA MULTIVERSE je pripravljen.
+Odpri svoj Portal.
+Poslušaj svojo Kodo Časa.
+Izberi svoj simbol.
+Zbiraj darila.
+Ustvarjaj prihodnost.
+
+Vsak korak šteje.
 
 </p>
 
+</div>
 
 
 </section>
@@ -226,7 +260,13 @@ showPortal(currentMember);
 
 
 
+document
+.getElementById("timePortalTab")
+.onclick = () => {
 
+showTimePortals(currentMember);
+
+};
 
 
 

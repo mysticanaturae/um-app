@@ -289,7 +289,7 @@ content.innerHTML = `
 
 
 <h1>
-📸 Moj profil
+👤 Moj profil
 </h1>
 
 
