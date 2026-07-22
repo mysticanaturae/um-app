@@ -302,8 +302,11 @@ content.innerHTML = `
 
 
 
-
 <div class="download-card profile-main">
+
+
+
+<div class="profile-selfie-box">
 
 
 
@@ -329,8 +332,10 @@ alt="Moj selfie"
 
 `
 
-<div class="download-icon">
-📸
+<div class="selfie-placeholder">
+
+📷
+
 </div>
 
 `
@@ -343,10 +348,36 @@ alt="Moj selfie"
 
 
 
+<input
+type="file"
+id="selfie-upload"
+accept="image/*"
+hidden
+>
+
+
+
+
+<button
+id="upload-selfie-button">
+
+📷 Naloži selfie
+
+</button>
+
+
+
+</div>
+
+
+
+
+
 
 <h2>
 ${member.first_name || "Ustvarjalec"}
 </h2>
+
 
 
 
@@ -363,6 +394,7 @@ ${membership?.package || "Še nimaš izbranega paketa"}
 
 
 
+
 <p>
 <b>🔢 Srečna številka:</b>
 
@@ -374,24 +406,6 @@ ${member.seat_number || "Še ni izbrana"}
 
 
 
-<input
-type="file"
-id="selfie-upload"
-accept="image/*"
->
-
-
-
-
-<button
-id="upload-selfie-button">
-
-📸 Naloži selfie
-
-</button>
-
-
-
 
 
 
@@ -400,6 +414,7 @@ id="upload-selfie-button">
 Nalagam tvoj simbol časa...
 
 </div>
+
 
 
 
@@ -567,7 +582,6 @@ document.getElementById("upload-selfie-button");
 
 
 
-
 // ==========================
 // UPLOAD SELFIE
 // ==========================
@@ -579,7 +593,24 @@ selfieUpload
 ){
 
 
-uploadSelfieButton.onclick = async()=>{
+
+// klik na lep gumb odpre skriti input
+
+uploadSelfieButton.onclick = () => {
+
+
+selfieUpload.click();
+
+
+};
+
+
+
+
+
+// ko uporabnik izbere sliko, se začne upload
+
+selfieUpload.onchange = async()=>{
 
 
 const file =
@@ -590,15 +621,11 @@ selfieUpload.files[0];
 if(!file){
 
 
-alert(
-"📸 Najprej izberi selfie."
-);
-
-
 return;
 
 
 }
+
 
 
 
@@ -631,7 +658,6 @@ upsert:true
 
 
 
-
 if(uploadError){
 
 
@@ -652,7 +678,6 @@ return;
 
 
 }
-
 
 
 
