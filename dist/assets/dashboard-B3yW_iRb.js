@@ -776,7 +776,7 @@ ${e.description}
 
 
 
-`).join(``),document.querySelectorAll(`.symbol-card button`).forEach(t=>{t.onclick=async t=>{let n=t.target.closest(`.symbol-card`),i=Number(n.dataset.id);console.log(`SELECTED AVATAR:`,i);let{error:a}=await e.from(`members`).update({avatar_id:i}).eq(`id`,r.id);if(a){console.error(`SAVE AVATAR ERROR:`,a),alert(a.message);return}await f(),alert(`✨ Tvoj Šepetalec Duše je izbran.`)}})}async function c(){let t=document.getElementById(`content`),{data:n,error:r}=await e.from(`memberships`).select(`*`).eq(`member_id`,null.id).eq(`status`,`active`).maybeSingle();console.log(`ACTIVE MEMBERSHIP:`,n),t.innerHTML=`
+`).join(``),document.querySelectorAll(`.symbol-card button`).forEach(t=>{t.onclick=async t=>{let n=t.target.closest(`.symbol-card`),i=Number(n.dataset.id);console.log(`SELECTED AVATAR:`,i);let{error:a}=await e.from(`members`).update({avatar_id:i}).eq(`id`,r.id);if(a){console.error(`SAVE AVATAR ERROR:`,a),alert(a.message);return}await f(),alert(`✨ Tvoj Šepetalec Duše je izbran.`)}})}async function c(t){let n=document.getElementById(`content`),{data:r,error:i}=await e.from(`memberships`).select(`*`).eq(`member_id`,t.id).eq(`status`,`active`).maybeSingle();console.log(`ACTIVE MEMBERSHIP:`,r),i&&console.error(`MEMBERSHIP ERROR:`,i),n.innerHTML=`
 
 
 <section class="dashboard-section">
@@ -806,7 +806,7 @@ Tvoje aktivno članstvo v Blinkita Multiverse.
 
 
 <h1>
-${n?.package||`Brez paketa`}
+${r?.package||`Brez paketa`}
 </h1>
 
 

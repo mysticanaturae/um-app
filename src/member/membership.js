@@ -1,8 +1,7 @@
 import { supabase } from "../supabase/client.js";
-import { memberData } from "./member.js";
 
 
-export async function showMembership(){
+export async function showMembership(memberFromDashboard){
 
 
 const content =
@@ -16,7 +15,7 @@ await supabase
 .select("*")
 .eq(
 "member_id",
-memberData.id
+memberFromDashboard.id
 )
 .eq(
 "status",
@@ -30,6 +29,17 @@ console.log(
 "ACTIVE MEMBERSHIP:",
 membership
 );
+
+
+
+if(error){
+
+console.error(
+"MEMBERSHIP ERROR:",
+error
+);
+
+}
 
 
 
