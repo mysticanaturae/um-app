@@ -1,3 +1,87 @@
+const tzolkinTones = [
+
+{
+    number:1,
+    name:"Magnetni",
+    meaning:"Začetek, namen in privlačenje energije."
+},
+
+{
+    number:2,
+    name:"Lunarni",
+    meaning:"Izzivi, ravnovesje in iskanje poti."
+},
+
+{
+    number:3,
+    name:"Električni",
+    meaning:"Gibanje, aktivacija in povezovanje."
+},
+
+{
+    number:4,
+    name:"Samozavestni",
+    meaning:"Oblika, struktura in ustvarjanje temeljev."
+},
+
+{
+    number:5,
+    name:"Vplivni",
+    meaning:"Moč, središče in usmerjanje energije."
+},
+
+{
+    number:6,
+    name:"Ritmični",
+    meaning:"Ravnovesje, organizacija in tok."
+},
+
+{
+    number:7,
+    name:"Resonančni",
+    meaning:"Uglasitev, intuicija in povezava z višjim znanjem."
+},
+
+{
+    number:8,
+    name:"Harmonični",
+    meaning:"Integracija, ravnovesje in lepota ustvarjanja."
+},
+
+{
+    number:9,
+    name:"Solarni",
+    meaning:"Vztrajnost, namen in uresničevanje."
+},
+
+{
+    number:10,
+    name:"Planetarni",
+    meaning:"Manifestacija, izpolnitev in utelešenje."
+},
+
+{
+    number:11,
+    name:"Spektralni",
+    meaning:"Osvoboditev, preobrazba in spuščanje starega."
+},
+
+{
+    number:12,
+    name:"Kristalni",
+    meaning:"Sodelovanje, povezovanje in širjenje zavesti."
+},
+
+{
+    number:13,
+    name:"Kozmični",
+    meaning:"Prisotnost, zaključek cikla in povezava z večnostjo."
+}
+
+];
+
+
+
 /* ==========================================
 BLINKITA TIME™
 TRADITIONAL TZOLK'IN ENGINE

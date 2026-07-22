@@ -1,6 +1,8 @@
 import { supabase } from "../supabase/client.js";
 import { getTzolkinData } from "../time/tzolkin.js";
 
+
+
 export async function showPortal(memberFromDashboard){
 
 
@@ -97,6 +99,7 @@ Pridruži se Blinkita Multiverse in odpri svoj osebni portal.
 
 
 
+
 <div class="dashboard-card">
 
 
@@ -125,6 +128,7 @@ Tvoja skrivnost čaka, da se odpre.
 
 
 
+
 </div>
 
 
@@ -142,6 +146,8 @@ return;
 
 
 }
+
+
 
 
 
@@ -169,6 +175,7 @@ await supabase
 
 
 
+
 if(error){
 
 
@@ -188,6 +195,10 @@ return;
 }
 
 
+
+
+
+
 // ==========================
 // DNEVNA KODA ČASA
 // ==========================
@@ -199,6 +210,7 @@ new Date()
 .split("T")[0];
 
 
+
 const todayTzolkin =
 getTzolkinData(today);
 
@@ -208,6 +220,7 @@ console.log(
 "DNEVNA KODA ČASA:",
 todayTzolkin
 );
+
 
 
 
@@ -253,6 +266,8 @@ BLINKITA MULTIVERSE
 
 
 
+
+
 <div class="dashboard-card">
 
 
@@ -278,6 +293,8 @@ Današnja energija tradicionalnega Tzolk'in koledarja.
 
 
 
+
+
 <div class="dashboard-card">
 
 
@@ -287,33 +304,55 @@ Današnja energija tradicionalnega Tzolk'in koledarja.
 
 
 
+
+
 <p>
-🌞 Današnji Kin:
+🌞 KIN:
 <strong>
 ${todayTzolkin.kin}
 </strong>
 </p>
 
 
-<p>
-🔢 Ton:
-<strong>
-${todayTzolkin.tone}
-</strong>
-</p>
 
 
-<p>
-🌿 Solarni pečat:
-<strong>
-${todayTzolkin.sign}
-</strong>
-</p>
+
+<h2>
+🌿 ${todayTzolkin.tone} ${todayTzolkin.signSlovenian}
+</h2>
+
+
+
 
 
 <p>
-✨ Sporočilo dneva se pripravlja...
+🔢 Število ${todayTzolkin.tone}:
+<br>
+
+${todayTzolkin.toneMeaning}
+
 </p>
+
+
+
+
+
+<p>
+🌿 ${todayTzolkin.signSlovenian}:
+<br>
+
+${todayTzolkin.meaning}
+
+</p>
+
+
+
+
+
+<p>
+✨ Sporočilo Današnje Kode Časa se pripravlja...
+</p>
+
 
 
 
@@ -371,6 +410,8 @@ Tvoja skrivnost čaka, da se odpre.
 
 
 `;
+
+
 
 
 
