@@ -459,3 +459,142 @@ margin-top:30px;
 text-align:center;
 
 }
+
+/* ==============================
+   BLINKITA WELCOME PORTAL
+============================== */
+
+
+.welcome-card {
+
+    padding: 35px 30px;
+
+    margin-bottom: 25px;
+
+    text-align: center;
+
+}
+
+
+
+.welcome-card h2 {
+
+    margin-bottom: 18px;
+
+}
+
+
+
+.welcome-card p {
+
+    line-height: 1.8;
+
+    font-size: 1.05rem;
+
+}
+
+
+
+.highlight-text {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    font-size: 1.15rem;
+
+    line-height: 1.8;
+
+    font-weight: 600;
+
+}
+
+
+
+.download-icon {
+
+    font-size: 3rem;
+
+    margin-bottom: 15px;
+
+    animation: blinkitaPulse 3s infinite;
+
+}
+
+
+
+/* subtilen "živ Čas" efekt */
+
+@keyframes blinkitaPulse {
+
+
+    0% {
+
+        transform: scale(1);
+
+        opacity: 0.8;
+
+    }
+
+
+    50% {
+
+        transform: scale(1.08);
+
+        opacity: 1;
+
+    }
+
+
+    100% {
+
+        transform: scale(1);
+
+        opacity: 0.8;
+
+    }
+
+
+}
+
+
+
+/* prostor med karticami */
+
+.dashboard-card {
+
+    margin-bottom: 25px;
+
+}
+
+
+
+/* lepši uvodni naslov */
+
+.dashboard-section > h1 {
+
+    margin-bottom: 30px;
+
+    line-height: 1.3;
+
+}
+
+
+
+/* nežnejši prehodi */
+
+.dashboard-card {
+
+    transition: transform 0.3s ease;
+
+}
+
+
+
+.dashboard-card:hover {
+
+    transform: translateY(-3px);
+
+}
