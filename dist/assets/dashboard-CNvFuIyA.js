@@ -459,7 +459,7 @@ Tvoj rojstni pečat tradicionalnega Tzolk'in koledarja bo pripravljen, ko ustvar
 
 
 <h1>
-📸 Moj profil
+👤 Moj profil
 </h1>
 
 
@@ -472,8 +472,11 @@ Tvoj rojstni pečat tradicionalnega Tzolk'in koledarja bo pripravljen, ko ustvar
 
 
 
-
 <div class="download-card profile-main">
+
+
+
+<div class="profile-selfie-box">
 
 
 
@@ -490,8 +493,10 @@ alt="Moj selfie"
 
 `:`
 
-<div class="download-icon">
-📸
+<div class="selfie-placeholder">
+
+📷
+
 </div>
 
 `}
@@ -502,10 +507,36 @@ alt="Moj selfie"
 
 
 
+<input
+type="file"
+id="selfie-upload"
+accept="image/*"
+hidden
+>
+
+
+
+
+<button
+id="upload-selfie-button">
+
+📷 Naloži selfie
+
+</button>
+
+
+
+</div>
+
+
+
+
+
 
 <h2>
 ${r.first_name||`Ustvarjalec`}
 </h2>
+
 
 
 
@@ -522,6 +553,7 @@ ${u?.package||`Še nimaš izbranega paketa`}
 
 
 
+
 <p>
 <b>🔢 Srečna številka:</b>
 
@@ -533,24 +565,6 @@ ${r.seat_number||`Še ni izbrana`}
 
 
 
-<input
-type="file"
-id="selfie-upload"
-accept="image/*"
->
-
-
-
-
-<button
-id="upload-selfie-button">
-
-📸 Naloži selfie
-
-</button>
-
-
-
 
 
 
@@ -559,6 +573,7 @@ id="upload-selfie-button">
 Nalagam tvoj simbol časa...
 
 </div>
+
 
 
 
@@ -698,7 +713,7 @@ Nalagam simbole...
 
 
 
-`;let d=document.getElementById(`symbols-container`),f=document.getElementById(`my-symbol-container`),p=document.getElementById(`selfie-upload`),m=document.getElementById(`upload-selfie-button`);m&&p&&(m.onclick=async()=>{let t=p.files[0];if(!t){alert(`📸 Najprej izberi selfie.`);return}let n=`${r.id}/${Date.now()}-${t.name}`,{error:i}=await e.storage.from(`selfies`).upload(n,t,{upsert:!0});if(i){console.error(`SELFIE UPLOAD ERROR:`,i),alert(i.message);return}let{data:a}=e.storage.from(`selfies`).getPublicUrl(n),{error:o}=await e.from(`members`).update({selfie_url:a.publicUrl}).eq(`id`,r.id);if(o){console.error(`SAVE SELFIE ERROR:`,o),alert(o.message);return}alert(`📸 Tvoj selfie je shranjen.`),s(r)});async function h(){let{data:t,error:n}=await e.from(`members`).select(`avatar_id`).eq(`id`,r.id).single();if(n){console.error(`LOAD AVATAR ID ERROR:`,n);return}if(!t.avatar_id){f.innerHTML=`
+`;let d=document.getElementById(`symbols-container`),f=document.getElementById(`my-symbol-container`),p=document.getElementById(`selfie-upload`),m=document.getElementById(`upload-selfie-button`);m&&p&&(m.onclick=()=>{p.click()},p.onchange=async()=>{let t=p.files[0];if(!t)return;let n=`${r.id}/${Date.now()}-${t.name}`,{error:i}=await e.storage.from(`selfies`).upload(n,t,{upsert:!0});if(i){console.error(`SELFIE UPLOAD ERROR:`,i),alert(i.message);return}let{data:a}=e.storage.from(`selfies`).getPublicUrl(n),{error:o}=await e.from(`members`).update({selfie_url:a.publicUrl}).eq(`id`,r.id);if(o){console.error(`SAVE SELFIE ERROR:`,o),alert(o.message);return}alert(`📸 Tvoj selfie je shranjen.`),s(r)});async function h(){let{data:t,error:n}=await e.from(`members`).select(`avatar_id`).eq(`id`,r.id).single();if(n){console.error(`LOAD AVATAR ID ERROR:`,n);return}if(!t.avatar_id){f.innerHTML=`
 
 
 
@@ -1263,7 +1278,282 @@ class="dashboard-button">
 
 
 
-    `}async function f(){console.log(`🔐 Checking authentication...`);let{data:{session:t}}=await e.auth.getSession(),n=t?.user;if(n||await new Promise(t=>{let{data:r}=e.auth.onAuthStateChange((e,r)=>{console.log(`AUTH EVENT:`,e),r?.user&&(n=r.user,t())});setTimeout(()=>{r.subscription.unsubscribe(),t()},3e3)}),!n)return console.log(`ℹ️ Guest user - no login session`),null;console.log(`AUTH USER:`,n.email);let{data:r,error:i}=await e.from(`members`).select(`*`).eq(`email`,n.email).single();return i?(console.error(`❌ MEMBER NOT FOUND:`,i),null):(console.log(`✅ MEMBER FOUND:`,r),r)}console.log(`🚀 MEMBER DASHBOARD LOADED`);function p(e){let t=document.getElementById(`content`);e?t.innerHTML=`
+    `}async function f(){console.log(`🔐 Checking authentication...`);let{data:{session:t}}=await e.auth.getSession(),n=t?.user;if(n||await new Promise(t=>{let{data:r}=e.auth.onAuthStateChange((e,r)=>{console.log(`AUTH EVENT:`,e),r?.user&&(n=r.user,t())});setTimeout(()=>{r.subscription.unsubscribe(),t()},3e3)}),!n)return console.log(`ℹ️ Guest user - no login session`),null;console.log(`AUTH USER:`,n.email);let{data:r,error:i}=await e.from(`members`).select(`*`).eq(`email`,n.email).single();return i?(console.error(`❌ MEMBER NOT FOUND:`,i),null):(console.log(`✅ MEMBER FOUND:`,r),r)}async function p(t){let n=document.getElementById(`content`);if(!t){n.innerHTML=`
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+
+<p>
+
+Šepetanje Časa je na voljo članom Blinkita Multiverse.
+
+</p>
+
+
+
+<a
+href="/index.html"
+class="dashboard-button">
+
+✨ Odkrij članske pakete
+
+</a>
+
+
+
+</section>
+
+
+`;return}let r=[];document.querySelectorAll(`.answer-buttons button`).forEach(e=>{e.onclick=()=>{let t=e.dataset.answer;if(r.includes(t)){let n=r.indexOf(t);r.splice(n,1),e.classList.remove(`selected`)}else r.push(t),e.classList.add(`selected`);console.log(`ODGOVORI ČASU:`,r)}});let i=document.getElementById(`activatePortalButton`);i.onclick=async()=>{if(r.length===0){alert(`✨ Najprej izberi svoj odgovor Času.`);return}for(let n of r){let{error:r}=await e.from(`portal_answers`).insert({member_id:t.id,portal_number:c.portal_number,answer:n});r&&console.error(`PORTAL ANSWER ERROR:`,r)}console.log(`✨ Odgovori shranjeni`);let{error:i}=await e.from(`member_time_portals`).insert({member_id:t.id,portal_number:c.portal_number,activated_at:new Date});if(i){console.error(`PORTAL ACTIVATION ERROR:`,i),alert(i.message);return}n.innerHTML=`
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Čas je sprejel tvoj odgovor.
+</h1>
+
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+
+<p>
+
+Tvoj šepet je bil slišan.
+
+Tvoja pot skozi portale se nadaljuje.
+
+</p>
+
+
+
+<h2>
+✨ Portal ${c.portal_number} je aktiviran.
+</h2>
+
+
+
+</div>
+
+
+</section>
+
+
+
+`};let{data:a,error:o}=await e.from(`member_time_portals`).select(`*`).eq(`member_id`,t.id).order(`portal_number`,{ascending:!1}).limit(1);if(o){console.error(`TIME PORTAL PROGRESS ERROR:`,o),n.innerHTML=`Napaka pri nalaganju poti Časa.`;return}let s=1;if(a&&a.length>0&&(s=a[0].portal_number+1),s>99){n.innerHTML=`
+
+
+<section class="dashboard-section">
+
+
+<h1>
+🌌 Portal 100
+</h1>
+
+
+<div class="dashboard-card">
+
+
+<h2>
+Jaz sem Čas.
+</h2>
+
+
+<p>
+
+Ne iščeš več vrat.
+
+Ti si postala vrata.
+
+</p>
+
+
+<h2>
+✨ Poseben dar čaka nate.
+</h2>
+
+
+
+</div>
+
+
+</section>
+
+
+`;return}console.log(`LOOKING FOR PORTAL NUMBER:`,s);let{data:c,error:l}=await e.from(`time_portals`).select(`*`).eq(`portal_number`,s).maybeSingle();if(l){console.error(`TIME PORTAL LOAD ERROR:`,l),n.innerHTML=`Napaka pri odpiranju Šepetanja Časa.`;return}if(console.log(`CURRENT TIME PORTAL:`,c),!c){n.innerHTML=`
+
+<section class="dashboard-section">
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+<div class="dashboard-card">
+
+<h2>
+Čas danes še tiho čaka.
+</h2>
+
+<p>
+Portal se pripravlja nate.
+</p>
+
+</div>
+
+</section>
+
+`;return}n.innerHTML=`
+
+
+
+<section class="dashboard-section">
+
+
+
+<h1>
+🌌 Šepetanje Časa
+</h1>
+
+
+
+
+<h2>
+
+Šepet Časa ${c.portal_number} / 99
+
+</h2>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+
+
+<p>
+
+${c.message.replace(/\n/g,`<br>`)}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="answer-section">
+
+
+<h2>
+Kako danes odgovarjaš Času?
+</h2>
+
+<div class="answer-buttons">
+
+<button data-answer="VIDIM">
+
+👁 VIDIM
+
+</button>
+
+
+
+<button data-answer="SLIŠIM">
+
+👂 SLIŠIM
+
+</button>
+
+
+
+<button data-answer="ČUTIM">
+
+💙 ČUTIM
+
+</button>
+
+
+
+<button data-answer="AKTIVIRAM">
+
+✨ AKTIVIRAM
+
+</button>
+
+
+
+<button data-answer="LJUBIM">
+
+❤️ LJUBIM
+
+</button>
+
+
+
+<button data-answer="ZAVEDAM">
+
+🌌 ZAVEDAM
+
+</button>
+
+
+
+<button data-answer="SPREJEMAM">
+
+🙏 SPREJEMAM
+
+</button>
+
+
+
+</div>
+
+
+
+
+<div class="portal-action">
+
+
+<button
+id="activatePortalButton"
+class="dashboard-button">
+
+✨ Sprejmem šepet
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+`}console.log(`🚀 MEMBER DASHBOARD LOADED`);function m(e){let t=document.getElementById(`content`);e?t.innerHTML=`
 
 
 <section class="dashboard-section">
@@ -1275,14 +1565,48 @@ class="dashboard-button">
 ${e.first_name||`Ustvarjalec`}
 </h1>
 
+<p>
 
+Dobrodošla v svojem osebnem prostoru
+<strong>BLINKITA MULTIVERSE</strong>.
+
+Čas te je ponovno pripeljal sem.
+
+Nekateri odpirajo aplikacije.
+
+Ti odpiraš portale.
+
+Tukaj vsaka številka nosi pomen.
+Vsak simbol pripoveduje zgodbo.
+Vsak obisk je nova možnost ustvarjanja.
+
+Dobrodošla v prostoru, kjer Čas postane živ in Mogoče postane resnično.
+</p>
+
+
+<div class="dashboard-card">
+
+<div class="download-icon">
+✨
+</div>
+
+<h2>
+Danes je nov začetek.
+</h2>
 
 <p>
 
-Tvoj osebni prostor BLINKITA MULTIVERSE je pripravljen.
+Odpri svoj Portal.
+Poslušaj svojo Kodo Časa.
+Izberi svoj simbol.
+Zbiraj darila.
+Ustvarjaj prihodnost.
+
+Vsak korak šteje.
 
 </p>
 
+</div>
 
 
 </section>
@@ -1361,4 +1685,4 @@ class="dashboard-button">
 
 
 
-`}async function m(){let e=await f();console.log(`CURRENT MEMBER:`,e),e?console.log(`LOGGED MEMBER:`,e):console.log(`👋 Guest visitor - showing full preview`),p(e),document.getElementById(`portalTab`).onclick=()=>{o(e)},document.getElementById(`profileTab`).onclick=()=>{s(e)},document.getElementById(`packageTab`).onclick=()=>{c(e)},document.getElementById(`multiverseTab`).onclick=()=>{u(e)},document.getElementById(`rewardsTab`).onclick=()=>{l(e)},document.getElementById(`libraryTab`).onclick=()=>{d(e)}}m();
+`}async function h(){let e=await f();console.log(`CURRENT MEMBER:`,e),e?console.log(`LOGGED MEMBER:`,e):console.log(`👋 Guest visitor - showing full preview`),m(e),document.getElementById(`portalTab`).onclick=()=>{o(e)},document.getElementById(`timePortalTab`).onclick=()=>{p(e)},document.getElementById(`profileTab`).onclick=()=>{s(e)},document.getElementById(`packageTab`).onclick=()=>{c(e)},document.getElementById(`multiverseTab`).onclick=()=>{u(e)},document.getElementById(`rewardsTab`).onclick=()=>{l(e)},document.getElementById(`libraryTab`).onclick=()=>{d(e)}}h();
