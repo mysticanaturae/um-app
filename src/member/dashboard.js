@@ -197,7 +197,7 @@ Danes je nov začetek.
 <p>
 
 Odpri svoj Portal.<br>
-Poslušaj svojo Kodo Časa.<br>
+Prisluhni Kodi Časa.<br>
 Izberi svoj simbol.<br>
 Zbiraj darila.<br>
 Ustvarjaj prihodnost.
@@ -229,7 +229,7 @@ Vsak korak šteje.
 <p>
 
 Prostor, kjer Čas postane živ
-in Mogoče postane resnično.
+in Mogoče postane res.
 
 </p>
 
