@@ -408,3 +408,54 @@ margin-bottom:15px;
     max-height:100%;
     object-fit:contain;
 }
+
+.answer-buttons {
+
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:20px 0;
+
+}
+
+
+.answer-buttons button.selected {
+
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(255,255,255,0.5);
+
+}
+
+
+.portal-action {
+
+margin-top:30px;
+text-align:center;
+
+}
+
+.answer-buttons button.selected {
+
+transform:scale(1.05);
+
+box-shadow:
+0 0 15px rgba(255,255,255,0.6);
+
+}
+
+
+.answer-buttons {
+
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+
+}
+
+
+.portal-action {
+
+margin-top:30px;
+text-align:center;
+
+}
